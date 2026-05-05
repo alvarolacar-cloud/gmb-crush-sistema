@@ -69,6 +69,7 @@ Cada output de esta fase tiene una fuente y un método concreto. Síguelos en or
 ### 3.3 Core Services (Variable S)
 - **Dato que buscamos:** Lista de servicios con intención de búsqueda diferenciada.
 - **Cómo se obtiene:** Buscar `[categoría] [Main City]` en Google Maps → mirar los servicios listados en los 5 primeros perfiles → los que aparecen en 2+ perfiles son candidatos.
+- **Multi-ciudad (opcional):** Si el operador declaró ciudades adicionales en el preflight, analizar también el Local Pack de esas ciudades para cruzar servicios. Los servicios que aparecen en 2+ ciudades del sector son los más sólidos. La arquitectura sigue siendo solo para la Main City — las otras ciudades solo se usan para validar la selección de servicios.
 - **Fuente:** `Doctrina + Local Pack`.
 - **Si no tienes acceso a Maps:** Tomar los servicios que el operador declaró en el preflight. Si declaró menos de 4, proponer expansiones lógicas del sector marcadas `⚠ inferido`. Si no declaró ninguno, inferir 4-6 del sector.
 - **Regla anti-duplicación:** Si dos servicios responden a la misma búsqueda del usuario (test: "¿alguien buscaría esto por separado?"), fusionar en uno. En caso de duda, NO crear el servicio — es mejor tener S=4 sólidos que S=6 con canibalización.
@@ -512,4 +513,8 @@ Con la respuesta, decides:
 
 **Si el operador dice "busca" y tienes acceso a la tool, DEBES usarla.** No inferir por rapidez cuando el operador pidió datos reales.
 
-Después, pide el Preflight (si no te lo han dado) y ejecuta las 8 fases en orden sin detenerte. Si necesitas más detalle sobre el contenido de cada page type, consulta `referencias/page-type-specs.md`. Si necesitas ver un ejemplo completo de arquitectura, consulta `referencias/ejemplo-cerrajeros.md`.
+Después, pide el Preflight al operador con este mensaje exacto:
+
+> Pásame los datos del preflight. Recuerda indicarme las ciudades que quieres que analice cuando investigue el Local Pack (tu ciudad principal + las que quieras para comparar servicios del sector).
+
+Cuando lo tengas, ejecuta las 8 fases en orden sin detenerte. Si necesitas más detalle sobre el contenido de cada page type, consulta `referencias/page-type-specs.md`. Si necesitas ver un ejemplo completo de arquitectura, consulta `referencias/ejemplo-cerrajeros.md`.
