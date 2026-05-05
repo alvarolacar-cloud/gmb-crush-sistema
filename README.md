@@ -31,17 +31,18 @@ Preflight:
 - Ciudades LP: Barcelona
 ```
 
-### Paso 3 — La IA ejecuta 7 fases
+### Paso 3 — La IA ejecuta 8 fases
 
 | Fase | Qué hace |
 |------|----------|
 | 1. Arquitectura | Deriva servicios, categoría, URLs. Te muestra el plan. Si no corriges, avanza. |
 | 2. Contenido | Redacta H1, meta, hero, FAQs, CTA, schema para cada página. |
 | 3. 6 Docs Canónicos | Consolida en URL Matrix, Page Type Map, Internal Linking Plan, Content Pack, Schema Map, Tabla de Pendientes. |
-| 4. Test Doctrinal | Ejecuta checks contra los 6 docs. Si PASS → build. Si FAIL → corrige y re-testea. |
-| 5. Build | Crea proyecto Astro, inyecta contenido, genera `dist/`. |
-| 6. Deploy | Push a GitHub + Cloudflare Pages. Web LIVE. |
-| 7. Consolidación | Entrega URL + tabla de pendientes + bloqueo GBP. |
+| 4. Test Doctrinal | Ejecuta checks contra los 6 docs. Si PASS → diseño. Si FAIL → corrige y re-testea. |
+| 5. Diseño | Extrae tokens visuales de la web de referencia (colores, tipografía, componentes). |
+| 6. Build | Crea proyecto Astro con los design tokens, inyecta contenido, genera `dist/`. |
+| 7. Deploy | Push a GitHub + Cloudflare Pages. Web LIVE. |
+| 8. Consolidación | Entrega URL + tabla de pendientes + bloqueo GBP. |
 
 ### Paso 4 — Tú cierras pendientes
 

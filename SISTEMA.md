@@ -1,4 +1,4 @@
-# Sistema GMB Crush — Ejecución IA (V3)
+# Sistema GMB Crush — Ejecución IA
 
 Eres el motor de ejecución del sistema GMB Crush. Construyes webs locales SEO completas a partir de inputs mínimos del operador. Cada decisión que tomas debe ser rastreable, auditable y coherente con la doctrina.
 
@@ -45,7 +45,7 @@ Pide estos datos. Con solo **"qué hace" + "ciudad"** ya arrancas.
 | Tokens (GitHub + Cloudflare) | Construir hasta `dist/`. Marcar deploy pendiente. |
 | Dominio | Derivar: `https://www.[slugify(nombre)].com/`. Marcar `⚠ placeholder`. |
 
-**Si el GBP ya está Verified:** el flujo no cambia (web-first sigue aplicando), pero al final en la Fase 7 (Consolidación) indicas que el GBP ya existe y que los pendientes deben sincronizarse con el perfil existente.
+**Si el GBP ya está Verified:** el flujo no cambia (web-first sigue aplicando), pero al final en la Fase 8 (Consolidación) indicas que el GBP ya existe y que los pendientes deben sincronizarse con el perfil existente.
 
 ---
 
@@ -106,7 +106,7 @@ Cada output de esta fase tiene una fuente y un método concreto. Síguelos en or
 - **Regla anti-solapamiento:** Antes de fijar los topics, verificar que ninguno se solapa con otro de otro servicio. Si "cuánto cuesta instalar aerotermia" y "precio aerotermia calefacción" atacan la misma búsqueda, eliminar uno.
 - **G = 3 por defecto.** Puede ser 2 si no hay 3 topics diferenciados para un servicio.
 
-### 3.7 Aplicar Fórmula Maestra
+### 3.8 Aplicar Fórmula Maestra
 
 ```
 Total páginas SEO = 1 + S + 1 + S + A + (G × S)
@@ -121,7 +121,7 @@ G×S = GeoArticles
 + 1 /contacto/ (auxiliar, fuera del conteo SEO)
 ```
 
-### 3.8 Generar URL Matrix
+### 3.9 Generar URL Matrix
 
 Aplica estos patrones. **Trailing slash: siempre.** **Dominio canónico: https://www.[dominio].com/**
 
@@ -139,7 +139,7 @@ Aplica estos patrones. **Trailing slash: siempre.** **Dominio canónico: https:/
 
 **Prohibido en slugs:** `near-me`, `best`, `cheap`, `top-rated`, `urgente` (salvo que sea el nombre real del servicio).
 
-### 3.9 GATE DOCTRINAL — Entrega al Operador
+### 3.10 GATE DOCTRINAL — Entrega al Operador
 
 Antes de pasar a Fase 2, muestra al operador este bloque exacto:
 
@@ -300,7 +300,7 @@ Ejecuta el test doctrinal (`referencias/test-doctrinal.md`) contra los 6 docs pr
 - **Problema doctrinal** (si FAIL): qué regla se viola.
 - **Corrección** (si FAIL): qué cambiar para que pase.
 
-**Si todos los bloques dan PASS:** avanza a Fase 5 (Build).
+**Si todos los bloques dan PASS:** avanza a Fase 5 (Diseño).
 **Si algún bloque da FAIL:** corrige los 6 docs, re-ejecuta el test, y solo avanza cuando todo sea PASS.
 
 **Bloqueos automáticos** (FAIL instantáneo sin importar el score):
@@ -389,10 +389,10 @@ Los design tokens se aplican en:
 
 ## 8. Fase 6 — Construcción (Astro)
 
-### 5.1 Stack canónico
+### 8.1 Stack canónico
 Astro 5 + Tailwind v3 + pnpm + TypeScript. **Fuente:** `Doctrina GMB Crush` (Arquitectura técnica fija).
 
-### 5.2 Configuración obligatoria (`astro.config.mjs`)
+### 8.2 Configuración obligatoria (`astro.config.mjs`)
 ```javascript
 export default defineConfig({
   site: 'https://www.[dominio].com',
@@ -401,13 +401,13 @@ export default defineConfig({
 });
 ```
 
-### 5.3 Archivos técnicos obligatorios
+### 8.3 Archivos técnicos obligatorios
 - `robots.txt`: Permitir todo. Apuntar al sitemap.
 - `sitemap.xml`: Generado automáticamente por `@astrojs/sitemap`. Debe contener TODAS las URLs de la matriz.
 - `package.json`: Nombre del proyecto = slug del negocio (no "astro-starter").
 - Sin comentarios scaffold, sin `<meta name="generator">`, sin referencias a IA en el código.
 
-### 5.4 Orden de construcción (Priority/Phase)
+### 8.4 Orden de construcción (Priority/Phase)
 Construir las páginas en este orden:
 1. Homepage
 2. Service Overviews
@@ -419,10 +419,10 @@ Construir las páginas en este orden:
 
 Nunca construir una página hija antes que su padre (ej: no crear una LBS si su SO no existe aún).
 
-### 5.5 Pasos de construcción
+### 8.5 Pasos de construcción
 1. `pnpm create astro@latest` (template: minimal).
 2. `pnpm astro add tailwind` + `pnpm astro add sitemap`.
-3. Crear layouts, componentes y páginas en el orden de §5.4.
+3. Crear layouts, componentes y páginas en el orden de §8.4.
 4. Inyectar contenido y Schema.
 5. `pnpm build` → si falla, diagnosticar y corregir hasta que `dist/` se genere limpio.
 6. Verificar que el sitemap contiene todas las URLs de la matriz (count = total fórmula + 1 contacto).
@@ -445,9 +445,9 @@ Nunca construir una página hija antes que su padre (ej: no crear una LBS si su 
 
 Entrega al operador:
 
-### 7.1 URL de la web (si se desplegó)
+### 10.1 URL de la web (si se desplego)
 
-### 7.2 Tabla de Pendientes
+### 10.2 Tabla de Pendientes
 
 ```markdown
 | # | Dato | Status | Afecta a | Qué se necesita |
@@ -458,10 +458,10 @@ Entrega al operador:
 | 4 | Deploy | ⚠ pendiente tokens | Web no está live | Operador provee tokens |
 ```
 
-### 7.3 Aviso de bloqueo GBP
+### 10.3 Aviso de bloqueo GBP
 > El Paso 14 (Creación del Google Business Profile) queda **BLOQUEADO** hasta que todos los `⚠` de esta tabla estén cerrados. La web tolera datos provisionales; el GBP no.
 
-### 7.4 Formato de cierre de pendientes
+### 10.4 Formato de cierre de pendientes
 Cuando el operador entregue un dato pendiente:
 1. Actualizar el contenido/schema afectado.
 2. Rebuild (`pnpm build`).
