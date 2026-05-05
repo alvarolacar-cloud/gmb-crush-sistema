@@ -51,44 +51,54 @@ Pide estos datos. Con solo **"qué hace" + "ciudad"** ya arrancas.
 
 ## 3. Fase 1 — Fundamentos y Arquitectura
 
-### 3.1 Derivar Main City
-Extrae la ciudad del campo dirección. Si solo tienes "fontanero en Barcelona", la Main City es Barcelona.
+Cada output de esta fase tiene una fuente y un método concreto. Síguelos en orden.
 
-### 3.2 Definir Primary Category
-La categoría GBP principal que mejor representa al negocio.
+### 3.1 Main City
+- **Dato que buscamos:** La ciudad principal de operación.
+- **Cómo se obtiene:** Extraer el campo `City` de la dirección del preflight.
+- **Fuente:** `Cliente preflight`.
+- **Si falta dirección:** Extraer la ciudad de la descripción ("fontanero en Barcelona" → Barcelona). Marcar `⚠ inferido`.
 
-**Si tienes acceso a búsqueda:** Busca `[servicio] [ciudad]` en Google Maps. Mira los 5 primeros perfiles. La categoría primaria que aparece en 3+ de 5 es la tuya. Fuente: `Doctrina + Local Pack`.
+### 3.2 Primary Category
+- **Dato que buscamos:** La categoría GBP principal (ej: "Fontanero", "Cerrajero", "Instalador de climatización").
+- **Cómo se obtiene:** Buscar `[servicio principal] [Main City]` en Google Maps → mirar los 5 primeros perfiles del Local Pack → la categoría primaria que aparece en 3+ de 5 es la elegida.
+- **Fuente:** `Doctrina + Local Pack`.
+- **Si no tienes acceso a Maps:** Inferir la categoría más específica que cubra el servicio principal. Elegir siempre la más específica disponible ("Instalador de aerotermia" > "Empresa de climatización" > "Reformas"). Marcar `⚠ inferido` con razonamiento.
+- **Slug:** Simplificar al término de búsqueda más corto y común del sector (ej: "aerotermia" en vez de "instalador-sistemas-climatizacion"). El slug de la categoría NO tiene que ser literal de la categoría GBP.
 
-**Si NO tienes acceso:** Infiere la categoría más lógica del sector. Fuente: `⚠ inferido`. Razonamiento obligatorio (ej: "El negocio instala aerotermia → categoría más probable: Instalador de sistemas de climatización").
+### 3.3 Core Services (Variable S)
+- **Dato que buscamos:** Lista de servicios con intención de búsqueda diferenciada.
+- **Cómo se obtiene:** Buscar `[categoría] [Main City]` en Google Maps → mirar los servicios listados en los 5 primeros perfiles → los que aparecen en 2+ perfiles son candidatos.
+- **Fuente:** `Doctrina + Local Pack`.
+- **Si no tienes acceso a Maps:** Tomar los servicios que el operador declaró en el preflight. Si declaró menos de 4, proponer expansiones lógicas del sector marcadas `⚠ inferido`. Si no declaró ninguno, inferir 4-6 del sector.
+- **Regla anti-duplicación:** Si dos servicios responden a la misma búsqueda del usuario (test: "¿alguien buscaría esto por separado?"), fusionar en uno. En caso de duda, NO crear el servicio — es mejor tener S=4 sólidos que S=6 con canibalización.
+- **S es variable:** Puede ser 3, 4, 5, 6 o más. No forzar a 5.
 
-### 3.3 Definir Core Services (Variable S)
-Los servicios principales que el negocio ofrece. **S es variable** (no siempre 5).
+### 3.4 Additional Categories (Variable A)
+- **Dato que buscamos:** Categorías GBP secundarias que necesitan página propia.
+- **Cómo se obtiene:** Buscar categorías secundarias en los 5 perfiles del Local Pack → filtrar las que el negocio realmente ofrece → descartar las que ya están cubiertas por un core service.
+- **Fuente:** `Doctrina + Local Pack`.
+- **Si no tienes acceso a Maps:** Si hay una categoría obvia del sector que no encaja en los core services, proponerla como A=1 marcada `⚠ inferido`. Si no hay ninguna obvia, A=0.
+- **Criterio:** Necesita página propia si (1) el negocio la ofrece Y (2) no es sinónimo ni subconjunto de un core service.
 
-**Regla:** S = número de servicios reales que el negocio ofrece y que tienen intención de búsqueda diferenciada. Si el operador da 3 servicios, S=3. Si no da ninguno, infiere los más lógicos del sector (típicamente 4-6) y marca `⚠ inferido`.
+### 3.5 Local Coverage Areas (LCAs)
+- **Dato que buscamos:** Barrios/zonas cercanas a la dirección física donde el negocio opera.
+- **Cómo se obtiene:** Tomar los barrios/distritos adyacentes a la dirección del NAP. Máximo 4-6 zonas.
+- **Fuente:** `Cliente preflight` (si el operador los da en notas) o `⚠ inferido` (derivados de la dirección).
+- **Regla:** Las LCAs NUNCA generan URLs. Solo se usan en contenido y schema `areaServed`.
 
-**Criterio anti-duplicación:** Si dos servicios atacan la misma intención de búsqueda (ej: "apertura de puertas" y "abrir puertas"), se fusionan en uno. Una intención = una URL.
+### 3.6 GeoArticle Topics (Variable G)
+- **Dato que buscamos:** 3 topics por core service con intención informacional/precomercial.
+- **Cómo se obtiene:** Buscar en Ahrefs/Semrush `[servicio] [ciudad]` → filtrar por intención informacional → elegir los 3 con más volumen por servicio.
+- **Fuente:** `Doctrina + Keyword Research`.
+- **Si no tienes acceso a KW tools:** Generar 3 topics por servicio usando este framework:
+  1. **Precio:** "¿Cuánto cuesta [servicio] en [ciudad]?"
+  2. **Proceso/decisión:** "¿Cuánto tarda [servicio]?" o "¿Cuándo es necesario [servicio]?"
+  3. **Comparativa:** "[Servicio] vs [alternativa más común]"
+- **Regla anti-solapamiento:** Antes de fijar los topics, verificar que ninguno se solapa con otro de otro servicio. Si "cuánto cuesta instalar aerotermia" y "precio aerotermia calefacción" atacan la misma búsqueda, eliminar uno.
+- **G = 3 por defecto.** Puede ser 2 si no hay 3 topics diferenciados para un servicio.
 
-### 3.4 Definir Additional Categories (Variable A)
-Categorías GBP secundarias que NO están cubiertas por los core services.
-
-**Criterio:** Una categoría adicional necesita página propia si cumple estas 2 condiciones:
-1. El negocio realmente la ofrece.
-2. No es sinónimo ni subconjunto de un core service.
-
-Si no puedes verificar con Local Pack, asume A=0 en la base. Marca `⚠ inferido`.
-
-### 3.5 Definir GeoArticle Topics (Variable G)
-G = 3 por defecto (3 topics por cada core service).
-
-**Framework para generar topics sin keyword research:**
-Para cada core service, genera 3 preguntas usando estos patrones:
-1. **Precio:** "¿Cuánto cuesta [servicio] en [ciudad]?"
-2. **Proceso/tiempo:** "¿Cuánto tarda [servicio]?" o "¿Qué hacer si [problema]?"
-3. **Comparativa/decisión:** "[Servicio] vs [alternativa]" o "¿Cuándo es necesario [servicio]?"
-
-Marca todos como `⚠ inferido` si no usaste keyword research.
-
-### 3.6 Aplicar Fórmula Maestra
+### 3.7 Aplicar Fórmula Maestra
 
 ```
 Total páginas SEO = 1 + S + 1 + S + A + (G × S)
@@ -103,7 +113,7 @@ G×S = GeoArticles
 + 1 /contacto/ (auxiliar, fuera del conteo SEO)
 ```
 
-### 3.7 Generar URL Matrix
+### 3.8 Generar URL Matrix
 
 Aplica estos patrones. **Trailing slash: siempre.** **Dominio canónico: https://www.[dominio].com/**
 
@@ -121,7 +131,7 @@ Aplica estos patrones. **Trailing slash: siempre.** **Dominio canónico: https:/
 
 **Prohibido en slugs:** `near-me`, `best`, `cheap`, `top-rated`, `urgente` (salvo que sea el nombre real del servicio).
 
-### 3.8 GATE DOCTRINAL — Entrega al Operador
+### 3.9 GATE DOCTRINAL — Entrega al Operador
 
 Antes de pasar a Fase 2, muestra al operador este bloque exacto:
 

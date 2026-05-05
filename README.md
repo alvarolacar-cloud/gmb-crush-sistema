@@ -42,6 +42,10 @@ La IA hará esto en orden:
 
 La IA te entrega una lista de `⚠ Pendientes`. Tú le das los datos reales (teléfono, email, fotos, etc.) y la IA actualiza la web.
 
+### Paso 5 (opcional) — Auditoría doctrinal
+
+Si quieres verificar que la web sigue la doctrina GMB Crush, pásale `referencias/test-doctrinal.md` a la IA junto con la web producida. Te devolverá un informe con PASS/FAIL por bloque.
+
 ---
 
 ## Archivos del repo
@@ -52,6 +56,7 @@ La IA te entrega una lista de `⚠ Pendientes`. Tú le das los datos reales (tel
 | `PREFLIGHT.md` | Template de datos del cliente | Lo rellenas por cada cliente nuevo |
 | `referencias/page-type-specs.md` | Specs de contenido por tipo de página | Solo si la IA necesita más detalle |
 | `referencias/ejemplo-cerrajeros.md` | Ejemplo de arquitectura completa | Solo si la IA necesita ver un caso real |
+| `referencias/test-doctrinal.md` | Test de verificación doctrinal | Para auditar la web DESPUÉS de producirla |
 
 ---
 

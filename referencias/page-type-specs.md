@@ -7,11 +7,11 @@ Cada tipo de página en el ecosistema GMB Crush tiene una función única. Cuand
 - **H1:** Nombre del negocio o Categoría Principal + Ciudad (ej: Fontaneros Express Barcelona).
 - **Hero Section:** Propuesta de valor clara, Trust Signals (años de experiencia, 24/7), y el CTA principal.
 - **Secciones clave:**
-  - Resumen de los 5 core services (con enlaces a sus Location-Based Services).
+  - Resumen de los core services (con enlaces a sus Service Overviews).
   - Bloque de confianza (por qué elegirnos, garantías).
   - NAP completo y visible (Name, Address, Phone).
   - Mapa embebido (opcional, centrado en la ciudad).
-- **Enlaces salientes obligatorios:** A los Service Overviews, al GeoHub, y a Contacto.
+- **Enlaces salientes obligatorios:** A todos los Service Overviews, al GeoHub, y a Contacto.
 
 ## 2. Service Overview (Topical Authority Pillar)
 **Función:** Explicar el servicio a nivel general, sin enfoque local. Construir autoridad temática.
