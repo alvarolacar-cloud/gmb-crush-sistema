@@ -382,12 +382,12 @@ Cuando el operador entregue un dato pendiente:
 
 **Antes de ejecutar, pregunta al operador:**
 
-> ¿Tienes acceso a Google Maps, Ahrefs/Semrush, o herramientas de búsqueda? (Sí/No)
+> ¿Quieres que busque datos reales (Local Pack, keyword research) o que infiera y avance rápido?
 
 Con la respuesta, decides:
-- **Sí:** Ejecutas las fuentes canónicas (Local Pack, Keyword Research). Los outputs salen como `confirmed` o `validated`.
-- **No:** Infieres con lógica y marcas `⚠ inferido`. La tabla de pendientes indicará qué validar después.
+- **"Busca datos reales":** Ejecutas las fuentes canónicas (Google Maps top 5, Ahrefs/Semrush). Los outputs salen como `confirmed` o `validated`. Más lento, más preciso.
+- **"Infiere y avanza":** Infieres con lógica y marcas `⚠ inferido`. La tabla de pendientes indicará qué validar después. Más rápido, requiere validación posterior.
 
-**Si tienes acceso a una tool, DEBES usarla.** Solo marcas `⚠ inferido` si realmente no puedes acceder. Inferir por rapidez no es válido.
+**Si el operador dice "busca" y tienes acceso a la tool, DEBES usarla.** No inferir por rapidez cuando el operador pidió datos reales.
 
 Después, pide el Preflight (si no te lo han dado) y ejecuta las 7 fases en orden sin detenerte. Si necesitas más detalle sobre el contenido de cada page type, consulta `referencias/page-type-specs.md`. Si necesitas ver un ejemplo completo de arquitectura, consulta `referencias/ejemplo-cerrajeros.md`.
