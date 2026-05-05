@@ -178,12 +178,14 @@ Antes de pasar a Fase 2, muestra al operador este bloque exacto:
 ## 4. Fase 2 — Contenido
 
 ### 4.1 Reglas generales de contenido
-- Cada página tiene contenido **único**. No copies bloques entre páginas.
-- Los GeoArticles **responden preguntas** (informacional). No venden.
-- Las LBS **venden** (comercial). No son artículos.
-- Las Service Overviews **explican** (temático). No son locales.
+- Cada página tiene contenido **único**. No copies bloques entre páginas. **Fuente:** `Doctrina GMB Crush`.
+- Los GeoArticles **responden preguntas** (informacional). No venden. **Fuente:** `Doctrina GMB Crush`.
+- Las LBS **venden** (comercial). No son artículos. **Fuente:** `Doctrina GMB Crush`.
+- Las Service Overviews **explican** (temático). No son locales. **Fuente:** `Doctrina GMB Crush`.
 
 ### 4.2 Specs por Page Type
+
+**Fuente de las specs:** `Doctrina GMB Crush` (estructura y función por page type).
 
 | Page Type | H1 | Word count | CTA | Secciones obligatorias |
 |-----------|----|-----------:|-----|------------------------|
@@ -196,6 +198,8 @@ Antes de pasar a Fase 2, muestra al operador este bloque exacto:
 | Contacto | "Contacto" | 300-500 | Formulario + teléfono | NAP + Horarios + Formulario + Mapa |
 
 ### 4.3 Elección de CTA
+**Fuente:** `Doctrina + Local Pack` (CTA dominante en top 5 competidores). Si no tienes acceso a Local Pack, usa esta tabla como fallback (`⚠ inferido`):
+
 | Tipo de servicio | CTA principal |
 |------------------|---------------|
 | Urgente (cerrajero, fontanero emergencia) | "Llamar ahora" |
@@ -211,6 +215,8 @@ Menciona las LCAs (barrios/zonas) en:
 - **Nunca** como si fueran oficinas físicas.
 
 ### 4.5 Schema JSON-LD
+
+**Fuente:** `Doctrina GMB Crush` (asignación por page type).
 
 | Page Type | Schema | Notas |
 |-----------|--------|-------|
@@ -230,6 +236,8 @@ Menciona las LCAs (barrios/zonas) en:
 
 ### 4.6 Internal Linking
 
+**Fuente:** `Doctrina GMB Crush` (mapa de enlaces por page type).
+
 | Página | Enlaza a (en el cuerpo) | Enlaza a (en footer/nav) |
 |--------|-------------------------|--------------------------|
 | Homepage | Todos los SO + GeoHub | Todos los SO + GeoHub + Contacto |
@@ -243,6 +251,8 @@ Menciona las LCAs (barrios/zonas) en:
 **Anchors:** Variados y contextuales. No repetir el mismo texto. Ej: "instalación de aerotermia en Barcelona", "nuestro servicio de aerotermia", "ver más sobre aerotermia".
 
 ### 4.7 Breadcrumbs
+**Fuente:** `Doctrina GMB Crush`.
+
 Cada página lleva breadcrumb según su jerarquía:
 - Homepage → no tiene breadcrumb (es raíz).
 - SO: `Inicio > [Servicio]`
@@ -259,7 +269,7 @@ El breadcrumb se refleja en el `BreadcrumbList` del Schema JSON-LD.
 ## 5. Fase 3 — Construcción (Astro)
 
 ### 5.1 Stack canónico
-Astro 5 + Tailwind v3 + pnpm + TypeScript.
+Astro 5 + Tailwind v3 + pnpm + TypeScript. **Fuente:** `Doctrina GMB Crush` (Arquitectura técnica fija).
 
 ### 5.2 Configuración obligatoria (`astro.config.mjs`)
 ```javascript
@@ -287,6 +297,8 @@ export default defineConfig({
 ---
 
 ## 6. Fase 4 — Deploy
+
+**Fuente:** `Doctrina GMB Crush` (Arquitectura técnica: Cloudflare Pages vía GitHub).
 
 **Con tokens:** Push a GitHub → Cloudflare Pages (build: `pnpm build`, output: `dist/`). Verificar web LIVE.
 
