@@ -64,7 +64,7 @@ Cada output de esta fase tiene una fuente y un método concreto. Síguelos en or
 - **Cómo se obtiene:** Buscar `[servicio principal] [Main City]` en Google Maps → mirar los 5 primeros perfiles del Local Pack → la categoría primaria que aparece en 3+ de 5 es la elegida.
 - **Fuente:** `Doctrina + Local Pack`.
 - **Si no tienes acceso a Maps:** Inferir la categoría más específica que cubra el servicio principal. Elegir siempre la más específica disponible ("Instalador de aerotermia" > "Empresa de climatización" > "Reformas"). Marcar `⚠ inferido` con razonamiento.
-- **Slug:** Simplificar al término de búsqueda más corto y común del sector (ej: "aerotermia" en vez de "instalador-sistemas-climatizacion"). El slug de la categoría NO tiene que ser literal de la categoría GBP.
+- **Slug:** La plantilla genera el slug automáticamente aplicando slugify al valor del output 1.5. No lo definas manualmente — la plantilla lo calcula.
 
 ### 3.3 Core Services (Variable S)
 - **Dato que buscamos:** Lista de servicios con intención de búsqueda diferenciada.
@@ -415,6 +415,7 @@ Los outputs mínimos que `outputs.json` debe contener para que la plantilla func
 
 | Output ID | Dato | De dónde sale |
 |-----------|------|---------------|
+| Pre.2 | Short Description (qué hace) | Preflight |
 | 1.1 | Business Name | Preflight |
 | 1.2 | Canonical Domain | Preflight o derivado |
 | 1.4 | Full NAP (8 campos) | Preflight |
@@ -432,15 +433,16 @@ Los outputs mínimos que `outputs.json` debe contener para que la plantilla func
 ### 8.2 Copiar plantilla y configurar
 
 1. Copiar `plantilla-astro/` a la carpeta del cliente.
-2. Colocar `outputs.json` en la raíz del proyecto (o donde `CLUSTER_PATH` apunte).
-3. Actualizar `astro.config.mjs`: `site` = dominio del cliente.
-4. Actualizar `package.json`: `name` = slug del negocio.
+2. Colocar `outputs.json` en la raíz del proyecto.
+3. Asegurar que `outputs.json` tiene `"meta": {"catalog_version": "0.1.0"}` (debe coincidir con la versión del código).
+4. Actualizar `astro.config.mjs`: `site` = dominio del cliente.
+5. Actualizar `package.json`: `name` = slug del negocio.
 
 ### 8.3 Build
 
 ```bash
 pnpm install
-pnpm build
+CLUSTER_PATH=./outputs.json pnpm build
 ```
 
 Si el build falla, diagnosticar y corregir. Los errores más comunes son:
