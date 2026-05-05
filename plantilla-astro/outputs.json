@@ -1,0 +1,181 @@
+{
+  "slug": "aerotermia-madrid",
+  "fecha_arranque": "2026-05-06",
+  "meta": {
+    "updated_at": "2026-05-06T18:30:00Z",
+    "catalog_version": "0.1.0"
+  },
+  "outputs": {
+    "Pre.2": {
+      "id": "Pre.2",
+      "name": "Short Description",
+      "value": "Instalación y mantenimiento de aerotermia en Madrid",
+      "status": "confirmed",
+      "fuente": "Cliente preflight",
+      "source": "Preflight campo qué hace",
+      "bloque": 0
+    },
+    "1.1": {
+      "id": "1.1",
+      "name": "Business Name",
+      "value": "Aerotermia Madrid SL",
+      "status": "confirmed",
+      "fuente": "Cliente preflight",
+      "source": "Preflight 2026-05-06",
+      "bloque": 1
+    },
+    "1.2": {
+      "id": "1.2",
+      "name": "Website URL / Canonical Domain",
+      "value": "https://www.aerotermia-madrid-sl.com/",
+      "status": "⚠ placeholder",
+      "fuente": "Cliente preflight",
+      "source": "Derivado de slugify(nombre)",
+      "bloque": 1,
+      "notes": "Dominio no confirmado por el cliente"
+    },
+    "1.4": {
+      "id": "1.4",
+      "name": "Full NAP",
+      "value": {
+        "name": "Aerotermia Madrid SL",
+        "street": "Calle Gran Vía 28",
+        "city": "Madrid",
+        "state": "Madrid",
+        "zip": "28013",
+        "country": "ES",
+        "phone": "[TELÉFONO]",
+        "email": "[EMAIL]"
+      },
+      "status": "⚠ placeholder",
+      "fuente": "Cliente preflight",
+      "source": "Preflight parcial — phone y email pendientes",
+      "bloque": 1
+    },
+    "1.5": {
+      "id": "1.5",
+      "name": "Planned Primary GBP Category",
+      "value": "Instalador de aerotermia",
+      "status": "⚠ inferido",
+      "fuente": "Doctrina + Local Pack",
+      "source": "Inferido sin acceso a Maps — categoría más específica del sector",
+      "bloque": 1
+    },
+    "1.6": {
+      "id": "1.6",
+      "name": "Planned Additional GBP Categories",
+      "value": [
+        {
+          "category": "Reparación de bombas de calor",
+          "needs_page": true,
+          "page_slug": "reparacion-bombas-calor"
+        }
+      ],
+      "status": "⚠ inferido",
+      "fuente": "Doctrina + Local Pack",
+      "source": "Inferido — servicio habitual del sector no cubierto por core",
+      "bloque": 1
+    },
+    "1.7": {
+      "id": "1.7",
+      "name": "Main City",
+      "value": "Madrid",
+      "status": "confirmed",
+      "fuente": "Cliente preflight",
+      "source": "Extraído del NAP campo City",
+      "hereda_de": ["1.4"],
+      "bloque": 1
+    },
+    "1.9": {
+      "id": "1.9",
+      "name": "Core Services",
+      "value": [
+        {"slug": "instalacion-aerotermia", "name": "Instalación de aerotermia"},
+        {"slug": "mantenimiento-aerotermia", "name": "Mantenimiento de aerotermia"},
+        {"slug": "aerotermia-suelo-radiante", "name": "Aerotermia para suelo radiante"},
+        {"slug": "aerotermia-acs", "name": "Aerotermia para agua caliente (ACS)"}
+      ],
+      "status": "⚠ inferido",
+      "fuente": "Doctrina + Local Pack",
+      "source": "2 del preflight + 2 inferidos del sector",
+      "bloque": 1
+    },
+    "1.10": {
+      "id": "1.10",
+      "name": "Local Coverage Areas",
+      "value": {
+        "direct": ["Chamberí"],
+        "candidate": ["Malasaña", "Chueca", "Salamanca"]
+      },
+      "status": "⚠ inferido",
+      "fuente": "Doctrina + Local Pack",
+      "source": "Barrios adyacentes a Gran Vía 28",
+      "bloque": 1
+    },
+    "1.13": {
+      "id": "1.13",
+      "name": "Preferred CTA",
+      "value": "Solicitar presupuesto",
+      "status": "⚠ inferido",
+      "fuente": "Doctrina + Local Pack",
+      "source": "Tipo proyecto/B2B → Solicitar presupuesto",
+      "bloque": 1
+    },
+    "1.14": {
+      "id": "1.14",
+      "name": "Trust Signals",
+      "value": ["Presupuesto sin compromiso", "Técnicos certificados", "Garantía 2 años", "Subvenciones gestionadas"],
+      "status": "⚠ inferido",
+      "fuente": "Doctrina + Local Pack",
+      "source": "Trust signals comunes del sector aerotermia",
+      "bloque": 1
+    },
+    "3.2": {
+      "id": "3.2",
+      "name": "GeoHub URL Style",
+      "value": "/madrid/",
+      "status": "confirmed",
+      "fuente": "Doctrina GMB Crush",
+      "source": "Option A: /[main-city]/",
+      "bloque": 1
+    },
+    "3.4": {
+      "id": "3.4",
+      "name": "GeoArticle Topics",
+      "value": [
+        {"service_slug": "instalacion-aerotermia", "topic_slug": "cuanto-cuesta-instalar-aerotermia", "title": "¿Cuánto cuesta instalar aerotermia en Madrid?"},
+        {"service_slug": "instalacion-aerotermia", "topic_slug": "aerotermia-vs-caldera-gas", "title": "Aerotermia vs caldera de gas: ¿qué compensa en Madrid?"},
+        {"service_slug": "instalacion-aerotermia", "topic_slug": "subvenciones-aerotermia-madrid", "title": "Subvenciones para aerotermia en Madrid (2026)"},
+        {"service_slug": "mantenimiento-aerotermia", "topic_slug": "mantenimiento-aerotermia-cada-cuanto", "title": "¿Cada cuánto se revisa la aerotermia?"},
+        {"service_slug": "mantenimiento-aerotermia", "topic_slug": "averias-comunes-aerotermia", "title": "Averías más comunes en sistemas de aerotermia"},
+        {"service_slug": "mantenimiento-aerotermia", "topic_slug": "revision-aerotermia-obligatoria", "title": "¿Es obligatoria la revisión de aerotermia en Madrid?"},
+        {"service_slug": "aerotermia-suelo-radiante", "topic_slug": "aerotermia-suelo-radiante-precio", "title": "Precio de aerotermia con suelo radiante en Madrid"},
+        {"service_slug": "aerotermia-suelo-radiante", "topic_slug": "suelo-radiante-con-aerotermia-ventajas", "title": "Ventajas del suelo radiante con aerotermia"},
+        {"service_slug": "aerotermia-suelo-radiante", "topic_slug": "aerotermia-suelo-radiante-en-reforma", "title": "¿Se puede instalar aerotermia con suelo radiante en una reforma?"},
+        {"service_slug": "aerotermia-acs", "topic_slug": "aerotermia-agua-caliente-consumo", "title": "Consumo de aerotermia para agua caliente: ¿cuánto gasta?"},
+        {"service_slug": "aerotermia-acs", "topic_slug": "aerotermia-acs-vs-termo-electrico", "title": "Aerotermia ACS vs termo eléctrico: comparativa"},
+        {"service_slug": "aerotermia-acs", "topic_slug": "aerotermia-acs-para-cuantas-personas", "title": "¿Para cuántas personas da agua caliente la aerotermia?"}
+      ],
+      "status": "⚠ inferido",
+      "fuente": "Doctrina + Keyword Research",
+      "source": "Framework precio/proceso/comparativa sin KW research",
+      "bloque": 1
+    },
+    "16.1": {
+      "id": "16.1",
+      "name": "Design Tokens",
+      "value": {
+        "color_primary": "#0369a1",
+        "color_primary_50": "#f0f9ff",
+        "color_primary_500": "#0ea5e9",
+        "color_primary_900": "#0c4a6e",
+        "color_accent": "#16a34a",
+        "font_family": "Inter, sans-serif"
+      },
+      "status": "⚠ inferido",
+      "fuente": "Cliente preflight",
+      "source": "Sin web de referencia — estilo genérico sector técnico (azul + verde acento)",
+      "bloque": 5
+    }
+  }
+}
