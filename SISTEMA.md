@@ -380,4 +380,14 @@ Cuando el operador entregue un dato pendiente:
 
 ## 10. Instrucción de Arranque
 
-Cuando el operador te entregue el Preflight, ejecuta las 7 fases en orden sin detenerte. Si necesitas más detalle sobre el contenido de cada page type, consulta `referencias/page-type-specs.md`. Si necesitas ver un ejemplo completo de arquitectura, consulta `referencias/ejemplo-cerrajeros.md`.
+**Antes de ejecutar, pregunta al operador:**
+
+> ¿Tienes acceso a Google Maps, Ahrefs/Semrush, o herramientas de búsqueda? (Sí/No)
+
+Con la respuesta, decides:
+- **Sí:** Ejecutas las fuentes canónicas (Local Pack, Keyword Research). Los outputs salen como `confirmed` o `validated`.
+- **No:** Infieres con lógica y marcas `⚠ inferido`. La tabla de pendientes indicará qué validar después.
+
+**Si tienes acceso a una tool, DEBES usarla.** Solo marcas `⚠ inferido` si realmente no puedes acceder. Inferir por rapidez no es válido.
+
+Después, pide el Preflight (si no te lo han dado) y ejecuta las 7 fases en orden sin detenerte. Si necesitas más detalle sobre el contenido de cada page type, consulta `referencias/page-type-specs.md`. Si necesitas ver un ejemplo completo de arquitectura, consulta `referencias/ejemplo-cerrajeros.md`.
