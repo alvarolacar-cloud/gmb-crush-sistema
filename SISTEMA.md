@@ -266,7 +266,47 @@ El breadcrumb se refleja en el `BreadcrumbList` del Schema JSON-LD.
 
 ---
 
-## 5. Fase 3 — Construcción (Astro)
+## 5. Fase 3 — Producir los 6 Docs Canónicos
+
+Antes de construir, consolida todo lo producido en Fases 1 y 2 en estos 6 documentos. Son la fuente de verdad del cluster y el input del test doctrinal.
+
+| # | Documento | Qué contiene |
+|---|-----------|---------------|
+| 1 | **URL Matrix** | Tabla con todas las URLs: ID, URL, Page Type, Servicio, Ciudad, Parent Page, Schema asignado, Links salientes, Status, Fuente del output. |
+| 2 | **Page Type Map** | Clasificación de cada URL por función: HP / SO / LBS / AC / GH / GA / AUX. |
+| 3 | **Internal Linking Plan** | Mapa de enlaces obligatorios entre páginas (quién enlaza a quién, en cuerpo y en nav). |
+| 4 | **Content Pack** | Brief por URL: H1, Meta Title, Meta Description, Hero, H2s, FAQs, CTA, LCAs mencionadas. |
+| 5 | **Schema Map** | JSON-LD asignado por Page Type, con campos específicos (address, areaServed, provider, author). |
+| 6 | **Tabla de Pendientes (⚠)** | Todos los outputs con status `⚠ inferido` o `⚠ placeholder`, con fuente y razonamiento. |
+
+Estos 6 docs se producen como un único entregable consolidado (puede ser un solo archivo .md con 6 secciones o 6 archivos separados).
+
+---
+
+## 6. Fase 4 — Test Doctrinal (Gate Pre-Build)
+
+Ejecuta el test doctrinal (`referencias/test-doctrinal.md`) contra los 6 docs producidos en Fase 3. Para cada bloque del test, responde con:
+
+- **PASS / FAIL**
+- **Evidencia:** dato concreto que demuestra el resultado (ej: "URL Matrix tiene 24 filas. Fórmula = 23+1. Cuadra.")
+- **Problema doctrinal** (si FAIL): qué regla se viola.
+- **Corrección** (si FAIL): qué cambiar para que pase.
+
+**Si todos los bloques dan PASS:** avanza a Fase 5 (Build).
+**Si algún bloque da FAIL:** corrige los 6 docs, re-ejecuta el test, y solo avanza cuando todo sea PASS.
+
+**Bloqueos automáticos** (FAIL instantáneo sin importar el score):
+- LCAs generan URLs sin aprobación.
+- Service Overview y LBS se mezclan.
+- GeoArticles se comportan como landings.
+- No existe GeoHub.
+- No hay internal linking padre/hijo.
+- Schema genérico para todas las páginas.
+- Se inventa ubicación física.
+
+---
+
+## 7. Fase 5 — Construcción (Astro)
 
 ### 5.1 Stack canónico
 Astro 5 + Tailwind v3 + pnpm + TypeScript. **Fuente:** `Doctrina GMB Crush` (Arquitectura técnica fija).
@@ -296,7 +336,7 @@ export default defineConfig({
 
 ---
 
-## 6. Fase 4 — Deploy
+## 8. Fase 6 — Deploy
 
 **Fuente:** `Doctrina GMB Crush` (Arquitectura técnica: Cloudflare Pages vía GitHub).
 
@@ -308,7 +348,7 @@ export default defineConfig({
 
 ---
 
-## 7. Fase 5 — Consolidación y Pendientes
+## 9. Fase 7 — Consolidación y Pendientes
 
 Entrega al operador:
 
@@ -338,6 +378,6 @@ Cuando el operador entregue un dato pendiente:
 
 ---
 
-## 8. Instrucción de Arranque
+## 10. Instrucción de Arranque
 
-Cuando el operador te entregue el Preflight, ejecuta las 5 fases en orden sin detenerte. Si necesitas más detalle sobre el contenido de cada page type, consulta `referencias/page-type-specs.md`. Si necesitas ver un ejemplo completo de arquitectura, consulta `referencias/ejemplo-cerrajeros.md`.
+Cuando el operador te entregue el Preflight, ejecuta las 7 fases en orden sin detenerte. Si necesitas más detalle sobre el contenido de cada page type, consulta `referencias/page-type-specs.md`. Si necesitas ver un ejemplo completo de arquitectura, consulta `referencias/ejemplo-cerrajeros.md`.
