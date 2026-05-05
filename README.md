@@ -29,22 +29,21 @@ Preflight:
 - Ciudades LP: Barcelona
 ```
 
-### Paso 3 — La IA ejecuta
+### Paso 3 — La IA ejecuta 7 fases
 
-La IA hará esto en orden:
-1. Te muestra la arquitectura (URLs, servicios, fórmula). Si no dices nada, avanza.
-2. Redacta el contenido de todas las páginas.
-3. Construye el proyecto Astro.
-4. Despliega a Cloudflare (si le diste tokens) o te entrega el proyecto listo.
-5. Te da la lista de pendientes (datos que faltan o se infirieron).
+| Fase | Qué hace |
+|------|----------|
+| 1. Arquitectura | Deriva servicios, categoría, URLs. Te muestra el plan. Si no corriges, avanza. |
+| 2. Contenido | Redacta H1, meta, hero, FAQs, CTA, schema para cada página. |
+| 3. 6 Docs Canónicos | Consolida en URL Matrix, Page Type Map, Internal Linking Plan, Content Pack, Schema Map, Tabla de Pendientes. |
+| 4. Test Doctrinal | Ejecuta checks contra los 6 docs. Si PASS → build. Si FAIL → corrige y re-testea. |
+| 5. Build | Crea proyecto Astro, inyecta contenido, genera `dist/`. |
+| 6. Deploy | Push a GitHub + Cloudflare Pages. Web LIVE. |
+| 7. Consolidación | Entrega URL + tabla de pendientes + bloqueo GBP. |
 
 ### Paso 4 — Tú cierras pendientes
 
 La IA te entrega una lista de `⚠ Pendientes`. Tú le das los datos reales (teléfono, email, fotos, etc.) y la IA actualiza la web.
-
-### Paso 5 (opcional) — Auditoría doctrinal
-
-Si quieres verificar que la web sigue la doctrina GMB Crush, pásale `referencias/test-doctrinal.md` a la IA junto con la web producida. Te devolverá un informe con PASS/FAIL por bloque.
 
 ---
 
@@ -56,7 +55,7 @@ Si quieres verificar que la web sigue la doctrina GMB Crush, pásale `referencia
 | `PREFLIGHT.md` | Template de datos del cliente | Lo rellenas por cada cliente nuevo |
 | `referencias/page-type-specs.md` | Specs de contenido por tipo de página | Solo si la IA necesita más detalle |
 | `referencias/ejemplo-cerrajeros.md` | Ejemplo de arquitectura completa | Solo si la IA necesita ver un caso real |
-| `referencias/test-doctrinal.md` | Test de verificación doctrinal | Para auditar la web DESPUÉS de producirla |
+| `referencias/test-doctrinal.md` | Test de verificación doctrinal | Lo ejecuta la IA en Fase 4 (gate pre-build) |
 
 ---
 
@@ -65,4 +64,5 @@ Si quieres verificar que la web sigue la doctrina GMB Crush, pásale `referencia
 - **Nunca se para.** Si falta un dato, infiere o marca placeholder y sigue.
 - **Web-first.** La web sale con lo que hay. El GBP se crea después.
 - **No inventa datos del negocio.** Teléfono, email, dirección, reseñas = placeholder visible, nunca falso.
-- **Un archivo = un sistema.** No necesitas leer 20 documentos para ejecutar.
+- **Trazabilidad.** Cada decisión declara su fuente. Lo que es inferido se marca como tal.
+- **Test antes de build.** Los 6 docs canónicos se verifican contra la doctrina antes de construir.

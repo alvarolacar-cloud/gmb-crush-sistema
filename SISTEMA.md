@@ -45,7 +45,7 @@ Pide estos datos. Con solo **"qué hace" + "ciudad"** ya arrancas.
 | Tokens (GitHub + Cloudflare) | Construir hasta `dist/`. Marcar deploy pendiente. |
 | Dominio | Derivar: `https://www.[slugify(nombre)].com/`. Marcar `⚠ placeholder`. |
 
-**Si el GBP ya está Verified:** el flujo no cambia (web-first sigue aplicando), pero al final en la Fase 5 indicas que el GBP ya existe y que los pendientes deben sincronizarse con el perfil existente.
+**Si el GBP ya está Verified:** el flujo no cambia (web-first sigue aplicando), pero al final en la Fase 7 (Consolidación) indicas que el GBP ya existe y que los pendientes deben sincronizarse con el perfil existente.
 
 ---
 
