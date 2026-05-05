@@ -1,5 +1,7 @@
 # GMB Crush — Sistema de Ejecución
 
+> **Si eres una IA y te han dado este repo:** lee `SISTEMA.md` y ejecútalo. Pide el preflight al operador si no te lo ha dado.
+
 Sistema para que una IA construya webs locales SEO + GBP siguiendo la metodología GMB Crush. Le das un archivo y un preflight, y produce una web completa en Cloudflare Pages.
 
 ---
