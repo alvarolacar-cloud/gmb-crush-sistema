@@ -1,0 +1,77 @@
+---
+/**
+ * Homepage (HP) — `/`
+ * Doctrina: Root Entity Anchor. Schema Organization + WebSite (NO LocalBusiness, NO FAQPage en schema).
+ */
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Hero from "@components/Hero.astro";
+import ServicesGrid from "@components/ServicesGrid.astro";
+import TrustBlock from "@components/TrustBlock.astro";
+import Faqs from "@components/Faqs.astro";
+import {
+  getBusinessName,
+  getNAP,
+  getMainCity,
+  getMainCitySlug,
+  getLCAs,
+  getTrustSignals,
+  getPreferredCTA,
+  getValue,
+  getPrimaryCategory,
+  phoneHref,
+  getFaqsHomepage,
+} from "@lib/cluster";
+import { buildHomepageSchemas } from "@lib/schemas";
+
+const businessName = getBusinessName();
+const nap = getNAP();
+const mainCity = getMainCity();
+const mainCitySlug = getMainCitySlug();
+const lcas = getLCAs();
+const trustSignals = getTrustSignals();
+const cta = getPreferredCTA();
+const shortDescription = getValue<string>("Pre.2");
+const primaryCategory = getPrimaryCategory();
+const faqs = getFaqsHomepage();
+
+const title = `${businessName} · ${shortDescription} en ${mainCity}`;
+const description = `${shortDescription}. Cobertura todo ${mainCity}: ${lcas.direct.join(", ")}, ${lcas.candidate.slice(0, 4).join(", ")}. ${trustSignals[0] ?? ""}.`;
+
+const schema = buildHomepageSchemas();
+---
+
+<BaseLayout title={title} description={description} schema={schema}>
+  <Hero
+    h1={`${shortDescription} en ${mainCity}`}
+    subtitle={`Especialistas en ${primaryCategory.toLowerCase()} con cobertura en todo ${mainCity}: ${lcas.direct.join(", ")}, ${lcas.candidate.slice(0, 4).join(", ")} y más.`}
+    trustItem={trustSignals[0]}
+    ctaPrimary={cta}
+    ctaPrimaryHref="/contacto/"
+    ctaSecondary={`Llamar ${nap.phone}`}
+    ctaSecondaryHref={phoneHref(nap.phone)}
+  />
+
+  <ServicesGrid />
+
+  <TrustBlock />
+
+  <Faqs faqs={faqs} />
+
+  <section class="section bg-primary-50">
+    <div class="container-narrow text-center">
+      <h2 class="mb-4">¿Empezamos?</h2>
+      <p class="text-lg text-gray-700 mb-8">
+        Presupuesto sin compromiso en 24h. Trabajamos en todo {mainCity}.
+      </p>
+      <a href="/contacto/" class="btn-primary">{cta}</a>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-narrow text-center">
+      <p class="text-sm text-gray-600">
+        Ver el <a href={`/${mainCitySlug}/`}>índice de servicios en {mainCity}</a>.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

@@ -90,6 +90,19 @@ La decisión fue: los Bloques 3 y 4 eran **meta-documentación sobre cómo ejecu
 
 ---
 
+## Plantilla Astro + outputs.json
+
+La carpeta `plantilla-astro/` viene del repo [`5demayoconsolidado`](https://github.com/alvarolacar-cloud/gmb-crush-ejecucion/tree/main/5demayoconsolidado/PLANTILLA-CLUSTER) (Sistema 3 validado 94/100 PASS). Es un proyecto Astro 5 + Tailwind v3 real que consume un archivo `outputs.json` y genera todas las páginas del cluster automáticamente.
+
+La IA no crea un proyecto Astro desde cero cada vez. En su lugar:
+1. Produce un `outputs.json` con los datos del cluster (IDs, valores, status, fuentes).
+2. La plantilla importa ese JSON y renderiza las páginas.
+3. `pnpm build` genera el `dist/` listo para deploy.
+
+La estructura del `outputs.json` está definida en `plantilla-astro/src/lib/types.ts`. La plantilla valida que el JSON sea correcto antes de construir (`validateCluster()` en `cluster.ts`).
+
+---
+
 ## Cómo verificar que no se perdió nada crítico
 
 El archivo `01-todos-los-outputs.md` (en el repo original) contiene los 242 outputs con su fuente y método. Se puede cruzar contra el SISTEMA.md para verificar cobertura. El cruce del Bloque 1 (42 outputs) se hizo y resultó en 40/42 cubiertos (se excluyó deliberadamente 1.8 Physical Location City; 3.1 nombre del spreadsheet es cosmético).

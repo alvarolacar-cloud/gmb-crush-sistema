@@ -1,0 +1,100 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import {
+  getBusinessName,
+  getDomain,
+  getNAP,
+  getMainCity,
+  getServices,
+  buildPostalAddress,
+  phoneHref,
+} from "@lib/cluster";
+
+const businessName = getBusinessName();
+const domain = getDomain();
+const nap = getNAP();
+const mainCity = getMainCity();
+const services = getServices();
+
+const title = `Contacto · ${businessName}`;
+const description = `Contacta con ${businessName} en ${mainCity}. Presupuesto sin compromiso en 24h.`;
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    name: title,
+    url: `${domain}contacto/`,
+    mainEntity: {
+      "@type": "Organization",
+      name: businessName,
+      telephone: nap.phone,
+      email: nap.email,
+      address: buildPostalAddress(nap),
+    },
+  },
+];
+---
+
+<BaseLayout title={title} description={description} schema={schema}>
+  <section class="section">
+    <div class="container-narrow">
+      <h1 class="mb-4">Contacto</h1>
+      <p class="text-lg text-gray-700 mb-10">
+        ¿Quieres presupuesto? Llámanos, escríbenos o visítanos en {nap.city}. Respuesta en 24h.
+      </p>
+
+      <div class="grid gap-8 md:grid-cols-2">
+        <div class="space-y-6">
+          <div>
+            <h2 class="text-lg font-bold mb-2">Teléfono</h2>
+            <a href={`${phoneHref(nap.phone)}`} class="text-2xl font-semibold text-primary-900 no-underline">
+              {nap.phone}
+            </a>
+          </div>
+          <div>
+            <h2 class="text-lg font-bold mb-2">Email</h2>
+            <a href={`mailto:${nap.email}`} class="text-lg text-primary-900 no-underline">
+              {nap.email}
+            </a>
+          </div>
+          <div>
+            <h2 class="text-lg font-bold mb-2">Dirección</h2>
+            <address class="not-italic text-gray-700 leading-7">
+              {nap.street}<br />
+              {nap.zip} {nap.city}<br />
+              {nap.country}
+            </address>
+          </div>
+        </div>
+
+        <div class="bg-white border border-gray-200 rounded-xl p-6">
+          <h2 class="text-lg font-bold mb-4">Solicitar presupuesto</h2>
+          <form action={`mailto:${nap.email}`} method="post" enctype="text/plain" class="space-y-4">
+            <div>
+              <label for="nombre" class="block text-sm font-medium mb-1">Nombre</label>
+              <input id="nombre" name="nombre" type="text" required class="w-full border border-gray-300 rounded-lg px-3 py-2" />
+            </div>
+            <div>
+              <label for="phone" class="block text-sm font-medium mb-1">Teléfono</label>
+              <input id="phone" name="phone" type="tel" required class="w-full border border-gray-300 rounded-lg px-3 py-2" />
+            </div>
+            <div>
+              <label for="servicio" class="block text-sm font-medium mb-1">Servicio</label>
+              <select id="servicio" name="servicio" class="w-full border border-gray-300 rounded-lg px-3 py-2">
+                {services.map((s) => (
+                  <option value={s.slug}>{s.name}</option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label for="mensaje" class="block text-sm font-medium mb-1">Mensaje</label>
+              <textarea id="mensaje" name="mensaje" rows="4" class="w-full border border-gray-300 rounded-lg px-3 py-2"></textarea>
+            </div>
+            <button type="submit" class="btn-primary w-full">Enviar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

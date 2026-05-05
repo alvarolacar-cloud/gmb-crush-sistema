@@ -1,0 +1,101 @@
+---
+/**
+ * Service Overview (SO) — `/[category]/[service]/`
+ * Doctrina: explica el servicio SIN ciudad. Empuja a LBS.
+ * Schema: Service + WebPage + BreadcrumbList.
+ */
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Faqs from "@components/Faqs.astro";
+import {
+  getDomain,
+  getBusinessName,
+  getServices,
+  getMainCity,
+  getMainCitySlug,
+  getPrimaryCategorySlug,
+  getPrimaryCategory,
+  getFaqsServiceOverview,
+  getPreferredCTA,
+} from "@lib/cluster";
+import { buildServiceOverviewSchemas } from "@lib/schemas";
+import type { Service } from "@lib/types";
+
+export async function getStaticPaths() {
+  const services = getServices();
+  const categorySlug = getPrimaryCategorySlug();
+  return services.map((service) => ({
+    params: { category: categorySlug, service: service.slug },
+    props: { service },
+  }));
+}
+
+interface Props {
+  service: Service;
+}
+
+const { service } = Astro.props;
+const businessName = getBusinessName();
+const domain = getDomain();
+const mainCity = getMainCity();
+const mainCitySlug = getMainCitySlug();
+const primaryCatSlug = getPrimaryCategorySlug();
+const primaryCategory = getPrimaryCategory();
+const faqs = getFaqsServiceOverview();
+const cta = getPreferredCTA();
+
+const url = `${domain}${primaryCatSlug}/${service.slug}/`;
+const lbsUrl = `/${primaryCatSlug}/${mainCitySlug}/${service.slug}/`;
+
+const title = `${service.name} · ${businessName}`;
+const description = `${service.name}: cómo lo hacemos, qué incluye, plazos y precios orientativos. Versión local: ${mainCity}.`;
+
+const schema = buildServiceOverviewSchemas({
+  serviceName: service.name,
+  primaryCategory,
+  url,
+  breadcrumbs: [
+    { name: "Inicio", url: domain },
+    { name: primaryCategory, url: `${domain}${primaryCatSlug}/` },
+    { name: service.name },
+  ],
+});
+---
+
+<BaseLayout title={title} description={description} schema={schema}>
+  <section class="bg-gradient-to-b from-primary-50 to-white">
+    <div class="container-narrow py-16 md:py-24">
+      <h1 class="mb-6">{service.name}</h1>
+      <p class="text-lg text-gray-700 mb-8">
+        Aquí explicamos en qué consiste {service.name.toLowerCase()}, cómo trabajamos y qué incluye.
+      </p>
+      <a href={lbsUrl} class="btn-primary">Ver {service.name.toLowerCase()} en {mainCity}</a>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-narrow">
+      <h2 class="mb-6">Cómo trabajamos</h2>
+      <ol class="space-y-4 text-gray-700">
+        <li><strong>1. Visita gratuita.</strong> Tomamos medidas y entendemos tus necesidades.</li>
+        <li><strong>2. Presupuesto cerrado.</strong> Por escrito, sin sorpresas.</li>
+        <li><strong>3. Ejecución profesional.</strong> Técnicos cualificados con experiencia.</li>
+        <li><strong>4. Garantía 2 años.</strong> Sobre todos los trabajos.</li>
+      </ol>
+
+      <h2 class="mt-12 mb-6">Versión local</h2>
+      <p class="text-gray-700 mb-4">
+        Si estás en {mainCity}, consulta la página específica con cobertura por barrios:
+      </p>
+      <a href={lbsUrl} class="btn-primary">{service.name} en {mainCity}</a>
+    </div>
+  </section>
+
+  <Faqs faqs={faqs} title={`FAQ — ${service.name}`} />
+
+  <section class="section bg-primary-50">
+    <div class="container-narrow text-center">
+      <h2 class="mb-4">Solicita presupuesto</h2>
+      <a href="/contacto/" class="btn-primary">{cta}</a>
+    </div>
+  </section>
+</BaseLayout>

@@ -389,43 +389,70 @@ Los design tokens se aplican en:
 
 ## 8. Fase 6 — Construcción (Astro)
 
-### 8.1 Stack canónico
-Astro 5 + Tailwind v3 + pnpm + TypeScript. **Fuente:** `Doctrina GMB Crush` (Arquitectura técnica fija).
+**Fuente:** `Doctrina GMB Crush` (Arquitectura técnica fija).
 
-### 8.2 Configuración obligatoria (`astro.config.mjs`)
-```javascript
-export default defineConfig({
-  site: 'https://www.[dominio].com',
-  trailingSlash: 'always',
-  integrations: [tailwind(), sitemap()],
-});
+Esta fase usa la **plantilla Astro** (`plantilla-astro/`) que ya existe en el repo. La IA NO crea un proyecto desde cero — produce un `outputs.json` y la plantilla lo renderiza.
+
+### 8.1 Producir `outputs.json`
+
+La IA debe producir un archivo `outputs.json` con la estructura definida en `plantilla-astro/src/lib/types.ts`. Cada output tiene:
+
+```json
+{
+  "id": "1.5",
+  "name": "Planned Primary GBP Category",
+  "value": "Instalador de aerotermia",
+  "status": "confirmed",
+  "fuente": "Doctrina + Local Pack",
+  "source": "Local Pack Madrid 2026-05-05",
+  "hereda_de": null,
+  "bloque": 1,
+  "notes": null
+}
 ```
 
-### 8.3 Archivos técnicos obligatorios
-- `robots.txt`: Permitir todo. Apuntar al sitemap.
-- `sitemap.xml`: Generado automáticamente por `@astrojs/sitemap`. Debe contener TODAS las URLs de la matriz.
-- `package.json`: Nombre del proyecto = slug del negocio (no "astro-starter").
-- Sin comentarios scaffold, sin `<meta name="generator">`, sin referencias a IA en el código.
+Los outputs mínimos que `outputs.json` debe contener para que la plantilla funcione:
 
-### 8.4 Orden de construcción (Priority/Phase)
-Construir las páginas en este orden:
-1. Homepage
-2. Service Overviews
-3. GeoHub
-4. Location-Based Services
-5. Additional Categories
-6. GeoArticles
-7. Contacto
+| Output ID | Dato | De dónde sale |
+|-----------|------|---------------|
+| 1.1 | Business Name | Preflight |
+| 1.2 | Canonical Domain | Preflight o derivado |
+| 1.4 | Full NAP (8 campos) | Preflight |
+| 1.5 | Primary Category | Fase 1 (3.2) |
+| 1.6 | Additional Categories | Fase 1 (3.4) |
+| 1.7 | Main City | Fase 1 (3.1) |
+| 1.9 | Core Services | Fase 1 (3.3) |
+| 1.10 | LCAs (direct + candidate) | Fase 1 (3.5) |
+| 1.13 | Preferred CTA | Fase 2 (4.3) |
+| 1.14 | Trust Signals | Fase 1 (3.6) |
+| 3.2 | GeoHub URL Style | `/[main-city]/` |
+| 3.4 | GeoArticle Topics | Fase 1 (3.7) |
+| 16.1 | Design Tokens | Fase 5 |
 
-Nunca construir una página hija antes que su padre (ej: no crear una LBS si su SO no existe aún).
+### 8.2 Copiar plantilla y configurar
 
-### 8.5 Pasos de construcción
-1. `pnpm create astro@latest` (template: minimal).
-2. `pnpm astro add tailwind` + `pnpm astro add sitemap`.
-3. Crear layouts, componentes y páginas en el orden de §8.4.
-4. Inyectar contenido y Schema.
-5. `pnpm build` → si falla, diagnosticar y corregir hasta que `dist/` se genere limpio.
-6. Verificar que el sitemap contiene todas las URLs de la matriz (count = total fórmula + 1 contacto).
+1. Copiar `plantilla-astro/` a la carpeta del cliente.
+2. Colocar `outputs.json` en la raíz del proyecto (o donde `CLUSTER_PATH` apunte).
+3. Actualizar `astro.config.mjs`: `site` = dominio del cliente.
+4. Actualizar `package.json`: `name` = slug del negocio.
+
+### 8.3 Build
+
+```bash
+pnpm install
+pnpm build
+```
+
+Si el build falla, diagnosticar y corregir. Los errores más comunes son:
+- `outputs.json` con campos faltantes → añadir el output que falta.
+- Slug inválido (acentos, espacios) → aplicar slugify.
+- Tipo incorrecto en un valor → revisar `types.ts`.
+
+### 8.4 Verificar
+
+- `dist/` se genera sin errores.
+- El sitemap contiene todas las URLs de la matriz.
+- Sin `<meta name="generator">`, sin comentarios scaffold, sin referencias a IA.
 
 ---
 
