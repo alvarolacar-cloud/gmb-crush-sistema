@@ -86,8 +86,16 @@ Cada output de esta fase tiene una fuente y un método concreto. Síguelos en or
 - **Cómo se obtiene:** Tomar los barrios/distritos adyacentes a la dirección del NAP. Máximo 4-6 zonas.
 - **Fuente:** `Cliente preflight` (si el operador los da en notas) o `⚠ inferido` (derivados de la dirección).
 - **Regla:** Las LCAs NUNCA generan URLs. Solo se usan en contenido y schema `areaServed`.
+- **Nota:** Direct LCAs = derivadas del NAP (barrio de la dirección). Candidate LCAs = zonas donde operan 2+ competidores top 5. Ambas se usan igual en contenido y schema.
 
-### 3.6 GeoArticle Topics (Variable G)
+### 3.6 Trust Signals
+- **Dato que buscamos:** Señales de confianza del sector (años, certificaciones, garantías, badges) + diferenciadores del cliente.
+- **Cómo se obtiene:** Extraer trust signals de los 5 perfiles top del Local Pack → las que aparecen en 3+ perfiles son "estándar del sector". Añadir diferenciadores propios del cliente si los declara.
+- **Fuente:** `Doctrina + Local Pack`.
+- **Si no tienes acceso a Maps:** Inferir los trust signals más comunes del sector (ej: fontanería → "24h", "sin desplazamiento", "presupuesto gratis"). Marcar `⚠ inferido`.
+- **Se usa en:** Hero de Homepage, bloque de confianza, contenido de LBS.
+
+### 3.7 GeoArticle Topics (Variable G)
 - **Dato que buscamos:** 3 topics por core service con intención informacional/precomercial.
 - **Cómo se obtiene:** Buscar en Ahrefs/Semrush `[servicio] [ciudad]` → filtrar por intención informacional → elegir los 3 con más volumen por servicio.
 - **Fuente:** `Doctrina + Keyword Research`.
@@ -303,6 +311,7 @@ Ejecuta el test doctrinal (`referencias/test-doctrinal.md`) contra los 6 docs pr
 - No hay internal linking padre/hijo.
 - Schema genérico para todas las páginas.
 - Se inventa ubicación física.
+- Orden topológico roto (páginas hijas declaradas sin padre).
 
 ---
 
@@ -326,10 +335,22 @@ export default defineConfig({
 - `package.json`: Nombre del proyecto = slug del negocio (no "astro-starter").
 - Sin comentarios scaffold, sin `<meta name="generator">`, sin referencias a IA en el código.
 
-### 5.4 Pasos de construcción
+### 5.4 Orden de construcción (Priority/Phase)
+Construir las páginas en este orden:
+1. Homepage
+2. Service Overviews
+3. GeoHub
+4. Location-Based Services
+5. Additional Categories
+6. GeoArticles
+7. Contacto
+
+Nunca construir una página hija antes que su padre (ej: no crear una LBS si su SO no existe aún).
+
+### 5.5 Pasos de construcción
 1. `pnpm create astro@latest` (template: minimal).
 2. `pnpm astro add tailwind` + `pnpm astro add sitemap`.
-3. Crear layouts, componentes y páginas.
+3. Crear layouts, componentes y páginas en el orden de §5.4.
 4. Inyectar contenido y Schema.
 5. `pnpm build` → si falla, diagnosticar y corregir hasta que `dist/` se genere limpio.
 6. Verificar que el sitemap contiene todas las URLs de la matriz (count = total fórmula + 1 contacto).
