@@ -286,7 +286,7 @@ Menciona las LCAs (barrios/zonas) en:
 - `sameAs`: vacío (no hay GBP todavía).
 - `aggregateRating`: no incluir (no hay reseñas reales).
 - `address`: solo la dirección real del NAP. Si es `[DIRECCIÓN]` placeholder, no incluir el campo.
-- `areaServed`: formato `{"@type": "City", "name": "[Ciudad]"}` para Main City, `{"@type": "AdministrativeArea", "name": "[Barrio]"}` para LCAs.
+- `areaServed`: Main City + Direct LCAs + Candidate LCAs validadas (solo cobertura real). Formato: `{"@type": "City", "name": "[Ciudad]"}` para Main City, `{"@type": "AdministrativeArea", "name": "[Barrio]"}` para LCAs validadas. No incluir zonas aspiracionales ni sin validar (coherente con §3.5).
 
 ### 4.6 Internal Linking
 
