@@ -12,16 +12,15 @@ Repo con sistemas para crear webs locales SEO. Tiene dos capas:
 ## Estructura
 
 ```
-├── inicio/                           ← Fase 0: investigar competidores
-│   └── INVESTIGACION.md
+├── inicio/
+│   └── INVESTIGACION.md              ← Fase 0: investigar competidores
 ├── formas/
 │   └── gmb-crush/                    ← Forma GMB Crush (SEO local + GBP)
 │       ├── SISTEMA.md                ← Instrucciones de ejecución (8 fases)
 │       ├── PREFLIGHT.md              ← Template de datos del cliente
 │       ├── ARQUITECTURA-SISTEMA.md   ← Decisiones de diseño del sistema
 │       ├── plantilla-astro/          ← Proyecto Astro parametrizable
-│       ├── referencias/              ← Test doctrinal, specs, ejemplo
-│       └── documentacion/            ← Doctrina de referencia (no leer salvo petición)
+│       └── referencias/              ← Test doctrinal, specs, ejemplo y doctrina
 └── ejecuciones/                      ← Resultados de ejecuciones reales
 ```
 
