@@ -13,6 +13,9 @@ Repo con sistemas para crear webs locales SEO. Tiene tres capas:
 ## Estructura
 
 ```
+sistemas-creacion-webs/
+├── AGENTS.md                         ← instrucciones para IAs
+├── README.md                         ← este archivo
 ├── 00-investigacion/
 │   └── INVESTIGACION.md              ← Fase 0: investigar competidores (común a todos)
 ├── 01-gmb-crush/                     ← Sistema GMB Crush (SEO local + GBP)
@@ -21,6 +24,7 @@ Repo con sistemas para crear webs locales SEO. Tiene tres capas:
 │   ├── plantilla-astro/              ← Proyecto Astro parametrizable
 │   └── referencias/                  ← Test doctrinal, specs, ejemplo y doctrina
 └── ejecuciones/                      ← Resultados de ejecuciones reales
+    └── [nombre-negocio-slug]/
 ```
 
 ---
