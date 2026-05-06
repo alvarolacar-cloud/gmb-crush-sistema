@@ -247,7 +247,7 @@ Antes de pasar a Fase 2, muestra al operador este bloque exacto:
 | Service Overview | Servicio (sin ciudad) | 1000-1500 | Suave → "¿Necesitas esto en [ciudad]?" | Qué es + Proceso + Problemas + FAQs genéricas |
 | LBS | Servicio + Ciudad | 1200-1800 | Fuerte (Llamar/Presupuesto) | Contexto local + Proceso + FAQs locales + LCAs en contenido |
 | GeoHub | "Servicios en [Ciudad]" | 600-1000 | Navegacional | Índice servicios + Índice artículos + Cobertura |
-| GeoArticle | Pregunta/tema + Ciudad | 800-1200 | Suave → enlace a LBS | Respuesta directa + Desarrollo + Contexto local |
+| GeoArticle | Pregunta/tema + Ciudad | 800-1200 | Suave → enlace a LBS | Respuesta directa + Desarrollo + Contexto local + **3 puentes narrativos** (enlaces contextuales distribuidos en el cuerpo que llevan a la LBS padre) |
 | Additional Category | Categoría + Ciudad | 1000-1500 | Fuerte | Similar a LBS |
 | Contacto | "Contacto" | 300-500 | Formulario + teléfono | NAP + Horarios + Formulario + Mapa |
 
@@ -503,6 +503,7 @@ Si el build falla, diagnosticar y corregir. Los errores más comunes son:
 - Sin `<meta name="generator">`, sin comentarios scaffold, sin referencias a IA.
 - **Cluster completo por servicio:** Cada core service tiene su SO + LBS + G GeoArticles generados. No publicar una LBS sin sus GeoArticles asociados.
 - **Orden topológico:** Ninguna página hija existe sin su padre (no hay LBS sin SO, no hay GA sin LBS).
+- **Links válidos:** Todos los enlaces internos apuntan a URLs que existen en la URL Matrix. Ningún enlace a URL inexistente o no aprobada (anti-404).
 
 ---
 
