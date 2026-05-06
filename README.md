@@ -19,11 +19,12 @@ sistemas-creacion-webs/
 ├── 00-investigacion/
 │   └── INVESTIGACION.md              ← Fase 0: investigar competidores (común a todos)
 ├── 01-gmb-crush/                     ← Sistema GMB Crush (SEO local + GBP)
-│   ├── SISTEMA.md                    ← Instrucciones de ejecución (8 fases)
-│   ├── PREFLIGHT.md                  ← Template de datos del cliente
-│   ├── plantilla-astro/              ← Proyecto Astro parametrizable
-│   └── referencias/                  ← Test doctrinal, specs, ejemplo y doctrina
-└── ejecuciones/                      ← Resultados de ejecuciones reales
+│   ├── SISTEMA.md                    ← índice del sistema (convenciones + tabla de fases)
+│   ├── PREFLIGHT.md                  ← template de datos del cliente
+│   ├── fases/                        ← un archivo por fase, se lee antes de ejecutarla
+│   ├── referencias/                  ← test doctrinal, specs, ejemplo y doctrina
+│   └── plantilla-astro/              ← proyecto Astro parametrizable
+└── ejecuciones/                      ← resultados de ejecuciones reales
     └── [nombre-negocio-slug]/
 ```
 
@@ -33,7 +34,7 @@ sistemas-creacion-webs/
 
 1. **Investigación:** La IA investiga el Local Pack y te muestra un informe de competidores.
 2. **Tú decides:** Qué servicios poner + qué web usar como referencia de diseño.
-3. **Ejecución:** La IA ejecuta el sistema elegido con tus decisiones confirmadas.
+3. **Ejecución:** La IA ejecuta el sistema elegido fase a fase.
 4. **Resultado:** Web en Cloudflare + tabla de pendientes.
 
 ---

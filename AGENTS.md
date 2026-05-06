@@ -12,8 +12,17 @@ sistemas-creacion-webs/
 ├── 00-investigacion/                ← PASO 0: común a todos los sistemas
 │   └── INVESTIGACION.md
 ├── 01-gmb-crush/                    ← Sistema GMB Crush (web local + Google Maps)
-│   ├── SISTEMA.md                   ← especificación completa (8 fases)
+│   ├── SISTEMA.md                   ← índice + convenciones + arranque (léelo primero)
 │   ├── PREFLIGHT.md                 ← datos del cliente
+│   ├── fases/                       ← un archivo por fase — léelo antes de ejecutar esa fase
+│   │   ├── fase-1-fundamentos.md
+│   │   ├── fase-2-contenido.md
+│   │   ├── fase-3-docs-canonicos.md
+│   │   ├── fase-4-test-doctrinal.md
+│   │   ├── fase-5-diseno.md
+│   │   ├── fase-6-build.md
+│   │   ├── fase-7-deploy.md
+│   │   └── fase-8-consolidacion.md
 │   ├── referencias/                 ← doctrina, ejemplos, test — solo consulta
 │   └── plantilla-astro/             ← template listo para desplegar
 └── ejecuciones/                     ← outputs de proyectos reales
@@ -31,9 +40,9 @@ sistemas-creacion-webs/
 4. **Para aquí** — espera que el operador confirme servicios y elija sistema antes de continuar
 
 ### PASO 1 — Ejecución GMB Crush (01-gmb-crush/)
-1. Lee `01-gmb-crush/SISTEMA.md` completo antes de hacer nada
+1. Lee `01-gmb-crush/SISTEMA.md` completo — es corto, tiene las convenciones y el índice de fases
 2. Rellena `01-gmb-crush/PREFLIGHT.md` con los datos del cliente
-3. Ejecuta las 8 fases en orden estricto
+3. Antes de cada fase, lee su archivo en `fases/` completo
 4. En Fase 4 ejecuta el Test Doctrinal completo (17 puntos), presenta los resultados al operador y **para aquí** — espera aprobación antes de continuar al build
 
 ### PASO 2 — Guardar resultados (ejecuciones/)
