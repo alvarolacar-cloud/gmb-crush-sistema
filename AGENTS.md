@@ -16,7 +16,7 @@ Flujo completo: investigación de competencia → arquitectura web → build →
 1. Lee `formas/gmb-crush/SISTEMA.md` completo antes de hacer nada
 2. Rellena `formas/gmb-crush/PREFLIGHT.md` con los datos del cliente
 3. Ejecuta las 8 fases en orden estricto
-4. **Para en Fase 4** (Test Doctrinal) — espera aprobación antes de continuar al build
+4. En Fase 4 ejecuta el Test Doctrinal completo (17 puntos), presenta los resultados al operador y **para aquí** — espera aprobación antes de continuar al build
 
 ### PASO 3 — Guardar resultados (ejecuciones/)
 Crea carpeta `ejecuciones/[nombre-negocio-slug]/` con todos los outputs generados.
@@ -24,7 +24,7 @@ Crea carpeta `ejecuciones/[nombre-negocio-slug]/` con todos los outputs generado
 ## Reglas que nunca puedes romper
 - Las LCAs (barrios, distritos, zonas) nunca generan URLs sin aprobación explícita del operador
 - No inventes teléfono, dirección, reseñas, certificaciones ni fotos
-- El Test Doctrinal (Fase 4) es un gate — si falla, para y notifica al operador antes de seguir
+- Si el Test Doctrinal falla, no continúes al build aunque el operador lo pida — explica qué falla primero
 - Todos los datos inciertos se marcan como ⚠ inferido o ⚠ placeholder, nunca se asumen como confirmados
 
 ## Estructura del repo
