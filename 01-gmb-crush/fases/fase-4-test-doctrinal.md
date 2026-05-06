@@ -1,6 +1,9 @@
-## 6. Fase 4 — Test Doctrinal (Gate Pre-Build)
+## Fase 4 — Test Doctrinal (Gate Pre-Build)
 
-Ejecuta el test doctrinal (`referencias/test-doctrinal.md`) contra los 6 docs producidos en Fase 3. Para cada bloque del test, responde con:
+**Lee el checklist completo antes de continuar: `../referencias/test-doctrinal.md`**
+Ábrelo ahora y ejecútalo punto por punto contra los 6 docs producidos en Fase 3.
+
+Para cada bloque del test, responde con:
 
 - **PASS / FAIL**
 - **Evidencia:** dato concreto que demuestra el resultado (ej: "URL Matrix tiene 24 filas. Fórmula = 23+1. Cuadra.")
@@ -19,6 +22,3 @@ Ejecuta el test doctrinal (`referencias/test-doctrinal.md`) contra los 6 docs pr
 - Schema genérico para todas las páginas.
 - Se inventa ubicación física.
 - Orden topológico roto (páginas hijas declaradas sin padre).
-
----
-
