@@ -38,6 +38,8 @@ Pide estos datos. Con solo **"qué hace" + "ciudad"** ya arrancas.
 | Nombre del negocio | Derivar de servicio + ciudad (ej: "Fontaneros Barcelona"). Marcar `⚠ placeholder`. |
 | Qué hace (servicio principal) | **Sin esto no puedes arrancar. Pídelo.** |
 | Dirección (al menos ciudad) | **Sin al menos la ciudad no puedes arrancar. Pídela.** |
+
+**Si faltan AMBOS (nombre + ciudad):** No puedes derivar nada. Pide al operador al menos "qué hace" y "en qué ciudad". Sin esos dos datos mínimos, no arrancas.
 | Teléfono | Marcar `[TELÉFONO]` en contenido. |
 | Email | Marcar `[EMAIL]` en contenido. |
 | Estado GBP | Asumir `Not Created`. |
@@ -64,6 +66,7 @@ Cada output de esta fase tiene una fuente y un método concreto. Síguelos en or
 - **Cómo se obtiene:** Buscar `[servicio principal] [Main City]` en Google Maps → mirar los 5 primeros perfiles del Local Pack → la categoría primaria que aparece en 3+ de 5 es la elegida.
 - **Fuente:** `Doctrina + Local Pack`.
 - **Si no tienes acceso a Maps:** Inferir la categoría más específica que cubra el servicio principal. Elegir siempre la más específica disponible ("Instalador de aerotermia" > "Empresa de climatización" > "Reformas"). Marcar `⚠ inferido` con razonamiento.
+- **Si ninguna categoría aparece en 3+ de 5:** Elegir la que aparece en 2 de 5. Si hay empate, elegir la más específica. Si solo aparece en 1, usar esa igualmente (es la mejor señal disponible). Marcar `⚠ inferido`.
 - **Slug:** La plantilla genera el slug automáticamente aplicando slugify al valor del output 1.5. No lo definas manualmente — la plantilla lo calcula.
 
 ### 3.3 Core Services (Variable S)
@@ -74,6 +77,7 @@ Cada output de esta fase tiene una fuente y un método concreto. Síguelos en or
 - **Si no tienes acceso a Maps:** Tomar los servicios que el operador declaró en el preflight. Si declaró menos de 4, proponer expansiones lógicas del sector marcadas `⚠ inferido`. Si no declaró ninguno, inferir 4-6 del sector.
 - **Regla anti-duplicación:** Si dos servicios responden a la misma búsqueda del usuario (test: "¿alguien buscaría esto por separado?"), fusionar en uno. En caso de duda, NO crear el servicio — es mejor tener S=4 sólidos que S=6 con canibalización.
 - **S es variable:** Puede ser 3, 4, 5, 6 o más. No forzar a 5.
+- **Criterio para fijar S:** Solo incluir servicios que (1) el negocio realmente ofrece Y (2) tienen intención de búsqueda propia verificable. Si no puedes verificar búsqueda, limitar a los servicios que el operador declaró + máximo 2 expansiones inferidas. En caso de duda, S más bajo es mejor que S más alto.
 
 ### 3.4 Additional Categories (Variable A)
 - **Dato que buscamos:** Categorías GBP secundarias que necesitan página propia.
@@ -106,12 +110,15 @@ El sistema GMB Crush separa el territorio en 3 capas que NUNCA se mezclan:
   4. Las que pasan entran como contenido. Solo generan URL si pasan a AEA (post-launch).
 - **Fuente:** `Doctrina + Local Pack`.
 - **Si no tienes acceso a Maps:** Inferir 4-6 barrios/distritos adyacentes a la dirección. Marcar `⚠ inferido`.
+- **Máximo Candidate LCAs:** 8. Si hay más candidatas que pasan el test, elegir las más cercanas a la dirección física.
 
 #### Test de Coherencia GEO (3 de 6)
 
 **Filtro previo obligatorio:** La zona pertenece a la Main City (es barrio/distrito, no otra ciudad). Si no pasa → descartada.
 
-**6 criterios (mínimo 3 para pasar):**
+**6 criterios (mínimo 3 para pasar, el criterio 6 es OBLIGATORIO):**
+
+**Nota:** El criterio 6 (No falsa ubicación) debe cumplirse SIEMPRE. Una zona que pasa 3 de los primeros 5 criterios pero NO cumple el 6 queda DESCARTADA.
 
 | # | Criterio | Pregunta |
 |---|----------|----------|
@@ -148,7 +155,7 @@ El sistema GMB Crush separa el territorio en 3 capas que NUNCA se mezclan:
 - **Si no tienes acceso a KW tools:** Generar 3 topics por servicio usando este framework:
   1. **Precio:** "¿Cuánto cuesta [servicio] en [ciudad]?"
   2. **Proceso/decisión:** "¿Cuánto tarda [servicio]?" o "¿Cuándo es necesario [servicio]?"
-  3. **Comparativa:** "[Servicio] vs [alternativa más común]"
+  3. **Comparativa:** "[Servicio] vs [alternativa más común del sector]" (la alternativa es la opción que un usuario consideraría en vez de contratar este servicio — ej: aerotermia vs caldera de gas, no aerotermia vs aire acondicionado)
 - **Regla anti-solapamiento:** Antes de fijar los topics, verificar que ninguno se solapa con otro de otro servicio. Si "cuánto cuesta instalar aerotermia" y "precio aerotermia calefacción" atacan la misma búsqueda, eliminar uno.
 - **G = 3 por defecto.** Puede ser 2 si no hay 3 topics diferenciados para un servicio.
 
@@ -247,7 +254,7 @@ Antes de pasar a Fase 2, muestra al operador este bloque exacto:
 | Service Overview | Servicio (sin ciudad) | 1000-1500 | Suave → "¿Necesitas esto en [ciudad]?" | Qué es + Proceso + Problemas + FAQs genéricas |
 | LBS | Servicio + Ciudad | 1200-1800 | Fuerte (Llamar/Presupuesto) | Contexto local + Proceso + FAQs locales + LCAs en contenido |
 | GeoHub | "Servicios en [Ciudad]" | 600-1000 | Navegacional | Índice servicios + Índice artículos + Cobertura |
-| GeoArticle | Pregunta/tema + Ciudad | 800-1200 | Suave → enlace a LBS | Respuesta directa + Desarrollo + Contexto local + **3 puentes narrativos** (enlaces contextuales distribuidos en el cuerpo que llevan a la LBS padre) |
+| GeoArticle | Pregunta/tema + Ciudad | 800-1200 (mínimo si topic simple/pregunta directa; máximo si comparativa o proceso complejo) | Suave → enlace a LBS | Respuesta directa + Desarrollo + Contexto local + **3 puentes narrativos** (enlaces contextuales distribuidos en el cuerpo que llevan a la LBS padre) |
 | Additional Category | Categoría + Ciudad | 1000-1500 | Fuerte | Similar a LBS |
 | Contacto | "Contacto" | 300-500 | Formulario + teléfono | NAP + Horarios + Formulario + Mapa |
 
@@ -259,13 +266,15 @@ Antes de pasar a Fase 2, muestra al operador este bloque exacto:
 | Urgente (cerrajero, fontanero emergencia) | "Llamar ahora" |
 | Programable (dentista, peluquería) | "Reservar cita" |
 | Proyecto/B2B (reformas, instalaciones) | "Solicitar presupuesto" |
-| Genérico / no claro | "Contactar" |
+| No encaja en ninguno de los anteriores | "Solicitar presupuesto" (default seguro) |
+
+**Criterio:** Si dudas entre dos CTAs, elige "Solicitar presupuesto" — es el más universal y no compromete.
 
 ### 4.4 Local Coverage Areas en contenido
-Menciona las LCAs (barrios/zonas) en:
-- La sección de cobertura de cada LBS (ej: "También atendemos en Gràcia, Eixample y Sarrià").
-- Las FAQs locales (ej: "¿Llegáis a Horta-Guinardó?").
-- El GeoHub (sección de cobertura).
+Menciona **2-3 LCAs por LBS** (las más relevantes para ese servicio, no todas en cada página):
+- La sección de cobertura de cada LBS (ej: "También atendemos en Chamberí y Salamanca").
+- Las FAQs locales (ej: "¿Llegáis a Retiro?").
+- El GeoHub (sección de cobertura — aquí sí listar todas).
 - **Nunca** como si fueran oficinas físicas.
 
 ### 4.5 Schema JSON-LD
@@ -422,6 +431,7 @@ Produce un archivo `design-tokens.md` (o sección dentro de los 6 docs) con todo
 - **Si la web de referencia tiene logo:** Pedir al operador que lo provea como archivo. Marcar `⚠ placeholder` si no lo da.
 - **Si la web de referencia tiene fotos propias:** No copiarlas. Marcar `[IMAGEN: descripción]` como placeholder en el contenido.
 - **Si no hay web de referencia:** Usar un estilo limpio: fondo blanco, texto oscuro, un color primario del sector (azul para servicios técnicos, verde para salud, naranja para urgencias). Marcar `⚠ inferido`.
+- **Si hay varios colores primarios en la referencia:** Elegir el que más se usa en botones y CTAs de la web de referencia — ese es el color de acción.
 - **No inventar branding:** Si el cliente no tiene colores corporativos, no inventarlos. Usar neutros + un acento lógico del sector.
 
 ### 7.5 Integración con Fase 6 (Build)
