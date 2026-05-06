@@ -33,7 +33,8 @@ sistemas-creacion-webs/
 
 ## Flujo obligatorio — síguelo en este orden
 
-### PASO 0 — Investigación (00-investigacion/) — común a todos los sistemas
+### PASO 0 — Investigación — común a todos los sistemas
+> ⚠ Esta fase NO está en `fases/` — vive en `00-investigacion/INVESTIGACION.md`
 1. Lee `00-investigacion/INVESTIGACION.md` — ahí está el método exacto de búsqueda
 2. Busca en Google Maps los 5 primeros resultados del Local Pack para [servicio] + [ciudad] siguiendo las instrucciones de ese archivo
 3. Presenta tabla comparativa de competidores al operador

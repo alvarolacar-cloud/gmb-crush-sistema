@@ -23,6 +23,8 @@ Con esas decisiones confirmadas, se pasa a la forma de construcción elegida (ej
 
 ## Lo que la IA hace
 
+**Método:** Búsqueda manual en el navegador — abre Google Maps en maps.google.com y busca directamente. No uses APIs ni scraping.
+
 1. Buscar `[servicio principal] [ciudad]` en Google Maps.
 2. Identificar los **5 primeros perfiles** del Local Pack.
 3. Para cada competidor, extraer:
@@ -87,4 +89,4 @@ Esos datos entran como `confirmed` en el preflight de la forma de construcción 
 
 ## Después de esta fase
 
-El operador elige una forma de construcción (ej: `formas/gmb-crush/`) y la IA ejecuta con los datos confirmados.
+El operador elige una forma de construcción (ej: `01-gmb-crush/`) y la IA ejecuta con los datos confirmados.
