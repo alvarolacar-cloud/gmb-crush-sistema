@@ -83,11 +83,55 @@ Cada output de esta fase tiene una fuente y un método concreto. Síguelos en or
 - **Criterio:** Necesita página propia si (1) el negocio la ofrece Y (2) no es sinónimo ni subconjunto de un core service.
 
 ### 3.5 Local Coverage Areas (LCAs)
-- **Dato que buscamos:** Barrios/zonas cercanas a la dirección física donde el negocio opera.
-- **Cómo se obtiene:** Tomar los barrios/distritos adyacentes a la dirección del NAP. Máximo 4-6 zonas.
-- **Fuente:** `Cliente preflight` (si el operador los da en notas) o `⚠ inferido` (derivados de la dirección).
-- **Regla:** Las LCAs NUNCA generan URLs. Solo se usan en contenido y schema `areaServed`.
-- **Nota:** Direct LCAs = derivadas del NAP (barrio de la dirección). Candidate LCAs = zonas donde operan 2+ competidores top 5. Ambas se usan igual en contenido y schema.
+
+El sistema GMB Crush separa el territorio en 3 capas que NUNCA se mezclan:
+- **Main City** (1.7) → crea arquitectura (URLs).
+- **Local Coverage Areas** (1.10) → refuerzan contenido y schema. NUNCA generan URLs.
+- **Approved Expansion Areas** (1.11) → generan URLs solo si se aprueban (default vacío en Phase 1).
+
+**Las LCAs son SOLO barrios/distritos dentro de la Main City. Nunca otras ciudades.**
+
+#### Direct LCAs
+- **Dato que buscamos:** Barrio + distrito de la dirección física del NAP.
+- **Cómo se obtiene:** Extraer directamente del NAP. Sin más validación.
+- **Fuente:** `Cliente preflight`.
+- **Ejemplo:** Dirección en Calle Rafael Calvo 40 → Direct LCAs: Almagro (barrio), Chamberí (distrito).
+
+#### Candidate LCAs
+- **Dato que buscamos:** Zonas dentro de la Main City donde el negocio podría posicionarse.
+- **Cómo se obtiene (4 pasos):**
+  1. Revisar áreas de servicio de 3-5 competidores top en Google Maps.
+  2. Listar zonas que aparecen en ≥2 competidores Y no son Direct.
+  3. Aplicar el **test de coherencia GEO** a cada zona candidata.
+  4. Las que pasan entran como contenido. Solo generan URL si pasan a AEA (post-launch).
+- **Fuente:** `Doctrina + Local Pack`.
+- **Si no tienes acceso a Maps:** Inferir 4-6 barrios/distritos adyacentes a la dirección. Marcar `⚠ inferido`.
+
+#### Test de Coherencia GEO (3 de 6)
+
+**Filtro previo obligatorio:** La zona pertenece a la Main City (es barrio/distrito, no otra ciudad). Si no pasa → descartada.
+
+**6 criterios (mínimo 3 para pasar):**
+
+| # | Criterio | Pregunta |
+|---|----------|----------|
+| 1 | Ancla física | ¿Sale directamente de la dirección o está conectada? |
+| 2 | Main City | ¿Pertenece claramente a la Main City? |
+| 3 | Proximidad | ¿Está cerca o conectada al punto físico? |
+| 4 | Intención local | ¿Explica una necesidad local real del servicio? |
+| 5 | Demanda/competencia | ¿Hay búsquedas o competidores trabajando esa zona? |
+| 6 | No falsa ubicación | ¿Puede mencionarse sin afirmar oficina física allí? |
+
+#### Dónde aparecen las LCAs
+
+| Dónde | Qué se puede hacer | Qué NO se puede hacer |
+|-------|--------------------|-----------------------|
+| Contenido LBS | "Atendemos en Chamberí, Salamanca..." | "Oficina en Salamanca" |
+| FAQs locales | "¿Llegáis a Retiro?" | Crear URL `/retiro/` |
+| GeoHub | Sección de cobertura | Listar como sedes |
+| Schema `areaServed` | Solo cobertura REAL o VALIDADA | Zonas aspiracionales o sin validar |
+
+**Regla schema vs contenido:** El contenido puede usar señales GEO coherentes (más flexible). El schema `areaServed` solo admite cobertura real o validada (más estricto).
 
 ### 3.6 Trust Signals
 - **Dato que buscamos:** Señales de confianza del sector (años, certificaciones, garantías, badges) + diferenciadores del cliente.
