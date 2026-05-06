@@ -139,6 +139,7 @@ El sistema GMB Crush separa el territorio en 3 capas que NUNCA se mezclan:
 - **Fuente:** `Doctrina + Local Pack`.
 - **Si no tienes acceso a Maps:** Inferir los trust signals más comunes del sector (ej: fontanería → "24h", "sin desplazamiento", "presupuesto gratis"). Marcar `⚠ inferido`.
 - **Se usa en:** Hero de Homepage, bloque de confianza, contenido de LBS.
+- **Regla:** Los trust signals deben ser verificables (años reales, certificaciones reales, garantías reales). No inventar "250+ reseñas" ni datos que el cliente no pueda respaldar.
 
 ### 3.7 GeoArticle Topics (Variable G)
 - **Dato que buscamos:** 3 topics por core service con intención informacional/precomercial.
@@ -500,6 +501,8 @@ Si el build falla, diagnosticar y corregir. Los errores más comunes son:
 - `dist/` se genera sin errores.
 - El sitemap contiene todas las URLs de la matriz.
 - Sin `<meta name="generator">`, sin comentarios scaffold, sin referencias a IA.
+- **Cluster completo por servicio:** Cada core service tiene su SO + LBS + G GeoArticles generados. No publicar una LBS sin sus GeoArticles asociados.
+- **Orden topológico:** Ninguna página hija existe sin su padre (no hay LBS sin SO, no hay GA sin LBS).
 
 ---
 
