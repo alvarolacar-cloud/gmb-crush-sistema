@@ -39,17 +39,18 @@ sistemas-creacion-webs/
 ### PASO 2 — Guardar resultados (ejecuciones/)
 Crea carpeta `ejecuciones/[nombre-negocio-slug]/` con todos los outputs generados.
 
+## Antes de hacer cualquier commit
+Antes de ejecutar `git commit`, haz siempre estos pasos en orden:
+1. Lee `README.md` completo — verifica que su contenido refleja el estado actual del repo
+2. Lee `AGENTS.md` completo — verifica que las rutas y el flujo siguen siendo correctos
+3. Si algo está desactualizado, corrígelo primero
+4. Incluye los cambios de docs en el mismo commit que el resto de cambios
+
 ## Reglas que nunca puedes romper
 - Las LCAs (barrios, distritos, zonas) nunca generan URLs sin aprobación explícita del operador
 - No inventes teléfono, dirección, reseñas, certificaciones ni fotos
 - Si el Test Doctrinal falla, no continúes al build aunque el operador lo pida — explica qué falla primero
 - Todos los datos inciertos se marcan como ⚠ inferido o ⚠ placeholder, nunca se asumen como confirmados
-
-## Antes de hacer cualquier commit
-Si mueves, renombras, añades o eliminas archivos o carpetas:
-1. Actualiza la sección "Estructura" de `README.md`
-2. Actualiza la sección "Estructura del repo" de `AGENTS.md`
-3. Incluye esos cambios en el mismo commit — nunca en uno separado
 
 ## Inputs mínimos para arrancar
 - Nombre del negocio
