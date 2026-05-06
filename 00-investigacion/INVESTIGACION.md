@@ -90,3 +90,14 @@ Esos datos entran como `confirmed` en el preflight de la forma de construcción 
 ## Después de esta fase
 
 El operador elige una forma de construcción (ej: `01-gmb-crush/`) y la IA ejecuta con los datos confirmados.
+
+---
+
+## ⛔ PARA AQUÍ
+
+Presenta el informe al operador y espera su respuesta. No arranques el sistema de construcción hasta tener confirmación explícita de:
+
+1. **Servicios elegidos** — el operador te dice cuáles incluir
+2. **Web de referencia de diseño** — el operador te indica una URL
+
+Sin esas dos confirmaciones no avances. Si el operador no responde, pregunta de nuevo.
