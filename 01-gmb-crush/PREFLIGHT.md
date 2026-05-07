@@ -12,7 +12,7 @@ Rellena lo que tengas. Con "Qué hace" y "Ciudad" ya se puede arrancar. Lo que d
 **Qué hace (descripción corta):**
 
 
-**Dirección completa (calle + número + ciudad + CP):**
+**Dirección completa (calle + número + ciudad + CP):** ⚠ REQUERIDA — sin ella la IA no puede determinar las LCAs (zonas de cobertura). Pídela antes de continuar a Fase 1.
 
 
 **Teléfono:**

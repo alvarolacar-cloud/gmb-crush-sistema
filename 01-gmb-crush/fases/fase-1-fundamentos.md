@@ -42,6 +42,17 @@ El sistema GMB Crush separa el territorio en 3 capas que NUNCA se mezclan:
 
 **Las LCAs son SOLO barrios/distritos dentro de la Main City. Nunca otras ciudades.**
 
+#### Gate previo — Direccion obligatoria
+
+**Antes de definir cualquier LCA, verifica que el preflight tiene direccion fisica.**
+
+- Si la direccion esta presente → continua con Direct LCAs y Candidate LCAs.
+- Si la direccion falta → **STOP**. Pregunta al operador:
+
+  > "Necesito la direccion fisica del negocio (calle, numero, ciudad, CP) para determinar las zonas de cobertura. Sin ella no puedo definir las LCAs."
+
+  No avances hasta tener respuesta. No inventes zonas sin ancla fisica.
+
 #### Direct LCAs
 - **Dato que buscamos:** Barrio + distrito de la dirección física del NAP.
 - **Cómo se obtiene:** Extraer directamente del NAP. Sin más validación.
