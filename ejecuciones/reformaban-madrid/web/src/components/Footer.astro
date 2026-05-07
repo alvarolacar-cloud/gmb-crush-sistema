@@ -1,0 +1,80 @@
+---
+import {
+  getBusinessName,
+  getNAP,
+  getServices,
+  getMainCity,
+  getMainCitySlug,
+  getPrimaryCategorySlug,
+  getLCAs,
+  phoneHref,
+} from "@lib/cluster";
+
+const businessName = getBusinessName();
+const nap = getNAP();
+const services = getServices();
+const mainCity = getMainCity();
+const mainCitySlug = getMainCitySlug();
+const primaryCatSlug = getPrimaryCategorySlug();
+const lcas = getLCAs();
+
+// Mostramos las direct + primeras 4 candidate (regla doctrinal: LCAs en footer no son enlaces)
+const allLcas = [...lcas.direct, ...lcas.candidate.slice(0, 4)];
+---
+
+<footer class="bg-gray-900 text-gray-300 mt-20">
+  <div class="container-wide py-12 grid gap-8 md:grid-cols-4">
+    <div>
+      <h3 class="text-white text-lg font-bold mb-3">{businessName}</h3>
+      <address class="not-italic text-sm leading-6">
+        {nap.street}<br />
+        {nap.zip} {nap.city}<br />
+        {nap.country}
+      </address>
+      <a href={phoneHref(nap.phone)} class="block mt-3 text-sm text-white no-underline">
+        {nap.phone}
+      </a>
+      <a href={`mailto:${nap.email}`} class="block mt-1 text-sm text-white no-underline">
+        {nap.email}
+      </a>
+    </div>
+
+    <div>
+      <h4 class="text-white font-semibold mb-3">Servicios</h4>
+      <ul class="space-y-2 text-sm">
+        {services.map((s) => (
+          <li>
+            <a
+              href={`/${primaryCatSlug}/${mainCitySlug}/${s.slug}/`}
+              class="text-gray-300 hover:text-white no-underline"
+            >
+              {s.name}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div>
+      <h4 class="text-white font-semibold mb-3">Cobertura</h4>
+      <p class="text-sm leading-6">
+        Trabajamos en todo {mainCity}: {allLcas.join(", ")}{lcas.candidate.length > 4 ? " y más" : ""}.
+      </p>
+    </div>
+
+    <div>
+      <h4 class="text-white font-semibold mb-3">Más</h4>
+      <ul class="space-y-2 text-sm">
+        <li><a href="/contacto/" class="text-gray-300 hover:text-white no-underline">Contacto</a></li>
+        <li><a href="/aviso-legal/" class="text-gray-300 hover:text-white no-underline">Aviso legal</a></li>
+        <li><a href="/privacidad/" class="text-gray-300 hover:text-white no-underline">Privacidad</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-gray-800">
+    <div class="container-wide py-4 text-xs text-gray-500 text-center">
+      © {new Date().getFullYear()} {businessName}. Todos los derechos reservados.
+    </div>
+  </div>
+</footer>

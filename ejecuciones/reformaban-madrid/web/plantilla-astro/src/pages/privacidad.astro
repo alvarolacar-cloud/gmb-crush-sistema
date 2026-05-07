@@ -1,0 +1,32 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { getBusinessName, getNAP } from "@lib/cluster";
+
+const businessName = getBusinessName();
+const nap = getNAP();
+---
+
+<BaseLayout title={`Política de privacidad · ${businessName}`} description={`Política de privacidad de ${businessName}.`}>
+  <section class="section">
+    <div class="container-narrow prose-styles">
+      <h1 class="mb-6">Política de privacidad</h1>
+      <p class="text-gray-700 leading-7 mb-4">
+        En cumplimiento del Reglamento (UE) 2016/679 (RGPD) y la Ley Orgánica 3/2018 de Protección de
+        Datos Personales y garantía de derechos digitales, se informa de los siguientes aspectos sobre el
+        tratamiento de datos personales en este sitio web:
+      </p>
+      <ul class="text-gray-700 space-y-2 mb-6">
+        <li><strong>Responsable:</strong> {businessName}</li>
+        <li><strong>Contacto:</strong> {nap.email}</li>
+        <li>
+          <strong>Dirección:</strong> {nap.street}, {nap.zip} {nap.city}
+        </li>
+      </ul>
+      <p class="text-gray-600 text-sm">
+        [Texto completo pendiente. El operador debe completar con: finalidad del tratamiento, base jurídica,
+        plazo de conservación, destinatarios, derechos del interesado (acceso, rectificación, supresión,
+        oposición, limitación, portabilidad), y forma de ejercicio.]
+      </p>
+    </div>
+  </section>
+</BaseLayout>

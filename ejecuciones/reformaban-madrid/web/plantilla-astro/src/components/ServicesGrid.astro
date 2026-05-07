@@ -1,0 +1,38 @@
+---
+import { getServices, getMainCity, getMainCitySlug, getPrimaryCategorySlug } from "@lib/cluster";
+
+interface Props {
+  title?: string;
+  showAll?: boolean;
+}
+
+const { title = "Nuestros servicios", showAll = true } = Astro.props;
+const services = getServices();
+const mainCity = getMainCity();
+const mainCitySlug = getMainCitySlug();
+const primaryCatSlug = getPrimaryCategorySlug();
+const list = showAll ? services : services.slice(0, 3);
+---
+
+<section class="section bg-gray-50">
+  <div class="container-wide">
+    <h2 class="text-center mb-10">{title}</h2>
+
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {list.map((s) => (
+        <a
+          href={`/${primaryCatSlug}/${mainCitySlug}/${s.slug}/`}
+          class="block bg-white rounded-xl p-6 shadow hover:shadow-lg transition-shadow no-underline"
+        >
+          <h3 class="text-lg font-bold text-primary-900 mb-2">{s.name}</h3>
+          <p class="text-sm text-gray-600">
+            En {mainCity}, presupuesto sin compromiso.
+          </p>
+          <span class="inline-block mt-4 text-primary-500 font-semibold text-sm">
+            Ver detalles →
+          </span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

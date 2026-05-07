@@ -1,0 +1,119 @@
+---
+/**
+ * GeoArticle (GA) — `/[city]/[topic]/`
+ * Doctrina: booster semántico, NO landing. CTA suave hacia LBS padre.
+ * Schema: Article + FAQPage + BreadcrumbList + Speakable.
+ */
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Faqs from "@components/Faqs.astro";
+import {
+  getDomain,
+  getMainCity,
+  getMainCitySlug,
+  getPrimaryCategorySlug,
+  getServices,
+  getGeoArticleTopics,
+  getFaqsGeoArticle,
+  getPreferredCTA,
+} from "@lib/cluster";
+import { buildGeoArticleSchemas } from "@lib/schemas";
+import type { GeoArticleTopic } from "@lib/types";
+
+export async function getStaticPaths() {
+  const topics = getGeoArticleTopics();
+  const mainCitySlug = getMainCitySlug();
+  return topics.map((topic) => ({
+    params: { city: mainCitySlug, topic: topic.topic_slug },
+    props: { topic },
+  }));
+}
+
+interface Props {
+  topic: GeoArticleTopic;
+}
+
+const { topic } = Astro.props;
+const domain = getDomain();
+const mainCity = getMainCity();
+const mainCitySlug = getMainCitySlug();
+const primaryCatSlug = getPrimaryCategorySlug();
+const services = getServices();
+const faqs = getFaqsGeoArticle();
+const cta = getPreferredCTA();
+
+const parentService = services.find((s) => s.slug === topic.service_slug);
+const lbsUrl = parentService
+  ? `/${primaryCatSlug}/${mainCitySlug}/${parentService.slug}/`
+  : `/${mainCitySlug}/`;
+
+const url = `${domain}${mainCitySlug}/${topic.topic_slug}/`;
+const title = `${topic.title}`;
+const description = `${topic.title}. Guía práctica con respuesta directa, factores y casos en ${mainCity}.`;
+
+const schema = buildGeoArticleSchemas({
+  title: topic.title,
+  url,
+  faqs,
+  breadcrumbs: [
+    { name: "Inicio", url: domain },
+    { name: mainCity, url: `${domain}${mainCitySlug}/` },
+    { name: topic.title },
+  ],
+});
+---
+
+<BaseLayout title={title} description={description} schema={schema}>
+  <article>
+    <section class="bg-gradient-to-b from-primary-50 to-white">
+      <div class="container-narrow py-12 md:py-16">
+        <h1 class="mb-6">{topic.title}</h1>
+
+        <div class="quick-answer bg-white rounded-xl p-6 shadow mb-8">
+          <p class="text-lg text-gray-800 leading-7">
+            <strong>Respuesta breve:</strong> esta es una guía sobre {topic.title.toLowerCase()} en {mainCity}.
+            Aquí encuentras los factores, plazos y referencias prácticas.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container-narrow prose-styles">
+        <h2 class="mb-6">Desglose</h2>
+        <p class="text-gray-700 leading-7 mb-6">
+          [Contenido pendiente — el cliente o la IA writer del Paso 15 redactará aquí ≥1000 palabras de respuesta detallada con factores, casos y referencias locales a {mainCity}.]
+        </p>
+
+        <h2 class="mb-6">Factores que influyen</h2>
+        <p class="text-gray-700 leading-7 mb-6">
+          [Pendiente.]
+        </p>
+
+        <h2 class="mb-6">Casos en {mainCity}</h2>
+        <p class="text-gray-700 leading-7 mb-6">
+          [Pendiente.]
+        </p>
+
+        {parentService && (
+          <div class="bg-primary-50 rounded-xl p-6 my-10">
+            <p class="text-gray-700 mb-3">
+              ¿Quieres presupuesto para <strong>{parentService.name}</strong> en {mainCity}?
+            </p>
+            <a href={lbsUrl} class="btn-primary">Ver {parentService.name} en {mainCity}</a>
+          </div>
+        )}
+      </div>
+    </section>
+
+    <Faqs faqs={faqs} />
+
+    <section class="section bg-gray-50">
+      <div class="container-narrow text-center">
+        <p class="text-sm text-gray-600 mb-4">
+          Ver el <a href={`/${mainCitySlug}/`}>índice de servicios en {mainCity}</a>.
+        </p>
+        <a href="/contacto/" class="btn-primary">{cta}</a>
+      </div>
+    </section>
+  </article>
+</BaseLayout>

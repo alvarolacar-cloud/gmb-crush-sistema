@@ -1,0 +1,24 @@
+---
+import { getTrustSignals } from "@lib/cluster";
+
+interface Props {
+  title?: string;
+}
+
+const { title = "Por qué elegirnos" } = Astro.props;
+const trustSignals = getTrustSignals();
+---
+
+<section class="section bg-white">
+  <div class="container-wide">
+    <h2 class="text-center mb-10">{title}</h2>
+
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+      {trustSignals.map((signal) => (
+        <div class="bg-primary-50 rounded-xl p-6 text-center">
+          <p class="font-semibold text-primary-900">{signal}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

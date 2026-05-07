@@ -1,0 +1,196 @@
+---
+/**
+ * LBS y AC comparten URL pattern doctrinal: `/[category]/[city]/[slug]/`.
+ * Esta ruta decide el page type según el slug:
+ *   - Si el slug coincide con un service → LBS (LocalBusiness + FAQPage + BreadcrumbList)
+ *   - Si coincide con additional category → AC (Service + BreadcrumbList)
+ *
+ * Ambos tipos están permitidos por la doctrina al mismo nivel.
+ */
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Hero from "@components/Hero.astro";
+import TrustBlock from "@components/TrustBlock.astro";
+import Faqs from "@components/Faqs.astro";
+import {
+  getDomain,
+  getBusinessName,
+  getNAP,
+  getMainCity,
+  getMainCitySlug,
+  getPrimaryCategorySlug,
+  getPrimaryCategory,
+  getServices,
+  getLCAs,
+  getTrustSignals,
+  getGeoArticleTopics,
+  getAdditionalCategoriesWithPage,
+  getFaqsLBS,
+  getFaqsAdditionalCategory,
+  getPreferredCTA,
+  phoneHref,
+} from "@lib/cluster";
+import {
+  buildLBSSchemas,
+  buildAdditionalCategorySchemas,
+} from "@lib/schemas";
+import type { Service, AdditionalCategory } from "@lib/types";
+
+type LBSEntry = { kind: "LBS"; service: Service };
+type ACEntry = { kind: "AC"; ac: AdditionalCategory };
+
+export async function getStaticPaths() {
+  const services = getServices();
+  const additionals = getAdditionalCategoriesWithPage();
+  const categorySlug = getPrimaryCategorySlug();
+  const mainCitySlug = getMainCitySlug();
+
+  const lbsRoutes = services.map((service) => ({
+    params: { category: categorySlug, city: mainCitySlug, slug: service.slug },
+    props: { kind: "LBS" as const, service } satisfies LBSEntry,
+  }));
+
+  const acRoutes = additionals
+    .filter((ac) => ac.page_slug)
+    .map((ac) => ({
+      params: { category: categorySlug, city: mainCitySlug, slug: ac.page_slug! },
+      props: { kind: "AC" as const, ac } satisfies ACEntry,
+    }));
+
+  return [...lbsRoutes, ...acRoutes];
+}
+
+type Props = LBSEntry | ACEntry;
+const props = Astro.props as Props;
+
+const businessName = getBusinessName();
+const domain = getDomain();
+const nap = getNAP();
+const mainCity = getMainCity();
+const mainCitySlug = getMainCitySlug();
+const primaryCategory = getPrimaryCategory();
+const primaryCatSlug = getPrimaryCategorySlug();
+const trustSignals = getTrustSignals();
+const cta = getPreferredCTA();
+const lcas = getLCAs();
+
+let title: string;
+let description: string;
+let schema: Record<string, unknown>[];
+let h1: string;
+let entityName: string;
+let url: string;
+let faqs;
+
+if (props.kind === "LBS") {
+  const { service } = props;
+  url = `${domain}${primaryCatSlug}/${mainCitySlug}/${service.slug}/`;
+  faqs = getFaqsLBS();
+  entityName = service.name;
+  h1 = `${service.name} en ${mainCity}`;
+  title = `${service.name} en ${mainCity} · ${businessName}`;
+  description = `${service.name} en ${mainCity}: ${trustSignals[0] ?? ""}. Cobertura ${lcas.direct.join(", ")} y resto de distritos.`;
+  schema = buildLBSSchemas({
+    serviceName: service.name,
+    url,
+    faqs,
+    breadcrumbs: [
+      { name: "Inicio", url: domain },
+      { name: primaryCategory, url: `${domain}${primaryCatSlug}/` },
+      { name: mainCity, url: `${domain}${mainCitySlug}/` },
+      { name: service.name },
+    ],
+  });
+} else {
+  const { ac } = props;
+  url = `${domain}${primaryCatSlug}/${mainCitySlug}/${ac.page_slug}/`;
+  faqs = getFaqsAdditionalCategory();
+  entityName = ac.category;
+  h1 = `${ac.category} en ${mainCity}`;
+  title = `${ac.category} en ${mainCity} · ${businessName}`;
+  description = `${ac.category} en ${mainCity}. Servicio especializado con cobertura en todos los distritos.`;
+  schema = buildAdditionalCategorySchemas({
+    categoryName: ac.category,
+    url,
+    breadcrumbs: [
+      { name: "Inicio", url: domain },
+      { name: primaryCategory, url: `${domain}${primaryCatSlug}/` },
+      { name: mainCity, url: `${domain}${mainCitySlug}/` },
+      { name: ac.category },
+    ],
+  });
+}
+
+const allLcas = [mainCity, ...lcas.direct, ...lcas.candidate];
+const childTopics =
+  props.kind === "LBS"
+    ? getGeoArticleTopics().filter((t) => t.service_slug === props.service.slug)
+    : [];
+const ghUrl = `/${mainCitySlug}/`;
+const soUrl = props.kind === "LBS" ? `/${primaryCatSlug}/${props.service.slug}/` : null;
+---
+
+<BaseLayout title={title} description={description} schema={schema}>
+  <Hero
+    h1={h1}
+    subtitle={`Especialistas en ${entityName.toLowerCase()} con cobertura en todo ${mainCity}.`}
+    trustItem={trustSignals[0]}
+    ctaPrimary={cta}
+    ctaPrimaryHref="/contacto/"
+    ctaSecondary={`Llamar ${nap.phone}`}
+    ctaSecondaryHref={phoneHref(nap.phone)}
+  />
+
+  <section class="section">
+    <div class="container-wide">
+      <h2 class="text-center mb-10">Cobertura en {mainCity}</h2>
+      <div class="bg-primary-50 rounded-xl p-8 mb-8">
+        <p class="text-lg text-gray-800 leading-7 mb-4">
+          Trabajamos {entityName.toLowerCase()} en todo <strong>{mainCity}</strong>:
+        </p>
+        <div class="flex flex-wrap gap-2">
+          {allLcas.map((zona) => (
+            <span class="bg-white rounded-full px-4 py-2 text-sm font-medium text-primary-900">
+              {zona}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <TrustBlock />
+
+  <Faqs faqs={faqs} title={`FAQ — ${entityName} en ${mainCity}`} />
+
+  {childTopics.length > 0 && (
+    <section class="section bg-gray-50">
+      <div class="container-wide">
+        <h2 class="text-center mb-10">Más sobre {entityName.toLowerCase()}</h2>
+        <div class="grid gap-4 md:grid-cols-3">
+          {childTopics.map((t) => (
+            <a
+              href={`/${mainCitySlug}/${t.topic_slug}/`}
+              class="block bg-white rounded-xl p-4 hover:bg-primary-50 no-underline text-sm"
+            >
+              {t.title}
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="section">
+    <div class="container-narrow text-center">
+      <p class="text-sm text-gray-600 mb-4">
+        {soUrl && (
+          <>
+            ¿Servicio en general? <a href={soUrl}>{entityName}</a>.{" "}
+          </>
+        )}
+        Ver el <a href={ghUrl}>índice de servicios en {mainCity}</a>.
+      </p>
+      <a href="/contacto/" class="btn-primary">{cta}</a>
+    </div>
+  </section>
+</BaseLayout>

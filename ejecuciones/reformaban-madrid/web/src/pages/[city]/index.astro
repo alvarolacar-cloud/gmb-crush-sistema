@@ -1,0 +1,121 @@
+---
+/**
+ * GeoHub — `/[city]/`
+ * Doctrina: contenedor de ciudad. Schema CollectionPage + BreadcrumbList.
+ */
+import BaseLayout from "@layouts/BaseLayout.astro";
+import TrustBlock from "@components/TrustBlock.astro";
+import Faqs from "@components/Faqs.astro";
+import {
+  getDomain,
+  getBusinessName,
+  getMainCity,
+  getMainCitySlug,
+  getPrimaryCategorySlug,
+  getServices,
+  getLCAs,
+  getGeoArticleTopics,
+  getAdditionalCategoriesWithPage,
+  getFaqsGeoHub,
+  getPreferredCTA,
+} from "@lib/cluster";
+import { buildGeoHubSchemas } from "@lib/schemas";
+
+export async function getStaticPaths() {
+  return [{ params: { city: getMainCitySlug() } }];
+}
+
+const businessName = getBusinessName();
+const domain = getDomain();
+const mainCity = getMainCity();
+const mainCitySlug = getMainCitySlug();
+const primaryCatSlug = getPrimaryCategorySlug();
+const services = getServices();
+const lcas = getLCAs();
+const topics = getGeoArticleTopics();
+const additionals = getAdditionalCategoriesWithPage();
+const faqs = getFaqsGeoHub();
+const cta = getPreferredCTA();
+
+const url = `${domain}${mainCitySlug}/`;
+const title = `Servicios en ${mainCity} · ${businessName}`;
+const description = `Cobertura completa en ${mainCity}: ${services.map((s) => s.name).join(", ")}. ${lcas.direct.join(", ")}, ${lcas.candidate.slice(0, 4).join(", ")} y más.`;
+
+const schema = buildGeoHubSchemas({
+  cityName: mainCity,
+  url,
+  breadcrumbs: [
+    { name: "Inicio", url: domain },
+    { name: mainCity },
+  ],
+});
+---
+
+<BaseLayout title={title} description={description} schema={schema}>
+  <section class="bg-gradient-to-b from-primary-50 to-white">
+    <div class="container-narrow py-16 md:py-24 text-center">
+      <h1 class="mb-6">Servicios en {mainCity}</h1>
+      <p class="text-lg text-gray-700 mb-8 max-w-prose mx-auto">
+        Cobertura completa en {mainCity}: {lcas.direct.join(", ")}, {lcas.candidate.slice(0, 4).join(", ")} y más.
+      </p>
+      <a href="/contacto/" class="btn-primary">{cta}</a>
+    </div>
+  </section>
+
+  <section class="section bg-gray-50">
+    <div class="container-wide">
+      <h2 class="text-center mb-10">Nuestros servicios en {mainCity}</h2>
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {services.map((s) => (
+          <a
+            href={`/${primaryCatSlug}/${mainCitySlug}/${s.slug}/`}
+            class="block bg-white rounded-xl p-6 shadow hover:shadow-lg transition-shadow no-underline"
+          >
+            <h3 class="text-lg font-bold text-primary-900 mb-2">{s.name}</h3>
+            <p class="text-sm text-gray-600">En {mainCity}, presupuesto sin compromiso.</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {additionals.length > 0 && (
+    <section class="section">
+      <div class="container-wide">
+        <h2 class="text-center mb-10">Otros servicios</h2>
+        <div class="grid gap-6 md:grid-cols-2">
+          {additionals.map((ac) => (
+            <a
+              href={`/${primaryCatSlug}/${mainCitySlug}/${ac.page_slug}/`}
+              class="block bg-white rounded-xl p-6 shadow hover:shadow-lg no-underline"
+            >
+              <h3 class="text-lg font-bold text-primary-900 mb-2">{ac.category}</h3>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {topics.length > 0 && (
+    <section class="section bg-gray-50">
+      <div class="container-wide">
+        <h2 class="text-center mb-10">Guías sobre {mainCity}</h2>
+        <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {topics.slice(0, 12).map((t) => (
+            <a
+              href={`/${mainCitySlug}/${t.topic_slug}/`}
+              class="block bg-white rounded-xl p-4 hover:bg-primary-50 no-underline text-sm"
+            >
+              {t.title}
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <TrustBlock />
+
+  <Faqs faqs={faqs} title={`Preguntas frecuentes — ${mainCity}`} />
+</BaseLayout>
