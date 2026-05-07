@@ -10,7 +10,7 @@ Si no están, construye hasta `dist/` y marca `⚠ pendiente tokens` — no bloq
 1. Crear repo GitHub con nombre `[slug-negocio]-web` (ej: `fontaneros-express-barcelona-web`)
 2. Push del proyecto al repo
 3. Conectar Cloudflare Pages al repo:
-   - Build command: `pnpm build`
+   - Build command: `pnpm run build`
    - Output directory: `dist/`
 4. Verificar que la web está LIVE y todas las URLs de la URL Matrix responden
 

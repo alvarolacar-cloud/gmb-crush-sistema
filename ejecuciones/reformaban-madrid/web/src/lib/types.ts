@@ -137,10 +137,18 @@ export interface DesignTokens {
   font_family: string;
 }
 
+export interface GeoArticleSection {
+  h2: string;
+  /** HTML parcial — se renderiza con set:html. Solo p, ul, li, strong, a. */
+  content: string;
+}
+
 export interface GeoArticleTopic {
   service_slug: string;
   topic_slug: string;
   title: string;
+  /** Secciones redactadas. Si está vacío → se muestra placeholder. */
+  sections?: GeoArticleSection[];
 }
 
 export interface FAQ {

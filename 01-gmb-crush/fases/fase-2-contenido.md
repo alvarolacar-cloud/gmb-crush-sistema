@@ -10,15 +10,17 @@
 
 **Fuente de las specs:** `Doctrina GMB Crush` (estructura y función por page type).
 
+> **Word counts canónicos:** los rangos definitivos por page type están en `fase-2b-redaccion.md`. Los de esta tabla son orientativos para el brief; en caso de conflicto, prevalece Fase 2b.
+
 | Page Type | H1 | Word count | CTA | Secciones obligatorias |
 |-----------|----|-----------:|-----|------------------------|
-| Homepage | Marca o Categoría+Ciudad | 800-1200 | Principal del negocio | Hero + Servicios + Trust + NAP + Links |
-| Service Overview | Servicio (sin ciudad) | 1000-1500 | Suave → "¿Necesitas esto en [ciudad]?" | Qué es + Proceso + Problemas + FAQs genéricas |
-| LBS | Servicio + Ciudad | 1200-1800 | Fuerte (Llamar/Presupuesto) | Contexto local + Proceso + FAQs locales + LCAs en contenido |
-| GeoHub | "Servicios en [Ciudad]" | 600-1000 | Navegacional | Índice servicios + Índice artículos + Cobertura |
-| GeoArticle | Pregunta/tema + Ciudad | 800-1200 (mínimo si topic simple/pregunta directa; máximo si comparativa o proceso complejo) | Suave → enlace a LBS | Respuesta directa + Desarrollo + Contexto local + **3 puentes narrativos** (enlaces contextuales distribuidos en el cuerpo que llevan a la LBS padre) |
-| Additional Category | Categoría + Ciudad | 1000-1500 | Fuerte | Similar a LBS |
-| Contacto | "Contacto" | 300-500 | Formulario + teléfono | NAP + Horarios + Formulario + Mapa |
+| Homepage | Marca o Categoría+Ciudad | 900–1.200 | Principal del negocio | Hero + Servicios + Trust + NAP + Links |
+| Service Overview | Servicio (sin ciudad) | 850–1.000 | Suave → "¿Necesitas esto en [ciudad]?" | Qué es + Proceso + Problemas + FAQs genéricas |
+| LBS | Servicio + Ciudad | 800–1.000 | Fuerte (Llamar/Presupuesto) | Contexto local + Proceso + FAQs locales + LCAs en contenido |
+| GeoHub | "Servicios en [Ciudad]" | 700–1.100 | Navegacional | Índice servicios + Índice artículos + Cobertura |
+| GeoArticle | Pregunta/tema + Ciudad | 1.000–1.500 | Suave → enlace a LBS | Respuesta directa + Desarrollo + Contexto local + **3 puentes narrativos** (enlaces contextuales distribuidos en el cuerpo que llevan a la LBS padre) |
+| Additional Category | Categoría + Ciudad | 800–1.000 | Fuerte | Similar a LBS |
+| Contacto | "Contacto" | 300–500 | Formulario + teléfono | NAP + Horarios + Formulario + Mapa |
 
 ### 4.3 Elección de CTA
 **Fuente:** `Doctrina + Local Pack` (CTA dominante en top 5 competidores). Si no tienes acceso a Local Pack, usa esta tabla como fallback (`⚠ inferido`):
@@ -54,7 +56,7 @@ Menciona **2-3 LCAs por LBS** (las más relevantes para ese servicio, no todas e
 | Contacto | `ContactPoint` + `Organization` | — |
 
 **Reglas de Schema:**
-- `sameAs`: vacío (no hay GBP todavía).
+- `sameAs`: **omitir el campo completamente** si el GBP no existe (no poner `""` ni `[]` — un valor vacío en JSON-LD es diferente a ausencia del campo).
 - `aggregateRating`: no incluir (no hay reseñas reales).
 - `address`: solo la dirección real del NAP. Si es `[DIRECCIÓN]` placeholder, no incluir el campo.
 - `areaServed`: Main City + Direct LCAs + Candidate LCAs validadas (solo cobertura real). Formato: `{"@type": "City", "name": "[Ciudad]"}` para Main City, `{"@type": "AdministrativeArea", "name": "[Barrio]"}` para LCAs validadas. No incluir zonas aspiracionales ni sin validar (coherente con §3.5).

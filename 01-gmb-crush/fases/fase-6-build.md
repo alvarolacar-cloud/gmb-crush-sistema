@@ -56,10 +56,33 @@ pnpm install
 CLUSTER_PATH=./outputs.json pnpm build
 ```
 
-Si el build falla, diagnosticar y corregir. Los errores más comunes son:
-- `outputs.json` con campos faltantes → añadir el output que falta.
-- Slug inválido (acentos, espacios) → aplicar slugify.
-- Tipo incorrecto en un valor → revisar `types.ts`.
+**Regla:** ejecutar `pnpm install && pnpm build` localmente antes de cada push a Cloudflare. Si falla en local, fallará en producción.
+
+**Autonomous bug fixing — protocolo de errores de build:**
+Si `pnpm build` falla, no preguntes al operador — diagnostica y corrige:
+1. Lee el error completo en el output del build.
+2. Identifica la causa raíz (columna "Causa" de la tabla de abajo).
+3. Aplica el fix y vuelve a ejecutar `pnpm build`.
+4. Repite hasta 3 veces. Si tras 3 intentos sigue fallando → para y reporta al operador con: error exacto + causa identificada + qué intentaste.
+
+**Stack canónico — NO negociable:**
+- Astro 5 (no Astro 6 — incompatible con `@astrojs/tailwind`)
+- Tailwind v3 (no Tailwind v4 — v4 requiere `@tailwindcss/vite`, no funciona con la integración canónica)
+- pnpm (no npm ni yarn — rompe el build de Cloudflare)
+- Cualquier cambio de stack → escalar al operador, no resolver solo.
+
+**Errores frecuentes y solución:**
+
+| Error | Causa | Fix |
+|-------|-------|-----|
+| `outputs.json` con campos faltantes | Output de una fase anterior no generado | Añadir el output que falta con `status: "⚠ placeholder"` |
+| Slug inválido (acentos, espacios) | Valor sin slugify | Aplicar `slugify()` al campo |
+| Tipo incorrecto en un valor | Mismatch con `types.ts` | Revisar tipo esperado en `plantilla-astro/src/lib/types.ts` |
+| `Cannot find module '@astrojs/tailwind'` | Se instaló Tailwind v4 en lugar de v3 | `pnpm remove tailwindcss && pnpm add -D tailwindcss@3.x @astrojs/tailwind` |
+| Build pasa en local pero falla en Cloudflare | Build command usa `npm` en Cloudflare | En Cloudflare Pages → Settings → Build command: `pnpm run build` (no `npm run build`) |
+| URLs en `dist/` no coinciden con URL Matrix | Directorio extra en `src/pages/` | La estructura de `src/pages/` debe replicar exactamente la URL Matrix. Ningún directorio extra. |
+| Schema `sameAs` apunta a GBP inexistente | Se añadió `sameAs` antes de crear el GBP | Omitir `sameAs` completamente si el GBP no existe. Añadirlo en Fase 8 cuando el GBP esté creado. |
+| `<meta name="generator" content="Astro">` en HTML | No se eliminó en limpieza | Eliminar en `BaseLayout.astro` o `Layout.astro` |
 
 ### 8.4 Verificar
 
@@ -69,6 +92,22 @@ Si el build falla, diagnosticar y corregir. Los errores más comunes son:
 - **Cluster completo por servicio:** Cada core service tiene su SO + LBS + G GeoArticles generados. No publicar una LBS sin sus GeoArticles asociados.
 - **Orden topológico:** Ninguna página hija existe sin su padre (no hay LBS sin SO, no hay GA sin LBS).
 - **Links válidos:** Todos los enlaces internos apuntan a URLs que existen en la URL Matrix. Ningún enlace a URL inexistente o no aprobada (anti-404).
+
+### 8.5 Configuración Cloudflare Pages
+
+Al conectar el repo a Cloudflare Pages, verificar estos 4 campos:
+
+| Campo | Valor correcto |
+|-------|----------------|
+| Build command | `pnpm run build` |
+| Build output directory | `dist` |
+| Root directory | ruta al proyecto si está en subcarpeta (ej. `ejecuciones/reformaban/`) |
+| Node.js version | Compatible con Astro 5 (≥ 18.x) |
+
+**Dominio y SSL:**
+- Conectar dominio del output 1.2.
+- Configurar redirección www ↔ apex según versión canónica del output 1.3.
+- SSL: auto-SSL completo de Cloudflare (no Flexible).
 
 ---
 

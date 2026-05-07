@@ -17,7 +17,7 @@ import {
   getPreferredCTA,
 } from "@lib/cluster";
 import { buildGeoArticleSchemas } from "@lib/schemas";
-import type { GeoArticleTopic } from "@lib/types";
+import type { GeoArticleTopic, GeoArticleSection } from "@lib/types";
 
 export async function getStaticPaths() {
   const topics = getGeoArticleTopics();
@@ -79,25 +79,32 @@ const schema = buildGeoArticleSchemas({
 
     <section class="section">
       <div class="container-narrow prose-styles">
-        <h2 class="mb-6">Desglose</h2>
-        <p class="text-gray-700 leading-7 mb-6">
-          [Contenido pendiente — el cliente o la IA writer del Paso 15 redactará aquí ≥1000 palabras de respuesta detallada con factores, casos y referencias locales a {mainCity}.]
-        </p>
-
-        <h2 class="mb-6">Factores que influyen</h2>
-        <p class="text-gray-700 leading-7 mb-6">
-          [Pendiente.]
-        </p>
-
-        <h2 class="mb-6">Casos en {mainCity}</h2>
-        <p class="text-gray-700 leading-7 mb-6">
-          [Pendiente.]
-        </p>
+        {topic.sections && topic.sections.length > 0 ? (
+          <>
+            {topic.sections.map((section: GeoArticleSection) => (
+              <>
+                <h2 class="mb-4 mt-10">{section.h2}</h2>
+                <div class="text-gray-700 leading-7 mb-6" set:html={section.content} />
+              </>
+            ))}
+          </>
+        ) : (
+          <>
+            <h2 class="mb-6">Desglose</h2>
+            <p class="text-gray-700 leading-7 mb-6">
+              [Contenido pendiente — redactar ≥1000 palabras con factores, casos y referencias locales a {mainCity}.]
+            </p>
+            <h2 class="mb-6">Factores que influyen</h2>
+            <p class="text-gray-700 leading-7 mb-6">[Pendiente.]</p>
+            <h2 class="mb-6">Casos en {mainCity}</h2>
+            <p class="text-gray-700 leading-7 mb-6">[Pendiente.]</p>
+          </>
+        )}
 
         {parentService && (
           <div class="bg-primary-50 rounded-xl p-6 my-10">
             <p class="text-gray-700 mb-3">
-              ¿Quieres presupuesto para <strong>{parentService.name}</strong> en {mainCity}?
+              ¿Necesitas <strong>{parentService.name}</strong> en {mainCity}? Solicita presupuesto sin compromiso.
             </p>
             <a href={lbsUrl} class="btn-primary">Ver {parentService.name} en {mainCity}</a>
           </div>

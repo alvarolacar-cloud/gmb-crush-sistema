@@ -18,6 +18,7 @@ sistemas-creacion-webs/
 │   │   ├── fase-1-fundamentos.md
 │   │   ├── fase-2-contenido.md
 │   │   ├── fase-3-docs-canonicos.md
+│   │   ├── fase-2b-redaccion.md
 │   │   ├── fase-4-test-doctrinal.md
 │   │   ├── fase-5-diseno.md
 │   │   ├── fase-6-build.md
@@ -43,12 +44,34 @@ sistemas-creacion-webs/
 ### PASO 1 — Ejecución GMB Crush (01-gmb-crush/)
 1. Lee `01-gmb-crush/SISTEMA.md` completo — es corto, tiene las convenciones y el índice de fases
 2. Rellena `01-gmb-crush/PREFLIGHT.md` con los datos del cliente
-3. Antes de cada fase, lee su archivo en `fases/` completo
-4. En Fase 4 ejecuta el Test Doctrinal completo (17 puntos), presenta los resultados al operador y **para aquí** — espera aprobación antes de continuar a Fase 5 (Extracción de Diseño)
+3. **⚠ OBLIGATORIO: antes de ejecutar cada fase, lee su archivo en `fases/` completo** — nunca ejecutes una fase de memoria
+4. En Fase 4 ejecuta el Test Doctrinal completo (lee `fase-4-test-doctrinal.md`), presenta los resultados al operador y **para aquí** — espera aprobación antes de continuar a Fase 5 (Diseño)
 
 ### PASO 2 — Guardar resultados (ejecuciones/)
-Crea carpeta `ejecuciones/[nombre-negocio-slug]/` con todos los outputs generados.
+⚠ Crea la carpeta `ejecuciones/[nombre-negocio-slug]/` **al arrancar PASO 1, antes de ejecutar la Fase 1** — no al final del proyecto.
+Guarda ahí todos los outputs generados durante cada fase.
 Consulta `ejecuciones/aerotermia-madrid/` como ejemplo de referencia de una ejecución completa.
+
+## lessons.md — Memoria de errores por proyecto
+
+Cada ejecución tiene un archivo `ejecuciones/[slug]/lessons.md`.
+
+**Al iniciar una sesión sobre un proyecto:**
+Lee `ejecuciones/[slug]/lessons.md` si existe. Aplica cada lección antes de ejecutar nada.
+
+**Después de cualquier corrección del operador:**
+Documenta el patrón en ese archivo inmediatamente. Formato:
+
+```markdown
+## [fecha] — [título corto del error]
+**Qué pasé:** descripción breve de lo que hice mal.
+**Por qué:** causa raíz.
+**Regla:** lo que hago diferente a partir de ahora.
+```
+
+Si el archivo no existe, créalo en el momento de la primera corrección.
+
+---
 
 ## Reglas que nunca puedes romper
 - Las LCAs (barrios, distritos, zonas) nunca generan URLs sin aprobación explícita del operador. **Aprobación explícita = el operador lo escribe en el chat o lo declara en PREFLIGHT.md**. Una aprobación implícita, sugerida o inferida no cuenta.

@@ -26,22 +26,3 @@ Cuando el operador entregue un dato pendiente:
 4. Eliminar la fila de la tabla.
 5. Cuando la tabla esté vacía → GBP desbloqueado.
 
----
-
-## 11. Instrucción de Arranque
-
-**Antes de ejecutar, pregunta al operador:**
-
-> ¿Quieres que busque datos reales (Local Pack, keyword research) o que infiera y avance rápido?
-
-Con la respuesta, decides:
-- **"Busca datos reales":** Ejecutas las fuentes canónicas (Google Maps top 5, Ahrefs/Semrush). Los outputs salen como `confirmed` o `validated`. Más lento, más preciso.
-- **"Infiere y avanza":** Infieres con lógica y marcas `⚠ inferido`. La tabla de pendientes indicará qué validar después. Más rápido, requiere validación posterior.
-
-**Si el operador dice "busca" y tienes acceso a la tool, DEBES usarla.** No inferir por rapidez cuando el operador pidió datos reales.
-
-Después, pide el Preflight al operador con este mensaje exacto:
-
-> Pásame los datos del preflight. Recuerda indicarme las ciudades que quieres que analice cuando investigue el Local Pack (tu ciudad principal + las que quieras para comparar servicios del sector).
-
-Cuando lo tengas, ejecuta las 8 fases en orden sin detenerte. Si necesitas más detalle sobre el contenido de cada page type, consulta `referencias/page-type-specs.md`. Si necesitas ver un ejemplo completo de arquitectura, consulta `referencias/ejemplo-cerrajeros.md`.
