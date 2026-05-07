@@ -4,8 +4,8 @@
 
 Antes de construir la web, la IA investiga el Local Pack del sector y entrega al operador un informe visual con los competidores. El operador decide:
 
-1. **Qué web usar como referencia de diseño**
-2. **Qué servicios poner en la web**
+1. **Qué servicios poner en la web**
+2. **Qué web usar como referencia de diseño**
 
 Con esas decisiones confirmadas, se pasa a la forma de construcción elegida (ej: GMB Crush).
 
@@ -13,11 +13,13 @@ Con esas decisiones confirmadas, se pasa a la forma de construcción elegida (ej
 
 ## Input necesario
 
-| Campo | Obligatorio |
-|-------|:-----------:|
-| Qué hace el negocio (servicio principal) | Sí |
-| Ciudad principal | Sí |
-| Ciudades adicionales para comparar (opcional) | No |
+Antes de buscar nada, pregunta al operador:
+
+1. **¿Cuál es el servicio principal del negocio?**
+2. **¿Cuál es la ciudad principal?**
+3. **¿Quieres analizar ciudades adicionales?** (si sí, lista cuáles)
+
+No empieces la investigación hasta tener estas respuestas.
 
 ---
 
@@ -27,40 +29,42 @@ Con esas decisiones confirmadas, se pasa a la forma de construcción elegida (ej
 
 1. Buscar `[servicio principal] [ciudad]` en Google Maps.
 2. Identificar los **5 primeros perfiles** del Local Pack.
-3. Para cada competidor, extraer:
-   - Nombre del negocio
-   - URL de su web
-   - Categoría GBP principal
-   - Categorías secundarias
-   - Servicios listados en el perfil
-   - Trust signals visibles (años, reseñas, badges)
-   - CTA principal de su web
-4. Si el operador dio ciudades adicionales, repetir para cada ciudad.
-5. Producir el **Informe de Competidores**.
+3. Para cada competidor, **entra en su web** y extrae **todos los servicios** que ofrece — no solo los del perfil GBP. Lee su menú, sus páginas de servicios, su footer. El objetivo es tener la lista completa.
+4. También extrae por competidor:
+   - Nombre y URL
+   - Categoría GBP principal y secundarias
+   - Trust signals visibles (años experiencia, reseñas, certificaciones, badges)
+   - CTA principal
+5. Si el operador dio ciudades adicionales, repetir para cada ciudad.
+6. Producir el **Informe de Competidores**.
 
 ---
 
 ## Output: Informe de Competidores
 
 ```markdown
-## Informe de Competidores — [Servicio] en [Ciudad]
+## Informe de Competidores — [Servicio] en [Ciudad(es)]
 
 ### Top 5 Local Pack
 
-| # | Nombre | Web | Categoría Principal | Servicios | Trust Signals | CTA |
-|---|--------|-----|--------------------:|-----------|---------------|-----|
-| 1 | ... | ... | ... | ... | ... | ... |
-| 2 | ... | ... | ... | ... | ... | ... |
-| 3 | ... | ... | ... | ... | ... | ... |
-| 4 | ... | ... | ... | ... | ... | ... |
-| 5 | ... | ... | ... | ... | ... | ... |
+| # | Nombre | Web | ★ | Reseñas | Trust signals | CTA principal |
+|---|--------|-----|----|---------|---------------|---------------|
+| 1 | ...    | ... | .. | ...     | ...           | ...           |
+| 2 | ...    | ... | .. | ...     | ...           | ...           |
+| 3 | ...    | ... | .. | ...     | ...           | ...           |
+| 4 | ...    | ... | .. | ...     | ...           | ...           |
+| 5 | ...    | ... | .. | ...     | ...           | ...           |
 
-### Servicios más frecuentes (aparecen en 2+ competidores)
-1. [servicio] (4 de 5)
-2. [servicio] (3 de 5)
-3. [servicio] (3 de 5)
-4. [servicio] (2 de 5)
-5. [servicio] (2 de 5)
+### Matriz de servicios
+
+| Servicio | Comp 1 | Comp 2 | Comp 3 | Comp 4 | Comp 5 | Total |
+|----------|:------:|:------:|:------:|:------:|:------:|:-----:|
+| [serv A] |   ✓    |   ✓    |   ✓    |   ✓    |   ✓    |  5/5  |
+| [serv B] |   ✓    |   ✓    |        |   ✓    |        |  3/5  |
+| [serv C] |        |   ✓    |        |        |   ✓    |  2/5  |
+| [serv D] |   ✓    |        |        |        |        |  1/5  |
+
+_Ordenada de más a menos frecuente. Sirve para decidir qué servicios incluir._
 
 ### Categoría GBP más frecuente
 [categoría] (aparece en X de 5)
@@ -70,7 +74,7 @@ Con esas decisiones confirmadas, se pasa a la forma de construcción elegida (ej
 2. [URL] — motivo
 
 ### Preguntas para el operador
-1. ¿Qué servicios quieres incluir? (recomendación: los top 4-5 de la tabla)
+1. ¿Qué servicios quieres incluir? (recomendación: los que aparecen en 3+/5)
 2. ¿Qué web te gusta como referencia de diseño?
 ```
 
