@@ -44,7 +44,7 @@ sistemas-creacion-webs/
 1. Lee `01-gmb-crush/SISTEMA.md` completo — es corto, tiene las convenciones y el índice de fases
 2. Rellena `01-gmb-crush/PREFLIGHT.md` con los datos del cliente
 3. Antes de cada fase, lee su archivo en `fases/` completo
-4. En Fase 4 ejecuta el Test Doctrinal completo (17 puntos), presenta los resultados al operador y **para aquí** — espera aprobación antes de continuar al build
+4. En Fase 4 ejecuta el Test Doctrinal completo (17 puntos), presenta los resultados al operador y **para aquí** — espera aprobación antes de continuar a Fase 5 (Extracción de Diseño)
 
 ### PASO 2 — Guardar resultados (ejecuciones/)
 Crea carpeta `ejecuciones/[nombre-negocio-slug]/` con todos los outputs generados.
@@ -53,7 +53,7 @@ Consulta `ejecuciones/aerotermia-madrid/` como ejemplo de referencia de una ejec
 ## Reglas que nunca puedes romper
 - Las LCAs (barrios, distritos, zonas) nunca generan URLs sin aprobación explícita del operador. **Aprobación explícita = el operador lo escribe en el chat o lo declara en PREFLIGHT.md**. Una aprobación implícita, sugerida o inferida no cuenta.
 - No inventes teléfono, dirección, reseñas, certificaciones ni fotos
-- Si el Test Doctrinal falla, no continúes al build aunque el operador lo pida — explica qué falla primero
+- Si el Test Doctrinal falla, no continúes a Fase 5 aunque el operador lo pida — explica qué falla primero
 - Todos los datos inciertos se marcan como ⚠ inferido o ⚠ placeholder, nunca se asumen como confirmados
 
 ## Antes de hacer cualquier commit
