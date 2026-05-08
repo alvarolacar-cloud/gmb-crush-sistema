@@ -50,12 +50,20 @@ Pide estos datos. Con solo **"qué hace" + "ciudad"** ya arrancas.
 
 ---
 
-## 3. Las 9 Fases — Léelas en orden
+## 3. Las 9 Fases
 
-Cada fase tiene su propio archivo en `fases/`. **Léelo completo antes de ejecutar esa fase — nunca ejecutes una fase de memoria.**
+> ### ⛔ PROTOCOLO OBLIGATORIO — sin excepción
+>
+> **Tu primera acción al arrancar cada fase es abrir y leer el archivo de esa fase.**
+> No lo resumas, no lo recuerdes de contexto anterior, no lo infierras del SISTEMA.md.
+> **Abre el archivo. Léelo. Luego ejecuta.**
+>
+> **Por qué:** Este archivo contiene solo el resumen de cada fase. Los patrones exactos (URLs, fórmulas, schemas, naming) viven en el archivo de fase. Ejecutar sin leerlo produce outputs con la arquitectura correcta en concepto pero con errores de detalle — URLs mal formadas, páginas faltantes, fórmulas no verificadas. Estos errores se propagan a todas las fases siguientes.
+>
+> **Este es el error operativo más común y más caro del sistema.**
 
-| Fase | Archivo | Qué produces |
-|------|---------|--------------|
+| Fase | Abre este archivo primero | Qué produces |
+|------|--------------------------|--------------|
 | **Fase 1** — Fundamentos y Arquitectura | `fases/fase-1-fundamentos.md` | Main City, servicios, URLs, fórmula de páginas |
 | **Fase 2** — Contenido | `fases/fase-2-contenido.md` | Textos, schemas, enlaces internos |
 | **Fase 3** — Docs Canónicos | `fases/fase-3-docs-canonicos.md` | 6 documentos de referencia del cluster |
@@ -68,7 +76,26 @@ Cada fase tiene su propio archivo en `fases/`. **Léelo completo antes de ejecut
 
 ---
 
-## 4. Instrucción de Arranque
+## 4. Estructura de Repos
+
+Este sistema opera con **dos repositorios separados**:
+
+| Repo | Ruta | Contiene |
+|------|------|----------|
+| **Sistema** | `sistemas-creacion-webs/01-gmb-crush/` | SISTEMA.md, fases, plantilla-astro, referencias |
+| **Ejecuciones** | `gmb-crush-ejecuciones/` | Una carpeta por cliente (`[slug-cliente]/`) |
+
+**Al arrancar una ejecución nueva:**
+1. Crea la carpeta del cliente en el repo de ejecuciones: `gmb-crush-ejecuciones/[slug-cliente]/`
+2. Copia la plantilla: `cp -r sistemas-creacion-webs/01-gmb-crush/plantilla-astro/ gmb-crush-ejecuciones/[slug-cliente]/web/`
+3. Trabaja desde `gmb-crush-ejecuciones/[slug-cliente]/` para todo lo del cliente
+4. Lee los archivos de fase desde el repo del sistema cuando los necesites
+
+**Nunca crees carpetas de cliente dentro del repo del sistema.**
+
+---
+
+## 5. Instrucción de Arranque
 
 **Antes de ejecutar, pregunta al operador:**
 

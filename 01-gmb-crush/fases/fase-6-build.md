@@ -93,7 +93,32 @@ Si `pnpm build` falla, no preguntes al operador — diagnostica y corrige:
 - **Orden topológico:** Ninguna página hija existe sin su padre (no hay LBS sin SO, no hay GA sin LBS).
 - **Links válidos:** Todos los enlaces internos apuntan a URLs que existen en la URL Matrix. Ningún enlace a URL inexistente o no aprobada (anti-404).
 
-### 8.5 Configuración Cloudflare Pages
+### 8.5 — Visual QA (OBLIGATORIO antes de entregar)
+
+**Antes de dar por buena la entrega**, compara el site construido contra la web de referencia:
+
+1. **Screenshot del site construido** — captura la homepage desplegada en Cloudflare Pages (o localhost).
+2. **Screenshot de la web de referencia** — captura la homepage de la web de referencia usada en Doc C.
+3. **Compara sección a sección** y lista las discrepancias:
+
+| Sección | Referencia | Construido | Discrepancia |
+|---------|-----------|------------|--------------|
+| Hero | [descripción] | [descripción] | [diferencia] |
+| Servicios | [descripción] | [descripción] | [diferencia] |
+
+4. **Clasifica cada discrepancia:**
+   - 🔴 **Bloqueante** — color primario diferente, layout roto, texto ilegible → corregir antes de entregar
+   - 🟡 **Menor** — espaciado ligeramente diferente, sombra distinta → documentar en notes del output
+   - ⚪ **Aceptada** — diferencia intencional (mejora sobre la referencia) → documentar en notes
+
+5. **Corrige los bloqueantes** y vuelve a hacer el screenshot.
+6. **Reporta al operador** con el resultado del QA: lista de discrepancias menores aceptadas + confirmación de que no hay bloqueantes.
+
+> Sin este paso, el operador no puede saber si el diseño es fiel a la referencia hasta que lo ve en producción. El QA visual aquí es más barato que una corrección post-entrega.
+
+---
+
+### 8.6 Configuración Cloudflare Pages
 
 Al conectar el repo a Cloudflare Pages, verificar estos 4 campos:
 
@@ -101,7 +126,7 @@ Al conectar el repo a Cloudflare Pages, verificar estos 4 campos:
 |-------|----------------|
 | Build command | `pnpm run build` |
 | Build output directory | `dist` |
-| Root directory | ruta al proyecto si está en subcarpeta (ej. `ejecuciones/reformaban/`) |
+| Root directory | ruta al proyecto en el repo de ejecuciones (ej. `gmb-crush-ejecuciones/reformaban-madrid/web/`) |
 | Node.js version | Compatible con Astro 5 (≥ 18.x) |
 
 **Dominio y SSL:**
