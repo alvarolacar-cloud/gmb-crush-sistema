@@ -82,6 +82,25 @@ Si el archivo no existe, créalo en el momento de la primera corrección.
 
 ---
 
+## Propagación de cambios — obligatorio tras cualquier modificación
+
+Cada vez que modifiques un archivo, antes de dar el trabajo por terminado:
+
+1. Busca en todo el repo referencias al archivo modificado y a los términos clave que cambiaste (nombres de rutas, números de output, nombres de secciones, conceptos renombrados).
+2. Por cada referencia encontrada, analiza si necesita actualizarse por coherencia con el cambio que acabas de hacer.
+3. Si necesita actualizarse — actualízala sin preguntar.
+4. Repite hasta que no quede ninguna referencia desactualizada.
+
+**Ejemplos de qué buscar:**
+- Cambiaste una ruta (`ejecuciones/` → `gmb-crush-ejecuciones/`) → busca la ruta antigua en todos los `.md` y actualízala
+- Renombraste un output (`16.3` → `16.7`) → busca el número antiguo y actualiza todas las menciones
+- Moviste una sección → busca referencias a ese nombre de sección en otros archivos
+- Cambiaste el nombre de un archivo → busca ese nombre en todos los archivos que puedan enlazarlo
+
+**El operador no debería tener que pedirte que actualices las referencias — es tu responsabilidad hacerlo como parte del mismo cambio.**
+
+---
+
 ## Reglas que nunca puedes romper
 - Las LCAs (barrios, distritos, zonas) nunca generan URLs sin aprobación explícita del operador. **Aprobación explícita = el operador lo escribe en el chat o lo declara en PREFLIGHT.md**. Una aprobación implícita, sugerida o inferida no cuenta.
 - No inventes teléfono, dirección, reseñas, certificaciones ni fotos
