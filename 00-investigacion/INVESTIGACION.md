@@ -34,7 +34,6 @@ No empieces la investigación hasta tener estas respuestas.
    - Nombre y URL
    - Categoría GBP principal y secundarias
    - Trust signals visibles (años experiencia, reseñas, certificaciones, badges)
-   - CTA principal
 5. Si el operador dio ciudades adicionales, repetir para cada ciudad.
 6. Producir el **Informe de Competidores**.
 
@@ -47,7 +46,7 @@ No empieces la investigación hasta tener estas respuestas.
 
 ### Top 5 Local Pack
 
-| # | Nombre | Web | ★ | Reseñas | Trust signals | CTA principal |
+| # | Nombre | Web | ★ | Reseñas | Trust signals |
 |---|--------|-----|----|---------|---------------|---------------|
 | 1 | ...    | ... | .. | ...     | ...           | ...           |
 | 2 | ...    | ... | .. | ...     | ...           | ...           |
@@ -99,7 +98,6 @@ Con las confirmaciones del operador, arranca `01-gmb-crush/SISTEMA.md` pasando e
 | Categoría GBP más frecuente | Fase 1 — output 1.5 (Primary Category) |
 | Categorías secundarias de competidores | Fase 1 — output 1.6 (Additional Categories) |
 | Trust signals del sector | Fase 1 — output 1.14 |
-| CTA dominante en el sector | Fase 2 — output 1.13 |
 | Web de referencia de diseño | Fase 5 — Paso 0 |
 
 El agente que ejecuta GMB Crush **no repite la investigación de Local Pack** para estos datos — los toma del informe y los marca como `confirmed` directamente.

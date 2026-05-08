@@ -23,7 +23,7 @@
 | Contacto | "Contacto" | 300–500 | Formulario + teléfono | NAP + Horarios + Formulario + Mapa |
 
 ### 4.3 Elección de CTA
-**Fuente:** Si existe el Informe de Competidores (Fase 0) → tomar la columna "CTA principal" del informe, marcar `confirmed`. Si no existe el informe → `Doctrina + Local Pack` (CTA dominante en top 5 competidores). Si no tienes acceso a Local Pack, usa esta tabla como fallback (`⚠ inferido`):
+**Fuente:** `Doctrina GMB Crush`. Usa esta tabla según el tipo de servicio:
 
 | Tipo de servicio | CTA principal |
 |------------------|---------------|
