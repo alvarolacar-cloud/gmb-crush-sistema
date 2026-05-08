@@ -30,7 +30,7 @@ Cada output de esta fase tiene una fuente y un método concreto. Síguelos en or
 
 ### 3.4 Additional Categories (Variable A)
 - **Dato que buscamos:** Categorías GBP secundarias que necesitan página propia.
-- **Cómo se obtiene:** Buscar categorías secundarias en los 5 perfiles del Local Pack → filtrar las que el negocio realmente ofrece → descartar las que ya están cubiertas por un core service.
+- **Cómo se obtiene:** Si existe el Informe de Competidores (Fase 0) → cruzar las categorías secundarias extraídas de los competidores con los servicios del cliente, descartar las ya cubiertas por un core service. Si no existe el informe → buscar categorías secundarias en los 5 perfiles del Local Pack → filtrar las que el negocio realmente ofrece → descartar las que ya están cubiertas por un core service.
 - **Fuente:** `Doctrina + Local Pack`.
 - **Si no tienes acceso a Maps:** Si hay una categoría obvia del sector que no encaja en los core services, proponerla como A=1 marcada `⚠ inferido`. Si no hay ninguna obvia, A=0.
 - **Criterio:** Necesita página propia si (1) el negocio la ofrece Y (2) no es sinónimo ni subconjunto de un core service.

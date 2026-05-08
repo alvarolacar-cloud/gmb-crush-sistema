@@ -97,6 +97,7 @@ Con las confirmaciones del operador, arranca `01-gmb-crush/SISTEMA.md` pasando e
 |-----------------|--------------------------|
 | Servicios elegidos | Fase 1 — output 1.9 (Core Services) |
 | Categoría GBP más frecuente | Fase 1 — output 1.5 (Primary Category) |
+| Categorías secundarias de competidores | Fase 1 — output 1.6 (Additional Categories) |
 | Trust signals del sector | Fase 1 — output 1.14 |
 | CTA dominante en el sector | Fase 2 — output 1.13 |
 | Web de referencia de diseño | Fase 5 — Paso 0 |
