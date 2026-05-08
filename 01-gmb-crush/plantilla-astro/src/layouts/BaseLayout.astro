@@ -2,7 +2,7 @@
 import "../styles/global.css";
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
-import { getDomain } from "@lib/cluster";
+import { getDomain, getDesignTokens } from "@lib/cluster";
 
 interface Props {
   title: string;
@@ -13,14 +13,32 @@ interface Props {
 
 const { title, description, canonical, schema = [] } = Astro.props;
 const canonicalUrl = canonical ?? new URL(Astro.url.pathname, getDomain()).href;
+
+// Inyectar tokens de diseño de outputs.json (16.1) como CSS vars en <html>
+// Esto hace que todos los componentes usen colores/radios del cliente sin hardcodear nada
+const t = getDesignTokens();
+const cssVars = [
+  `--color-primary: ${t.color_primary}`,
+  `--color-primary-50: ${t.color_primary_50 ?? t.color_primary + "1a"}`,
+  `--color-primary-500: ${t.color_primary_500 ?? t.color_primary}`,
+  `--color-primary-900: ${t.color_primary_900}`,
+  `--color-accent: ${t.color_accent}`,
+  `--color-bg-dark: ${t.color_bg_dark ?? "#111827"}`,
+  `--color-bg-light: ${t.color_bg_light ?? "#f9fafb"}`,
+  `--color-text-main: ${t.color_text_main ?? "#374151"}`,
+  `--color-text-heading: ${t.color_text_heading ?? "#111827"}`,
+  `--font-family: ${t.font_family ?? "Inter, system-ui, sans-serif"}`,
+  `--btn-radius: ${t.btn_radius ?? "8px"}`,
+  `--card-radius: ${t.card_radius ?? "8px"}`,
+  `--card-shadow: ${t.card_shadow ?? "0 1px 3px 0 rgba(0,0,0,0.1)"}`,
+].join("; ");
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang="es" style={cssVars}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="generator" content={Astro.generator} />
 
     <title>{title}</title>
     <meta name="description" content={description} />

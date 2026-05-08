@@ -170,11 +170,37 @@
         "color_primary_500": "#0ea5e9",
         "color_primary_900": "#0c4a6e",
         "color_accent": "#16a34a",
-        "font_family": "Inter, sans-serif"
+        "color_bg_dark": "#111827",
+        "color_bg_light": "#f9fafb",
+        "color_text_main": "#374151",
+        "color_text_heading": "#111827",
+        "font_family": "Inter, sans-serif",
+        "h1_size": "48px",
+        "h2_size": "30px",
+        "body_size": "16px",
+        "body_line_height": "1.6",
+        "btn_radius": "8px",
+        "btn_padding": "12px 24px",
+        "btn_transform": "none",
+        "card_radius": "8px",
+        "card_shadow": "0 1px 3px 0 rgba(0,0,0,0.1)",
+        "hero_layout": "full-photo"
       },
       "status": "⚠ inferido",
-      "fuente": "Cliente preflight",
-      "source": "Sin web de referencia — estilo genérico sector técnico (azul + verde acento)",
+      "fuente": "Doctrina GMB Crush",
+      "source": "Sin web de referencia — ejecutar Doc C sobre web del sector antes de confirmar",
+      "bloque": 5
+    },
+    "16.7": {
+      "id": "16.7",
+      "name": "Inventario de imágenes CDN",
+      "value": {
+        "hero_homepage": "https://[CDN]/hero-homepage.webp",
+        "hero_[service-slug]": "https://[CDN]/hero-[service].webp"
+      },
+      "status": "⚠ placeholder",
+      "fuente": "Doctrina GMB Crush",
+      "source": "Pendiente ejecutar Doc C — generar imágenes y subir a CDN",
       "bloque": 5
     }
   }

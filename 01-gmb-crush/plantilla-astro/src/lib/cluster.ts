@@ -17,7 +17,9 @@ import type {
   DesignTokens,
   FAQ,
   GeoArticleTopic,
+  ImageInventory,
   LCAs,
+  LayoutMap,
   NAP,
   Service,
 } from "./types.ts";
@@ -79,6 +81,20 @@ export const getTrustSignals = () => getValue<string[]>("1.14");
 export const getGeoHubURLStyle = () => getValue<string>("3.2");
 export const getGeoArticleTopics = () => getValue<GeoArticleTopic[]>("3.4");
 export const getDesignTokens = () => getValue<DesignTokens>("16.1");
+
+/** Layout map por tipo de página (16.2). Devuelve vacíos si no existe. */
+export function getLayoutMap(): LayoutMap {
+  const output = cluster.outputs["16.2"];
+  if (!output) return { homepage: [], service_page: [], location_page: [], geo_article: [] };
+  return (output.value as LayoutMap) ?? { homepage: [], service_page: [], location_page: [], geo_article: [] };
+}
+
+/** Inventario de imágenes CDN (16.7). Devuelve {} si no existe. */
+export function getImages(): ImageInventory {
+  const output = cluster.outputs["16.7"];
+  if (!output) return {};
+  return (output.value as ImageInventory) ?? {};
+}
 
 export function getMainCitySlug(): string {
   return slugify(getMainCity());

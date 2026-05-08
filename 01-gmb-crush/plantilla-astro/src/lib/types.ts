@@ -129,12 +129,57 @@ export interface LCAs {
 }
 
 export interface DesignTokens {
+  // Colores
   color_primary: string;
   color_primary_50: string;
   color_primary_500: string;
   color_primary_900: string;
   color_accent: string;
+  color_bg_dark?: string;
+  color_bg_light?: string;
+  color_text_main?: string;
+  color_text_heading?: string;
+  // Tipografía
   font_family: string;
+  h1_size?: string;
+  h2_size?: string;
+  body_size?: string;
+  body_line_height?: string;
+  // Botones
+  btn_radius?: string;
+  btn_padding?: string;
+  btn_transform?: "uppercase" | "none";
+  // Cards
+  card_radius?: string;
+  card_shadow?: string;
+  // Layout
+  hero_layout?: "centered" | "split" | "full-photo";
+}
+
+/** Una sección del layout-map por tipo de página. */
+export interface LayoutSection {
+  section: number;
+  name: string;
+  layout: "flex" | "grid" | "block";
+  cols: string;
+  bg: "white" | "light" | "dark" | "image" | "primary";
+  image_required: boolean;
+  image_ratio?: string;
+  notes?: string;
+}
+
+/** Layout-map completo por tipo de página (output 16.2). */
+export interface LayoutMap {
+  homepage: LayoutSection[];
+  service_page: LayoutSection[];
+  location_page: LayoutSection[];
+  geo_article: LayoutSection[];
+}
+
+/** Inventario de imágenes CDN generadas en Doc C (output 16.7). */
+export interface ImageInventory {
+  hero_homepage?: string;
+  [key: string]: string | undefined;
 }
 
 export interface GeoArticleTopic {

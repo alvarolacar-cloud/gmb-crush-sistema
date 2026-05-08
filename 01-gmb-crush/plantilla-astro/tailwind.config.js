@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Tokens parametrizables (sobrescritos por cliente.json)
+        // Tokens parametrizables — valores vienen de outputs.json 16.1 vía BaseLayout.astro
         primary: {
           DEFAULT: "var(--color-primary)",
           50: "var(--color-primary-50)",
@@ -12,9 +12,14 @@ export default {
           900: "var(--color-primary-900)",
         },
         accent: "var(--color-accent)",
+        "bg-dark": "var(--color-bg-dark)",
+        "bg-light": "var(--color-bg-light)",
+        "text-main": "var(--color-text-main)",
+        "text-heading": "var(--color-text-heading)",
       },
       fontFamily: {
-        sans: ["Inter", "system-ui", "-apple-system", "sans-serif"],
+        // La fuente real viene de --font-family (inyectada en <html> por BaseLayout)
+        sans: ["var(--font-family)", "Inter", "system-ui", "-apple-system", "sans-serif"],
       },
       maxWidth: {
         prose: "65ch",

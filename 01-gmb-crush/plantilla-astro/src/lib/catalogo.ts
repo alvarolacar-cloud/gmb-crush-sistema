@@ -86,11 +86,63 @@ const BLOQUE_1_PASO_3: OutputDefinition[] = [
   { id: "3.14", name: "Validación matriz cerrada antes de contenido", bloque: 1, fuente_esperada: "Info heredada" },
 ];
 
-/* ──────────────────────────── BLOQUE 5 — Outputs clave ──────────────────────────── */
+/* ──────────────────────────── BLOQUE 5 — Diseño (Fase 5 / Doc C) ──────────────────────────── */
 
-const BLOQUE_5: OutputDefinition[] = [
-  { id: "16.1", name: "Identidad Visual y CSS Base (design tokens)", bloque: 5, fuente_esperada: "Cliente preflight", page_types: ["HP", "SO", "LBS", "AC", "GH", "GA"] },
-  // FAQs por page type (Bloque 5 — Paso 15 redacción)
+const BLOQUE_5_DISENO: OutputDefinition[] = [
+  {
+    id: "16.1",
+    name: "Design Tokens — colores, tipografía, componentes",
+    bloque: 5,
+    fuente_esperada: "Doctrina GMB Crush",
+    page_types: ["HP", "SO", "LBS", "AC", "GH", "GA"],
+  },
+  {
+    id: "16.2",
+    name: "Layout Map por tipo de página",
+    bloque: 5,
+    fuente_esperada: "Doctrina GMB Crush",
+    page_types: ["HP", "SO", "LBS", "AC", "GH", "GA"],
+  },
+  {
+    id: "16.3",
+    name: "Confirmación de diseño por operador",
+    bloque: 5,
+    fuente_esperada: "Doctrina GMB Crush",
+  },
+  {
+    id: "16.4",
+    name: "tailwind.config.js generado con tokens",
+    bloque: 5,
+    fuente_esperada: "Doctrina GMB Crush",
+    no_aplica_razon: "vive en plantilla-astro/tailwind.config.js, no en outputs.json",
+  },
+  {
+    id: "16.5",
+    name: "Reglas CSS críticas por componente (Hero, botones, cards, grids)",
+    bloque: 5,
+    fuente_esperada: "Doctrina GMB Crush",
+    page_types: ["HP", "SO", "LBS", "AC", "GH", "GA"],
+  },
+  {
+    id: "16.6",
+    name: "Layout-Map definitivo cruzado con copy de Fase 3b",
+    bloque: 5,
+    fuente_esperada: "Doctrina GMB Crush",
+    hereda_de: ["16.2"],
+    page_types: ["HP", "SO", "LBS", "AC", "GH", "GA"],
+  },
+  {
+    id: "16.7",
+    name: "Inventario de imágenes CDN (generadas en Doc C)",
+    bloque: 5,
+    fuente_esperada: "Doctrina GMB Crush",
+    page_types: ["HP", "SO", "LBS"],
+  },
+];
+
+/* ──────────────────────────── BLOQUE 5 — Contenido (Paso 15 redacción) ──────────────────────────── */
+
+const BLOQUE_5_CONTENIDO: OutputDefinition[] = [
   { id: "15.1", name: "FAQs Homepage", bloque: 5, fuente_esperada: "Doctrina + Local Pack", page_types: ["HP"] },
   { id: "15.2", name: "FAQs Service Overview", bloque: 5, fuente_esperada: "Doctrina + Local Pack", page_types: ["SO"] },
   { id: "15.3", name: "FAQs LBS", bloque: 5, fuente_esperada: "Doctrina + Local Pack", page_types: ["LBS"] },
@@ -98,6 +150,8 @@ const BLOQUE_5: OutputDefinition[] = [
   { id: "15.5", name: "FAQs GeoHub", bloque: 5, fuente_esperada: "Doctrina + Local Pack", page_types: ["GH"] },
   { id: "15.6", name: "FAQs GeoArticle", bloque: 5, fuente_esperada: "Doctrina + Keyword Research", page_types: ["GA"] },
 ];
+
+const BLOQUE_5 = [...BLOQUE_5_DISENO, ...BLOQUE_5_CONTENIDO];
 
 /* ──────────────────────────── BLOQUE 7 — GBP (Paso 14, 20 outputs) ──────────────────────────── */
 

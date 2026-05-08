@@ -7,6 +7,8 @@ interface Props {
   ctaPrimaryHref: string;
   ctaSecondary?: string;
   ctaSecondaryHref?: string;
+  /** URL de imagen CDN (output 16.7 hero_homepage). Si existe → foto de fondo con overlay. */
+  heroImage?: string;
 }
 
 const {
@@ -17,29 +19,71 @@ const {
   ctaPrimaryHref,
   ctaSecondary,
   ctaSecondaryHref,
+  heroImage,
 } = Astro.props;
 ---
 
-<section class="bg-gradient-to-b from-primary-50 to-white">
-  <div class="container-narrow py-16 md:py-24 text-center">
-    <h1 class="mb-6">{h1}</h1>
-    <p class="text-lg md:text-xl text-gray-700 mb-8 max-w-prose mx-auto">
-      {subtitle}
-    </p>
+<section
+  class="relative overflow-hidden text-white"
+  style={!heroImage ? "background-color: var(--color-primary-900)" : ""}
+>
+  {/* Foto de fondo desde CDN (16.7) con overlay oscuro */}
+  {heroImage && (
+    <>
+      <img
+        src={heroImage}
+        alt=""
+        aria-hidden="true"
+        class="absolute inset-0 w-full h-full object-cover"
+        loading="eager"
+        decoding="async"
+      />
+      <div
+        class="absolute inset-0"
+        style="background-color: color-mix(in srgb, var(--color-primary-900) 75%, transparent)"
+      />
+    </>
+  )}
 
-    {trustItem && (
-      <p class="text-sm text-gray-500 mb-6">★★★★★ {trustItem}</p>
-    )}
+  <div class="relative z-10 container-narrow py-20 md:py-28">
+    <div class="text-center max-w-3xl mx-auto">
 
-    <div class="flex flex-col sm:flex-row gap-3 justify-center">
-      <a href={ctaPrimaryHref} class="btn-primary">
-        {ctaPrimary}
-      </a>
-      {ctaSecondary && ctaSecondaryHref && (
-        <a href={ctaSecondaryHref} class="btn-accent">
-          {ctaSecondary}
-        </a>
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 leading-tight">
+        {h1}
+      </h1>
+
+      <p
+        class="text-lg md:text-xl mb-8 leading-relaxed max-w-prose mx-auto"
+        style="color: rgba(255,255,255,0.85)"
+      >
+        {subtitle}
+      </p>
+
+      {trustItem && (
+        <p class="text-sm mb-8" style="color: var(--color-accent)">
+          ★★★★★ {trustItem}
+        </p>
       )}
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a
+          href={ctaPrimaryHref}
+          class="inline-flex items-center justify-center px-8 py-4 font-bold text-base no-underline shadow-lg transition-opacity hover:opacity-90"
+          style="background-color: var(--color-accent); color: #111827; border-radius: var(--btn-radius)"
+        >
+          {ctaPrimary}
+        </a>
+
+        {ctaSecondary && ctaSecondaryHref && (
+          <a
+            href={ctaSecondaryHref}
+            class="btn-outline-white px-8 py-4 text-base"
+          >
+            {ctaSecondary}
+          </a>
+        )}
+      </div>
+
     </div>
   </div>
 </section>

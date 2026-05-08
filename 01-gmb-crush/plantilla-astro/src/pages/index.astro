@@ -20,6 +20,7 @@ import {
   getPrimaryCategory,
   phoneHref,
   getFaqsHomepage,
+  getImages,
 } from "@lib/cluster";
 import { buildHomepageSchemas } from "@lib/schemas";
 
@@ -33,6 +34,7 @@ const cta = getPreferredCTA();
 const shortDescription = getValue<string>("Pre.2");
 const primaryCategory = getPrimaryCategory();
 const faqs = getFaqsHomepage();
+const images = getImages();
 
 const title = `${businessName} · ${shortDescription} en ${mainCity}`;
 const description = `${shortDescription}. Cobertura todo ${mainCity}: ${lcas.direct.join(", ")}, ${lcas.candidate.slice(0, 4).join(", ")}. ${trustSignals[0] ?? ""}.`;
@@ -49,6 +51,7 @@ const schema = buildHomepageSchemas();
     ctaPrimaryHref="/contacto/"
     ctaSecondary={`Llamar ${nap.phone}`}
     ctaSecondaryHref={phoneHref(nap.phone)}
+    heroImage={images.hero_homepage}
   />
 
   <ServicesGrid />
