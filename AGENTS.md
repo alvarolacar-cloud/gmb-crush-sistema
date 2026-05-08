@@ -63,10 +63,10 @@ gmb-crush-ejecuciones/[nombre-negocio-slug]/
 
 ## lessons.md — Memoria de errores por proyecto
 
-Cada ejecución tiene un archivo `ejecuciones/[slug]/lessons.md`.
+Cada ejecución tiene un archivo `gmb-crush-ejecuciones/[slug]/lessons.md`.
 
 **Al iniciar una sesión sobre un proyecto:**
-Lee `ejecuciones/[slug]/lessons.md` si existe. Aplica cada lección antes de ejecutar nada.
+Lee `gmb-crush-ejecuciones/[slug]/lessons.md` si existe. Aplica cada lección antes de ejecutar nada.
 
 **Después de cualquier corrección del operador:**
 Documenta el patrón en ese archivo inmediatamente. Formato:

@@ -10,22 +10,24 @@ Repo con sistemas para crear webs locales SEO. Tiene tres capas:
 
 ---
 
-## Estructura
+## Estructura — dos repos
 
 ```
-sistemas-creacion-webs/
+sistemas-creacion-webs/               ← este repo — solo sistema
 ├── AGENTS.md                         ← instrucciones para IAs
 ├── README.md                         ← este archivo
 ├── 00-investigacion/
 │   └── INVESTIGACION.md              ← Fase 0: investigar competidores (común a todos)
-├── 01-gmb-crush/                     ← Sistema GMB Crush (SEO local + GBP)
-│   ├── SISTEMA.md                    ← índice del sistema (convenciones + tabla de fases)
-│   ├── PREFLIGHT.md                  ← template de datos del cliente
-│   ├── fases/                        ← un archivo por fase, se lee antes de ejecutarla
-│   ├── referencias/                  ← test doctrinal, specs, ejemplo y doctrina
-│   └── plantilla-astro/              ← proyecto Astro parametrizable
-└── ejecuciones/                      ← resultados de ejecuciones reales
-    └── [nombre-negocio-slug]/
+└── 01-gmb-crush/                     ← Sistema GMB Crush (SEO local + GBP)
+    ├── SISTEMA.md                    ← índice del sistema (convenciones + tabla de fases)
+    ├── fases/                        ← un archivo por fase, se lee antes de ejecutarla
+    ├── referencias/                  ← test doctrinal, specs, ejemplo y doctrina
+    └── plantilla-astro/              ← proyecto Astro parametrizable — se copia por cliente
+
+gmb-crush-ejecuciones/               ← repo separado — datos de clientes
+└── [nombre-negocio-slug]/
+    ├── outputs.json
+    └── web/
 ```
 
 ---
