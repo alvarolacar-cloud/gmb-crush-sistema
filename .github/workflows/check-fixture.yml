@@ -10,6 +10,7 @@ on:
     paths:
       - '01-gmb-crush/plantilla-astro/**'
       - '.github/workflows/check-fixture.yml'
+  workflow_dispatch:
 
 permissions:
   contents: read
