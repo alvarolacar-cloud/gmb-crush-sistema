@@ -59,7 +59,7 @@ Pide estos datos junto al informe de competidores. Con solo **"qué hace" + "ciu
 |-------|----------|
 | Nombre del negocio | Derivar de servicio + ciudad. Marcar `⚠ placeholder`. |
 | Qué hace (servicio principal) | **Sin esto no puedes arrancar. Pídelo.** |
-| Dirección (al menos ciudad) | **Sin al menos la ciudad no puedes arrancar. Pídela.** |
+| Dirección completa (calle, número, CP, ciudad) | **Pídela siempre al inicio.** Si no la tiene aún, marcar `[DIRECCIÓN]` en schemas y NAP. Sin al menos la ciudad no puedes arrancar. |
 | Teléfono | Marcar `[TELÉFONO]` en contenido. |
 | Email | Marcar `[EMAIL]` en contenido. |
 | Estado GBP | Asumir `Not Created`. |
@@ -131,6 +131,6 @@ Con la respuesta, decides cómo ejecutar las **Fases 1–8**:
 
 Después, pide el Preflight con este mensaje exacto:
 
-> Pásame los datos del preflight. Recuerda indicarme las ciudades que quieres que analice cuando investigue el Local Pack (tu ciudad principal + las que quieras para comparar servicios del sector).
+> Pásame los datos del preflight: nombre del negocio, servicio principal, dirección completa (calle, número, CP y ciudad) y teléfono. Recuerda indicarme también las ciudades que quieres que analice cuando investigue el Local Pack (tu ciudad principal + las que quieras para comparar servicios del sector).
 
 Cuando lo tengas, ejecuta las 9 fases en orden. Si necesitas más detalle sobre page types, consulta `referencias/page-type-specs.md`. Para ver un ejemplo completo, consulta `referencias/ejemplo-cerrajeros.md`.

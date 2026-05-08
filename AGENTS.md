@@ -113,6 +113,7 @@ Antes de ejecutar `git commit`, haz siempre estos pasos en orden:
 ## Inputs mínimos para arrancar
 - Nombre del negocio
 - Servicio principal
-- Ciudad principal
+- Dirección completa (calle, número, CP, ciudad) — si no la tiene, al menos la ciudad
+- Teléfono
 
 Con eso puedes ejecutar el Paso 0. El resto se completa durante el flujo.
