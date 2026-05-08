@@ -28,6 +28,7 @@ sistemas-creacion-webs/              ← ESTE repo — solo sistema, nunca datos
     └── plantilla-astro/             ← template base — se copia por cliente, nunca se modifica aquí
 
 gmb-crush-ejecuciones/              ← repo SEPARADO — un cliente por carpeta
+│   GitHub: https://github.com/alvarolacar-cloud/gmb-crush-ejecuciones
 └── [nombre-negocio-slug]/          ← ej: reformaban-madrid/, fontaneria-ramos/
     ├── outputs.json                 ← todos los outputs del cliente
     └── web/                        ← copia de plantilla-astro con datos reales
@@ -45,19 +46,14 @@ gmb-crush-ejecuciones/              ← repo SEPARADO — un cliente por carpeta
 4. **Para aquí** — espera que el operador confirme servicios y elija sistema antes de continuar
 
 ### PASO 1 — Ejecución GMB Crush (01-gmb-crush/)
-1. Lee `01-gmb-crush/SISTEMA.md` completo — es corto, tiene las convenciones y el índice de fases
-2. Rellena `01-gmb-crush/PREFLIGHT.md` con los datos del cliente
-3. **⚠ OBLIGATORIO: antes de ejecutar cada fase, lee su archivo en `fases/` completo** — nunca ejecutes una fase de memoria
-4. En Fase 4 ejecuta el Test Doctrinal completo (lee `fase-4-test-doctrinal.md`), presenta los resultados al operador y **para aquí** — espera aprobación antes de continuar a Fase 5 (Diseño)
+1. Clona el repo de ejecuciones: `https://github.com/alvarolacar-cloud/gmb-crush-ejecuciones`
+2. Crea la carpeta del cliente: `gmb-crush-ejecuciones/[slug-cliente]/` con `outputs.json` vacío y `web/` (copia de `plantilla-astro/`)
+3. Lee `01-gmb-crush/SISTEMA.md` completo — convenciones y tabla de fases
+4. **⚠ OBLIGATORIO: antes de ejecutar cada fase, lee su archivo en `fases/` completo** — nunca ejecutes una fase de memoria
+5. En Fase 4 ejecuta el Test Doctrinal completo, presenta resultados al operador y **para aquí** — espera aprobación antes de continuar a Fase 5
 
-### PASO 2 — Guardar resultados (repo gmb-crush-ejecuciones)
-⚠ Crea la carpeta del cliente en el repo de ejecuciones **al arrancar PASO 1, antes de ejecutar la Fase 1** — no al final del proyecto.
-
-```
-gmb-crush-ejecuciones/[nombre-negocio-slug]/
-├── outputs.json          ← créalo vacío al inicio, rellénalo durante las fases
-└── web/                  ← copia de plantilla-astro (cp -r sistemas-creacion-webs/01-gmb-crush/plantilla-astro/ aquí)
-```
+### PASO 2 — Guardar resultados
+Los outputs de cada fase van a `gmb-crush-ejecuciones/[slug]/outputs.json`. El build va a `gmb-crush-ejecuciones/[slug]/web/`. Ya creaste esta estructura en PASO 1.
 
 **Nunca crees carpetas de cliente dentro del repo `sistemas-creacion-webs`.** Los datos de clientes van siempre en `gmb-crush-ejecuciones/`.
 
@@ -102,7 +98,7 @@ Cada vez que modifiques un archivo, antes de dar el trabajo por terminado:
 ---
 
 ## Reglas que nunca puedes romper
-- Las LCAs (barrios, distritos, zonas) nunca generan URLs sin aprobación explícita del operador. **Aprobación explícita = el operador lo escribe en el chat o lo declara en PREFLIGHT.md**. Una aprobación implícita, sugerida o inferida no cuenta.
+- Las LCAs (barrios, distritos, zonas) nunca generan URLs sin aprobación explícita del operador. **Aprobación explícita = el operador lo escribe en el chat**. Una aprobación implícita, sugerida o inferida no cuenta.
 - No inventes teléfono, dirección, reseñas, certificaciones ni fotos
 - Si el Test Doctrinal falla, no continúes a Fase 5 aunque el operador lo pida — explica qué falla primero
 - Todos los datos inciertos se marcan como ⚠ inferido o ⚠ placeholder, nunca se asumen como confirmados
