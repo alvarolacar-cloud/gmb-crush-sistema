@@ -17,7 +17,7 @@ Antes de buscar nada, pregunta al operador:
 
 1. **¿Cuál es el servicio principal del negocio?**
 2. **¿Cuál es la dirección completa?** (calle, número, CP y ciudad — si no la tiene aún, al menos la ciudad)
-3. **¿Quieres analizar ciudades adicionales para la investigación?** (si sí, lista cuáles)
+3. **¿Quieres que analice otras ciudades además de la tuya** para comparar qué servicios ofrece el sector? (si sí, lista cuáles)
 
 No empieces la investigación hasta tener estas respuestas.
 
