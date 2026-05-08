@@ -1,0 +1,17 @@
+name: Check coherence
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  coherence:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run coherence script
+        run: sh scripts/check-coherence.sh
