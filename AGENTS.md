@@ -27,8 +27,8 @@ sistemas-creacion-webs/              ← ESTE repo — solo sistema, nunca datos
     ├── referencias/                 ← doctrina, ejemplos, test — solo consulta
     └── plantilla-astro/             ← template base — se copia por cliente, nunca se modifica aquí
 
-gmb-crush-ejecuciones/              ← repo SEPARADO — un cliente por carpeta
-│   GitHub: https://github.com/alvarolacar-cloud/gmb-crush-ejecuciones
+ejecuciones-webs/                   ← repo SEPARADO — un sistema por subcarpeta
+│   GitHub: https://github.com/alvarolacar-cloud/ejecuciones-webs
 └── [nombre-negocio-slug]/          ← ej: reformaban-madrid/, fontaneria-ramos/
     ├── outputs.json                 ← todos los outputs del cliente
     └── web/                        ← copia de plantilla-astro con datos reales
@@ -46,7 +46,7 @@ gmb-crush-ejecuciones/              ← repo SEPARADO — un cliente por carpeta
 4. **Para aquí** — espera que el operador confirme servicios y elija sistema antes de continuar
 
 ### PASO 1 — Ejecución GMB Crush (01-gmb-crush/)
-1. Clona el repo de ejecuciones: `https://github.com/alvarolacar-cloud/gmb-crush-ejecuciones`
+1. Clona el repo de ejecuciones: `https://github.com/alvarolacar-cloud/ejecuciones-webs`
 2. Crea la carpeta del cliente: `gmb-crush-ejecuciones/[slug-cliente]/` con `outputs.json` vacío y `web/` (copia de `plantilla-astro/`)
 3. Lee `01-gmb-crush/SISTEMA.md` completo — convenciones y tabla de fases
 4. **⚠ OBLIGATORIO: antes de ejecutar cada fase, lee su archivo en `fases/` completo** — nunca ejecutes una fase de memoria

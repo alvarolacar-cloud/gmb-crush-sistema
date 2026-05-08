@@ -24,7 +24,7 @@ sistemas-creacion-webs/               ← este repo — solo sistema
     ├── referencias/                  ← test doctrinal, specs, ejemplo y doctrina
     └── plantilla-astro/              ← proyecto Astro parametrizable — se copia por cliente
 
-gmb-crush-ejecuciones/               ← repo separado — datos de clientes
+ejecuciones-webs/                    ← repo separado — un sistema por subcarpeta
 └── [nombre-negocio-slug]/
     ├── outputs.json
     └── web/
