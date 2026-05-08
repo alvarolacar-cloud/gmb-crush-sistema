@@ -1,0 +1,42 @@
+name: Build plantilla-astro fixture
+
+on:
+  pull_request:
+    paths:
+      - '01-gmb-crush/plantilla-astro/**'
+      - '.github/workflows/check-fixture.yml'
+  push:
+    branches: [main]
+    paths:
+      - '01-gmb-crush/plantilla-astro/**'
+      - '.github/workflows/check-fixture.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 01-gmb-crush/plantilla-astro
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+          cache-dependency-path: 01-gmb-crush/plantilla-astro/pnpm-lock.yaml
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Build with example fixture
+        env:
+          CLUSTER_PATH: ./outputs.example.json
+        run: pnpm build

@@ -1,0 +1,41 @@
+#!/bin/sh
+# .githooks/pre-commit — gate local que aborta el commit si la coherencia se rompe.
+#
+# Activación (una sola vez por clon):
+#   git config core.hooksPath .githooks
+#
+# Checks que ejecuta:
+#   1. scripts/check-coherence.sh     (siempre)
+#   2. lychee --offline (todos los .md) (si lychee está instalado, opcional)
+#   3. pnpm build de plantilla-astro    (opt-in: PRE_COMMIT_FIXTURE=1)
+#
+# El #3 está desactivado por defecto porque tarda ~30s. Para activarlo:
+#   PRE_COMMIT_FIXTURE=1 git commit ...
+# o exporta PRE_COMMIT_FIXTURE=1 en tu entorno.
+
+set -e
+
+ROOT="$(git rev-parse --show-toplevel)"
+cd "$ROOT"
+
+printf '\n→ pre-commit: coherence\n'
+sh scripts/check-coherence.sh
+
+if command -v lychee >/dev/null 2>&1; then
+  printf '\n→ pre-commit: lychee (links)\n'
+  lychee --offline --no-progress --base . './**/*.md' >/dev/null
+  printf '  ok    sin enlaces rotos\n'
+else
+  printf '\n→ pre-commit: lychee no instalado — skip (CI lo verificará)\n'
+fi
+
+if [ "${PRE_COMMIT_FIXTURE:-0}" = "1" ]; then
+  printf '\n→ pre-commit: build fixture (plantilla-astro)\n'
+  (
+    cd 01-gmb-crush/plantilla-astro
+    CLUSTER_PATH=./outputs.example.json pnpm build >/dev/null
+  )
+  printf '  ok    fixture build pasa\n'
+fi
+
+printf '\npre-commit OK\n\n'

@@ -46,3 +46,25 @@ gmb-crush-ejecuciones/               ← repo separado — datos de clientes
 | Sistema | Qué es | Cuándo usarla |
 |---------|--------|---------------|
 | `01-gmb-crush` | SEO local + GBP. Fase 0 investigación + 8 fases de construcción, plantilla Astro, test doctrinal. | Negocios locales que quieren posicionar en Google Maps + web. |
+
+---
+
+## Checks automáticos
+
+El repo tiene tres checks que corren en CI y pueden ejecutarse en local. Detectan deriva entre docs cuando un cambio no se propaga.
+
+| Check | Qué hace | Cómo correrlo en local |
+|-------|----------|------------------------|
+| **Coherencia** (`scripts/check-coherence.sh`) | Verifica que el nº de fases sea idéntico en SISTEMA.md, README.md y `fases/`, y que no haya archivos huérfanos. | `sh scripts/check-coherence.sh` |
+| **Enlaces rotos** (lychee) | Detecta cualquier `.md` que referencie un archivo o ancla inexistente. | `lychee --offline --no-progress --base . './**/*.md'` |
+| **Build del fixture** | Construye `01-gmb-crush/plantilla-astro/` con `outputs.example.json`. Garantiza que `types.ts` y el ejemplo siguen casados. | `cd 01-gmb-crush/plantilla-astro && pnpm install && CLUSTER_PATH=./outputs.example.json pnpm build` |
+
+### Pre-commit hook local
+
+Para que los checks se ejecuten antes de cada `git commit` (aborta si falla):
+
+```bash
+git config core.hooksPath .githooks
+```
+
+El hook ejecuta coherencia siempre, lychee si está instalado, y el build del fixture solo si exportas `PRE_COMMIT_FIXTURE=1` (es lento).
