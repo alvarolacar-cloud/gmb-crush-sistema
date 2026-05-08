@@ -23,7 +23,7 @@ sh scripts/check-coherence.sh
 
 if command -v lychee >/dev/null 2>&1; then
   printf '\n→ pre-commit: lychee (links)\n'
-  lychee --offline --no-progress --base . './**/*.md' >/dev/null
+  lychee --offline --no-progress --root-dir "$ROOT" './**/*.md' >/dev/null
   printf '  ok    sin enlaces rotos\n'
 else
   printf '\n→ pre-commit: lychee no instalado — skip (CI lo verificará)\n'

@@ -56,7 +56,7 @@ El repo tiene tres checks que corren en CI y pueden ejecutarse en local. Detecta
 | Check | Qué hace | Cómo correrlo en local |
 |-------|----------|------------------------|
 | **Coherencia** (`scripts/check-coherence.sh`) | Verifica que el nº de fases sea idéntico en SISTEMA.md, README.md y `fases/`, y que no haya archivos huérfanos. | `sh scripts/check-coherence.sh` |
-| **Enlaces rotos** (lychee) | Detecta cualquier `.md` que referencie un archivo o ancla inexistente. | `lychee --offline --no-progress --base . './**/*.md'` |
+| **Enlaces rotos** (lychee) | Detecta cualquier `.md` que referencie un archivo o ancla inexistente. | `lychee --offline --no-progress --root-dir "$(pwd)" './**/*.md'` |
 | **Build del fixture** | Construye `01-gmb-crush/plantilla-astro/` con `outputs.example.json`. Garantiza que `types.ts` y el ejemplo siguen casados. | `cd 01-gmb-crush/plantilla-astro && pnpm install && CLUSTER_PATH=./outputs.example.json pnpm build` |
 
 ### Pre-commit hook local
