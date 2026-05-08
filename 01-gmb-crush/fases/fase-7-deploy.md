@@ -3,7 +3,7 @@
 **Fuente:** `Doctrina GMB Crush` (Arquitectura técnica: Cloudflare Pages vía GitHub).
 
 ### Dónde están los tokens
-Los tokens de GitHub y Cloudflare los declara el operador en `PREFLIGHT.md`.
+Los tokens de GitHub y Cloudflare los pasa el operador por chat al arrancar el sistema (ver `SISTEMA.md` §3).
 Si no están, construye hasta `dist/` y marca `⚠ pendiente tokens` — no bloquees la ejecución.
 
 ### Con tokens

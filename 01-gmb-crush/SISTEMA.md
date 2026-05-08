@@ -69,7 +69,7 @@ Pide estos datos junto al informe de competidores. Con solo **"qué hace" + "ciu
 
 ---
 
-## 4. Las 8 Fases de GMB Crush
+## 4. Las 9 Fases de GMB Crush
 
 > ### ⛔ PROTOCOLO OBLIGATORIO — sin excepción
 >
