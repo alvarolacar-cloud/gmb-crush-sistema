@@ -32,9 +32,24 @@ La web se publica primero con datos provisionales. El GBP se crea DESPUÉS, cuan
 
 ---
 
-## 2. Input del Operador (Preflight)
+## 2. Pre-requisito — Fase de Investigación
 
-Pide estos datos. Con solo **"qué hace" + "ciudad"** ya arrancas.
+> **⛔ Antes de ejecutar GMB Crush, debe existir un Informe de Competidores.**
+
+El informe lo produce `00-investigacion/INVESTIGACION.md`. Si el operador no lo ha hecho:
+
+1. Lee `00-investigacion/INVESTIGACION.md`
+2. Ejecuta la investigación
+3. Presenta el informe al operador y **PARA** — espera confirmación de servicios y web de referencia
+4. Con esas confirmaciones, vuelve aquí y arranca las 9 fases
+
+**Si el operador ya tiene el informe:** toma los datos confirmados directamente y márcalos como `confirmed` en `outputs.json` sin repetir la búsqueda en Maps.
+
+---
+
+## 3. Input del Operador (Preflight)
+
+Pide estos datos junto al informe de competidores. Con solo **"qué hace" + "ciudad"** ya arrancas.
 
 | Campo | Si falta |
 |-------|----------|
@@ -50,7 +65,7 @@ Pide estos datos. Con solo **"qué hace" + "ciudad"** ya arrancas.
 
 ---
 
-## 3. Las 9 Fases
+## 4. Las 9 Fases
 
 > ### ⛔ PROTOCOLO OBLIGATORIO — sin excepción
 >
@@ -95,7 +110,7 @@ Este sistema opera con **dos repositorios separados**:
 
 ---
 
-## 5. Instrucción de Arranque
+## 6. Instrucción de Arranque
 
 **Antes de ejecutar, pregunta al operador:**
 

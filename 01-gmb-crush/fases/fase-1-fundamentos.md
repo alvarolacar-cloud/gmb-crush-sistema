@@ -1,5 +1,7 @@
 ## 3. Fase 1 — Fundamentos y Arquitectura
 
+> **Si has llegado aquí, estás en el lugar correcto.** Lee este archivo completo antes de producir ningún output. Los patrones de URL, la fórmula de páginas y las convenciones de naming están en las secciones siguientes — no en el SISTEMA.md.
+
 Cada output de esta fase tiene una fuente y un método concreto. Síguelos en orden.
 
 ### 3.1 Main City
@@ -10,7 +12,7 @@ Cada output de esta fase tiene una fuente y un método concreto. Síguelos en or
 
 ### 3.2 Primary Category
 - **Dato que buscamos:** La categoría GBP principal (ej: "Fontanero", "Cerrajero", "Instalador de climatización").
-- **Cómo se obtiene:** Buscar `[servicio principal] [Main City]` en Google Maps → mirar los 5 primeros perfiles del Local Pack → la categoría primaria que aparece en 3+ de 5 es la elegida.
+- **Cómo se obtiene:** Si existe el Informe de Competidores (Fase 0) → tomar la "Categoría GBP más frecuente" del informe, marcar `confirmed`. Si no existe el informe → buscar `[servicio principal] [Main City]` en Google Maps → mirar los 5 primeros perfiles del Local Pack → la categoría primaria que aparece en 3+ de 5 es la elegida.
 - **Fuente:** `Doctrina + Local Pack`.
 - **Si no tienes acceso a Maps:** Inferir la categoría más específica que cubra el servicio principal. Elegir siempre la más específica disponible ("Instalador de aerotermia" > "Empresa de climatización" > "Reformas"). Marcar `⚠ inferido` con razonamiento.
 - **Si ninguna categoría aparece en 3+ de 5:** Elegir la que aparece en 2 de 5. Si hay empate, elegir la más específica. Si solo aparece en 1, usar esa igualmente (es la mejor señal disponible). Marcar `⚠ inferido`.
@@ -18,7 +20,7 @@ Cada output de esta fase tiene una fuente y un método concreto. Síguelos en or
 
 ### 3.3 Core Services (Variable S)
 - **Dato que buscamos:** Lista de servicios con intención de búsqueda diferenciada.
-- **Cómo se obtiene:** Buscar `[categoría] [Main City]` en Google Maps → mirar los servicios listados en los 5 primeros perfiles → los que aparecen en 2+ perfiles son candidatos.
+- **Cómo se obtiene:** Si existe el Informe de Competidores (Fase 0) → tomar los servicios confirmados por el operador de la Matriz de Servicios, marcar `confirmed`. Si no existe el informe → buscar `[categoría] [Main City]` en Google Maps → mirar los servicios listados en los 5 primeros perfiles → los que aparecen en 2+ perfiles son candidatos.
 - **Multi-ciudad (opcional):** Si el operador declaró ciudades adicionales en el preflight, analizar también el Local Pack de esas ciudades para cruzar servicios. Los servicios que aparecen en 2+ ciudades del sector son los más sólidos. La arquitectura sigue siendo solo para la Main City — las otras ciudades solo se usan para validar la selección de servicios.
 - **Fuente:** `Doctrina + Local Pack`.
 - **Si no tienes acceso a Maps:** Tomar los servicios que el operador declaró en el preflight. Si declaró menos de 4, proponer expansiones lógicas del sector marcadas `⚠ inferido`. Si no declaró ninguno, inferir 4-6 del sector.
@@ -100,7 +102,7 @@ El sistema GMB Crush separa el territorio en 3 capas que NUNCA se mezclan:
 
 ### 3.6 Trust Signals
 - **Dato que buscamos:** Señales de confianza del sector (años, certificaciones, garantías, badges) + diferenciadores del cliente.
-- **Cómo se obtiene:** Extraer trust signals de los 5 perfiles top del Local Pack → las que aparecen en 3+ perfiles son "estándar del sector". Añadir diferenciadores propios del cliente si los declara.
+- **Cómo se obtiene:** Si existe el Informe de Competidores (Fase 0) → tomar la columna "Trust signals" del informe, marcar `confirmed`. Si no existe el informe → extraer trust signals de los 5 perfiles top del Local Pack → las que aparecen en 3+ perfiles son "estándar del sector". Añadir diferenciadores propios del cliente si los declara.
 - **Fuente:** `Doctrina + Local Pack`.
 - **Si no tienes acceso a Maps:** Inferir los trust signals más comunes del sector (ej: fontanería → "24h", "sin desplazamiento", "presupuesto gratis"). Marcar `⚠ inferido`.
 - **Se usa en:** Hero de Homepage, bloque de confianza, contenido de LBS.
@@ -177,11 +179,22 @@ Antes de pasar a Fase 2, muestra al operador este bloque exacto:
 **URL Matrix:** [lista completa de URLs]
 
 ## Checklist Doctrinal
+
+**Arquitectura:**
 - [ ] Main City = ciudad del NAP (no inventada)
 - [ ] Ninguna LCA genera URL
-- [ ] Ningún slug con near-me/best/cheap
-- [ ] No hay dos URLs con la misma intención
-- [ ] Fórmula cuadra con el número de URLs listadas
+- [ ] GeoHub existe (`/[main-city-slug]/`) — es obligatorio, no opcional
+- [ ] Fórmula declarada: `1+S+1+S+A+(G×S) = [total]` y el número de URLs en la matrix cuadra exactamente
+
+**Patrones URL — verifica cada tipo contra la tabla de 3.9:**
+- [ ] SO sigue `/[primary-cat-slug]/[service-slug]/` — NO `/[service-slug]/` sin categoría
+- [ ] LBS sigue `/[primary-cat-slug]/[main-city-slug]/[service-slug]/` — NO ciudad pegada al servicio sin categoría
+- [ ] GeoArticle sigue `/[main-city-slug]/[topic-slug]/` — NO anidado bajo LBS
+- [ ] AC sigue `/[primary-cat-slug]/[main-city-slug]/[additional-slug]/`
+
+**Calidad:**
+- [ ] Ningún slug con near-me/best/cheap/urgente
+- [ ] No hay dos URLs con la misma intención de búsqueda
 - [ ] Todos los ⚠ están declarados con razonamiento
 
 ## ⚠ Datos inferidos o pendientes

@@ -87,13 +87,21 @@ Después de ver el informe, el operador responde:
 1. **Servicios elegidos:** [lista]
 2. **Web de referencia:** [URL]
 
-Esos datos entran como `confirmed` en el preflight de la forma de construcción elegida.
-
 ---
 
-## Después de esta fase
+## Handoff a GMB Crush
 
-El operador elige una forma de construcción (ej: `01-gmb-crush/`) y la IA ejecuta con los datos confirmados.
+Con las confirmaciones del operador, arranca `01-gmb-crush/SISTEMA.md` pasando estos datos como `confirmed`:
+
+| Dato confirmado | Dónde entra en GMB Crush |
+|-----------------|--------------------------|
+| Servicios elegidos | Fase 1 — output 1.9 (Core Services) |
+| Categoría GBP más frecuente | Fase 1 — output 1.5 (Primary Category) |
+| Trust signals del sector | Fase 1 — output 1.14 |
+| CTA dominante en el sector | Fase 2 — output 1.13 |
+| Web de referencia de diseño | Fase 5 — Paso 0 |
+
+El agente que ejecuta GMB Crush **no repite la investigación de Local Pack** para estos datos — los toma del informe y los marca como `confirmed` directamente.
 
 ---
 
