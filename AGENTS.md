@@ -4,30 +4,33 @@
 Sistema para crear webs locales optimizadas para Google Maps y posicionamiento local.
 Contiene múltiples metodologías de construcción. Todas comparten el mismo punto de partida: investigación de competencia.
 
-## Estructura del repo
+## Estructura — dos repos separados
+
 ```
-sistemas-creacion-webs/
+sistemas-creacion-webs/              ← ESTE repo — solo sistema, nunca datos de clientes
 ├── AGENTS.md                        ← estás aquí — léelo primero
 ├── README.md                        ← resumen para humanos
 ├── 00-investigacion/                ← PASO 0: común a todos los sistemas
 │   └── INVESTIGACION.md
-├── 01-gmb-crush/                    ← Sistema GMB Crush (web local + Google Maps)
-│   ├── SISTEMA.md                   ← índice + convenciones + arranque (léelo primero)
-│   ├── PREFLIGHT.md                 ← datos del cliente
-│   ├── fases/                       ← un archivo por fase — léelo antes de ejecutar esa fase
-│   │   ├── fase-1-fundamentos.md
-│   │   ├── fase-2-contenido.md
-│   │   ├── fase-3-docs-canonicos.md
-│   │   ├── fase-2b-redaccion.md
-│   │   ├── fase-4-test-doctrinal.md
-│   │   ├── fase-5-diseno.md
-│   │   ├── fase-6-build.md
-│   │   ├── fase-7-deploy.md
-│   │   └── fase-8-consolidacion.md
-│   ├── referencias/                 ← doctrina, ejemplos, test — solo consulta
-│   └── plantilla-astro/             ← template listo para desplegar
-└── ejecuciones/                     ← outputs de proyectos reales
-    └── [nombre-negocio-slug]/       ← ejemplo real: aerotermia-madrid/
+└── 01-gmb-crush/                    ← Sistema GMB Crush (web local + Google Maps)
+    ├── SISTEMA.md                   ← convenciones + arranque
+    ├── fases/                       ← un archivo por fase — léelo antes de ejecutar esa fase
+    │   ├── fase-1-fundamentos.md
+    │   ├── fase-2-contenido.md
+    │   ├── fase-3-docs-canonicos.md
+    │   ├── fase-2b-redaccion.md
+    │   ├── fase-4-test-doctrinal.md
+    │   ├── fase-5-diseno.md
+    │   ├── fase-6-build.md
+    │   ├── fase-7-deploy.md
+    │   └── fase-8-consolidacion.md
+    ├── referencias/                 ← doctrina, ejemplos, test — solo consulta
+    └── plantilla-astro/             ← template base — se copia por cliente, nunca se modifica aquí
+
+gmb-crush-ejecuciones/              ← repo SEPARADO — un cliente por carpeta
+└── [nombre-negocio-slug]/          ← ej: reformaban-madrid/, fontaneria-ramos/
+    ├── outputs.json                 ← todos los outputs del cliente
+    └── web/                        ← copia de plantilla-astro con datos reales
 ```
 
 > Cuando se añadan nuevos sistemas aparecerán como `02-nombre-sistema/`, `03-nombre-sistema/`, etc.
@@ -47,10 +50,16 @@ sistemas-creacion-webs/
 3. **⚠ OBLIGATORIO: antes de ejecutar cada fase, lee su archivo en `fases/` completo** — nunca ejecutes una fase de memoria
 4. En Fase 4 ejecuta el Test Doctrinal completo (lee `fase-4-test-doctrinal.md`), presenta los resultados al operador y **para aquí** — espera aprobación antes de continuar a Fase 5 (Diseño)
 
-### PASO 2 — Guardar resultados (ejecuciones/)
-⚠ Crea la carpeta `ejecuciones/[nombre-negocio-slug]/` **al arrancar PASO 1, antes de ejecutar la Fase 1** — no al final del proyecto.
-Guarda ahí todos los outputs generados durante cada fase.
-Consulta `ejecuciones/aerotermia-madrid/` como ejemplo de referencia de una ejecución completa.
+### PASO 2 — Guardar resultados (repo gmb-crush-ejecuciones)
+⚠ Crea la carpeta del cliente en el repo de ejecuciones **al arrancar PASO 1, antes de ejecutar la Fase 1** — no al final del proyecto.
+
+```
+gmb-crush-ejecuciones/[nombre-negocio-slug]/
+├── outputs.json          ← créalo vacío al inicio, rellénalo durante las fases
+└── web/                  ← copia de plantilla-astro (cp -r sistemas-creacion-webs/01-gmb-crush/plantilla-astro/ aquí)
+```
+
+**Nunca crees carpetas de cliente dentro del repo `sistemas-creacion-webs`.** Los datos de clientes van siempre en `gmb-crush-ejecuciones/`.
 
 ## lessons.md — Memoria de errores por proyecto
 
