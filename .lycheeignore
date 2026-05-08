@@ -1,0 +1,31 @@
+# Pseudo-URLs doctrinales. Los archivos en 01-gmb-crush/referencias/ usan
+# rutas como /almagro/, /chamberi/, /madrid/, /cerrajero/madrid/...
+# como EJEMPLOS de URLs (las que se crean y las que NO se deben crear).
+# No son enlaces reales a archivos — son ilustraciones doctrinales.
+#
+# lychee los detecta como links rotos. Los ignoramos por patrón.
+
+# Barrios y distritos usados en ejemplos del consolidado de cobertura local
+file:///.*/almagro/?$
+file:///.*/chamberi/?$
+file:///.*/salamanca/?$
+file:///.*/retiro/?$
+file:///.*/centro/?$
+file:///.*/tetuan/?$
+file:///.*/chamartin/?$
+file:///.*/arganzuela/?$
+file:///.*/moncloa/?$
+file:///.*/prosperidad/?$
+
+# Patrones de URL canónicos del sistema GMB Crush (ejemplos en docs)
+file:///.*/madrid/?$
+file:///.*/madrid/.*$
+file:///.*/cerrajero/.*$
+file:///.*/fontanero/.*$
+file:///.*/contacto/?$
+file:///.*/aviso-legal/?$
+file:///.*/privacidad/?$
+file:///.*/[a-z-]+-slug.*$
+
+# Placeholders sintácticos: [city], [service], etc.
+file:///.*\[.*\].*$
