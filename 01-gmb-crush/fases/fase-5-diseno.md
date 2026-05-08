@@ -4,7 +4,7 @@
 
 Esta fase extrae el diseño EXACTO de la web de referencia para replicarlo. No estimas ni inventas — trabajas con datos reales (screenshots para composición, CSS computado para valores).
 
-**Cuándo se ejecuta:** después de Fase 2b (Redacción). Antes de Fase 6 (Build). Cierra TODAS las decisiones estéticas — el constructor NO toma decisiones de diseño, solo ejecuta lo que produce esta fase.
+**Cuándo se ejecuta:** después de Fase 3b (Redacción). Antes de Fase 6 (Build). Cierra TODAS las decisiones estéticas — el constructor NO toma decisiones de diseño, solo ejecuta lo que produce esta fase.
 
 > **⛔ BLOQUEO:** No produzcas ningún output de diseño (tokens, layout-map, assets) sin haber completado los Pasos 1–3. Si te saltas la extracción producirás valores estimados y la web no se parecerá a la referencia.
 
@@ -226,7 +226,7 @@ Checklist del operador marcado como `status: "confirmed"`:
 
 ### Output 16.6 — Layout-Map definitivo
 
-Cruza el Layout-Map (16.2) con el copy redactado en Fase 2b. Receta literal para el constructor.
+Cruza el Layout-Map (16.2) con el copy redactado en Fase 3b. Receta literal para el constructor.
 
 Para cada page type: lista numerada de secciones con el componente Astro, las props y los datos reales (h1 del output 15.x, cta del output 1.13, etc.).
 
@@ -251,7 +251,7 @@ Si hay placeholders: valor = `"[IMAGEN: descripción]"` y status = `"⚠ placeho
 - [ ] **16.2** — Layout Map con secciones en orden por page type
 - [ ] **16.3** — Diseño confirmado por operador (`status: "confirmed"`)
 - [ ] **16.5** — Reglas CSS por componente (hero alturas, botones, cards, grids)
-- [ ] **16.6** — Layout-Map definitivo cruzado con copy de Fase 2b
+- [ ] **16.6** — Layout-Map definitivo cruzado con copy de Fase 3b
 - [ ] **16.7** — Inventario de imágenes (URLs CDN o placeholders documentados)
 
 Si cualquier output está como `⚠ inferido` sin confirmación del operador: resolver antes de build.

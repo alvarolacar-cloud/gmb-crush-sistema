@@ -45,4 +45,4 @@ gmb-crush-ejecuciones/               ← repo separado — datos de clientes
 
 | Sistema | Qué es | Cuándo usarla |
 |---------|--------|---------------|
-| `01-gmb-crush` | SEO local + GBP. 8 fases, plantilla Astro, test doctrinal. | Negocios locales que quieren posicionar en Google Maps + web. |
+| `01-gmb-crush` | SEO local + GBP. Fase 0 investigación + 8 fases de construcción, plantilla Astro, test doctrinal. | Negocios locales que quieren posicionar en Google Maps + web. |

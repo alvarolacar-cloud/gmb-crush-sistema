@@ -69,7 +69,7 @@ Pide estos datos junto al informe de competidores. Con solo **"qué hace" + "ciu
 
 ---
 
-## 4. Las 9 Fases
+## 4. Las 8 Fases de GMB Crush
 
 > ### ⛔ PROTOCOLO OBLIGATORIO — sin excepción
 >
@@ -86,7 +86,7 @@ Pide estos datos junto al informe de competidores. Con solo **"qué hace" + "ciu
 | **Fase 1** — Fundamentos y Arquitectura | `fases/fase-1-fundamentos.md` | Main City, servicios, URLs, fórmula de páginas |
 | **Fase 2** — Contenido | `fases/fase-2-contenido.md` | Textos, schemas, enlaces internos |
 | **Fase 3** — Docs Canónicos | `fases/fase-3-docs-canonicos.md` | 6 documentos de referencia del cluster |
-| **Fase 2b** — Redacción de Contenido | `fases/fase-2b-redaccion.md` | Copy real de todas las páginas (HP, SO, LBS, GH, GA, contacto) |
+| **Fase 3b** — Redacción de Contenido | `fases/fase-3b-redaccion.md` | Copy real de todas las páginas (HP, SO, LBS, GH, GA, contacto) |
 | **Fase 4** — Test Doctrinal | `fases/fase-4-test-doctrinal.md` | Validación doctrinal — gate obligatorio |
 | **Fase 5** — Diseño | `fases/fase-5-diseno.md` | Design tokens + Layout-Map definitivo |
 | **Fase 6** — Build | `fases/fase-6-build.md` | `outputs.json` + build Astro |
@@ -95,7 +95,7 @@ Pide estos datos junto al informe de competidores. Con solo **"qué hace" + "ciu
 
 ---
 
-## 4. Estructura de Repos
+## 5. Estructura de Repos
 
 Este sistema opera con **dos repositorios separados**:
 
@@ -115,6 +115,7 @@ Este sistema opera con **dos repositorios separados**:
 ---
 
 ## 6. Instrucción de Arranque
+
 
 **Antes de ejecutar las 9 fases, pregunta al operador:**
 

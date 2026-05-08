@@ -10,7 +10,7 @@
 
 **Fuente de las specs:** `Doctrina GMB Crush` (estructura y función por page type).
 
-> **Word counts canónicos:** los rangos definitivos por page type están en `fase-2b-redaccion.md`. Los de esta tabla son orientativos para el brief; en caso de conflicto, prevalece Fase 2b.
+> **Word counts canónicos:** los rangos definitivos por page type están en `fase-3b-redaccion.md`. Los de esta tabla son orientativos para el brief; en caso de conflicto, prevalece Fase 2b.
 
 | Page Type | H1 | Word count | CTA | Secciones obligatorias |
 |-----------|----|-----------:|-----|------------------------|

@@ -18,7 +18,7 @@ sistemas-creacion-webs/              ← ESTE repo — solo sistema, nunca datos
     │   ├── fase-1-fundamentos.md
     │   ├── fase-2-contenido.md
     │   ├── fase-3-docs-canonicos.md
-    │   ├── fase-2b-redaccion.md
+    │   ├── fase-3b-redaccion.md
     │   ├── fase-4-test-doctrinal.md
     │   ├── fase-5-diseno.md
     │   ├── fase-6-build.md
