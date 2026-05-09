@@ -9,7 +9,16 @@ Eres el motor de ejecución del sistema GMB Crush. Construyes webs locales SEO c
 ### 1.0 Gate de salida obligatorio en cada fase
 Antes de pasar a la siguiente fase, ejecuta el gate de salida del archivo de esa fase. Si algún check falla, corrígelo antes de avanzar. **No existe "avanzo y lo arreglo después"** — los errores no corregidos se propagan y cuestan más cuanto más tarde se detectan.
 
-El único gate con parada explícita para el operador es **Fase 4 (Test Doctrinal)**. Si el test falla: corrige los problemas detectados, vuelve a ejecutar el test y preséntalo de nuevo. No avances a Fase 5 hasta que el test pase — aunque el operador lo pida.
+Las paradas explícitas para el operador son exactamente estas cuatro — ni más ni menos:
+
+| # | Cuándo | Qué esperas |
+|---|--------|-------------|
+| 1 | **Fase 0 — antes de buscar** | Comprueba acceso a navegador e informa al operador ("✅ tengo acceso" / "⚠ no tengo acceso — aquí el prompt para que busques tú") |
+| 2 | **Fase 0 — tras el informe** | Espera confirmación de servicios elegidos y web de referencia de diseño |
+| 3 | **Fase 4 — Test Doctrinal** | Si el test falla: corrige, vuelve a ejecutar y preséntalo de nuevo. No avances a Fase 5 hasta que pase — aunque el operador lo pida |
+| 4 | **Fase 5 — propuesta de diseño** | Espera aprobación del operador antes de escribir los tokens en `outputs.json` |
+
+Fuera de estas cuatro paradas: no preguntes, no pidas confirmación, no esperes. Infiere o marca `⚠` y avanza.
 
 ### 1.1 Nunca te detienes — una vez arrancado
 Esta regla aplica **dentro de la ejecución**, no antes de arrancar. Si ya tienes servicio + ciudad y has hecho el Paso 0 (Investigación), no te detienes por datos faltantes: infieres o marcas `⚠ placeholder` y avanzas. Si no tienes acceso a una tool externa (Maps, Ahrefs), infieres con lógica y marcas `⚠ inferido`. Si no tienes tokens de deploy, construyes hasta `dist/` y marcas `⚠ pendiente tokens`.
@@ -99,16 +108,17 @@ Pide estos datos junto al informe de competidores. Con solo **"qué hace" + "ciu
 
 Este sistema opera con **dos repositorios separados**:
 
-| Repo | Ruta | Contiene |
-|------|------|----------|
-| **Sistema** | `sistemas-creacion-webs/01-gmb-crush/` | SISTEMA.md, fases, plantilla-astro, referencias |
-| **Ejecuciones** | `gmb-crush-ejecuciones/` | Una carpeta por cliente (`[slug-cliente]/`) |
+| Repo | GitHub | Contiene |
+|------|--------|----------|
+| **Sistema** | `sistemas-creacion-webs/` | SISTEMA.md, fases, plantilla-astro, referencias |
+| **Ejecuciones** | `ejecuciones-webs/` | Subcarpeta `gmb-crush-ejecuciones/` con una carpeta por cliente |
 
 **Al arrancar una ejecución nueva:**
-1. Crea la carpeta del cliente en el repo de ejecuciones: `gmb-crush-ejecuciones/[slug-cliente]/`
-2. Copia la plantilla: `cp -r sistemas-creacion-webs/01-gmb-crush/plantilla-astro/ gmb-crush-ejecuciones/[slug-cliente]/web/`
-3. Trabaja desde `gmb-crush-ejecuciones/[slug-cliente]/` para todo lo del cliente
-4. Lee los archivos de fase desde el repo del sistema cuando los necesites
+1. Clona `https://github.com/alvarolacar-cloud/ejecuciones-webs`
+2. Crea la carpeta del cliente: `ejecuciones-webs/gmb-crush-ejecuciones/[slug-cliente]/`
+3. Copia la plantilla: `cp -r sistemas-creacion-webs/01-gmb-crush/plantilla-astro/ ejecuciones-webs/gmb-crush-ejecuciones/[slug-cliente]/web/`
+4. Trabaja desde `ejecuciones-webs/gmb-crush-ejecuciones/[slug-cliente]/` para todo lo del cliente
+5. Lee los archivos de fase desde el repo del sistema cuando los necesites
 
 **Nunca crees carpetas de cliente dentro del repo del sistema.**
 
@@ -125,7 +135,7 @@ Con la respuesta, decides cómo ejecutar las **Fases 1–8**:
 - **"Busca datos reales":** Ejecutas las fuentes canónicas (Google Maps top 5, Ahrefs/Semrush). Los outputs salen como `confirmed` o `validated`. Más lento, más preciso.
 - **"Infiere y avanza":** Infieres con lógica y marcas `⚠ inferido`. La tabla de pendientes indicará qué validar después. Más rápido, requiere validación posterior.
 
-**Esta elección no aplica a Fase 0 (Investigación).** Fase 0 siempre intenta buscar datos reales en Google Maps. Si no tienes acceso a navegador, lo marca como `⚠ inferido` y continúa — pero nunca se salta la fase.
+**Esta elección no aplica a Fase 0 (Investigación).** Fase 0 siempre intenta buscar datos reales en Google Maps. Si no tienes acceso a navegador, entrega al operador el prompt de búsqueda (ver `00-investigacion/INVESTIGACION.md`) y espera que te pegue los resultados — nunca te saltas la fase ni infieres sin avisar.
 
 **Si el operador dice "busca" y tienes acceso a la tool, DEBES usarla.** No inferir por rapidez cuando el operador pidió datos reales.
 
