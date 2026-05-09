@@ -26,6 +26,15 @@ No empieces la investigación hasta tener estas respuestas.
 
 ## Lo que la IA hace
 
+### Paso previo — Comprobar acceso al navegador
+
+Antes de empezar, comprueba si puedes abrir Google Maps e informa al operador:
+
+- **Si tienes acceso a navegador real** (Chrome MCP, computer-use o similar): di exactamente esto → *"✅ Tengo acceso al navegador. Voy a buscar datos reales en Google Maps."* y continúa.
+- **Si no tienes acceso**: di exactamente esto → *"⚠ No tengo acceso al navegador. Puedo inferir los competidores más probables del sector con lógica, pero los datos no serán reales. ¿Continúo así o prefieres hacer tú la búsqueda y pasarme los resultados?"* y espera respuesta del operador antes de continuar.
+
+---
+
 **Método:** Búsqueda manual en el navegador — abre Google Maps en maps.google.com y busca directamente. No uses APIs ni scraping.
 
 1. Buscar `[servicio principal] [ciudad]` en Google Maps.
