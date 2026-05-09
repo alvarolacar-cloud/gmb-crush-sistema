@@ -31,7 +31,24 @@ No empieces la investigación hasta tener estas respuestas.
 Antes de empezar, comprueba si puedes abrir Google Maps e informa al operador:
 
 - **Si tienes acceso a navegador real** (Chrome MCP, computer-use o similar): di exactamente esto → *"✅ Tengo acceso al navegador. Voy a buscar datos reales en Google Maps."* y continúa.
-- **Si no tienes acceso**: di exactamente esto → *"⚠ No tengo acceso al navegador. Puedo inferir los competidores más probables del sector con lógica, pero los datos no serán reales. ¿Continúo así o prefieres hacer tú la búsqueda y pasarme los resultados?"* y espera respuesta del operador antes de continuar.
+- **Si no tienes acceso**: di exactamente esto → *"⚠ No tengo acceso al navegador. Para que la investigación sea real, necesito que hagas tú la búsqueda y me pegues los resultados. Aquí tienes las instrucciones:"* y a continuación entrega al operador el prompt de investigación (ver más abajo). Espera a que el operador te pegue los resultados antes de continuar.
+
+**Prompt de investigación para el operador** (entrégalo cuando no tengas acceso al navegador):
+
+```
+Busca en Google Maps: "[servicio principal] [ciudad]"
+
+Para cada uno de los 5 primeros resultados anota:
+- Nombre del negocio
+- URL de su web
+- Puntuación (★) y número de reseñas
+- Categoría principal que aparece en su perfil GBP
+- Trust signals visibles en su web (años de experiencia, certificaciones, badges, garantías)
+- TODOS los servicios que ofrece (revisa su menú, páginas de servicios y footer)
+
+Repite la búsqueda para cada ciudad adicional si las hay.
+Pégame los resultados y continúo con el informe.
+```
 
 ---
 
