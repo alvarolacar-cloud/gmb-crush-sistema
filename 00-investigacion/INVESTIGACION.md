@@ -15,9 +15,10 @@ Con esas decisiones confirmadas, se pasa a la forma de construcción elegida (ej
 
 Antes de buscar nada, pregunta al operador:
 
-1. **¿Cuál es el servicio principal del negocio?**
-2. **¿Cuál es la dirección completa?** (calle, número, CP y ciudad — si no la tiene aún, al menos la ciudad)
-3. **¿Quieres que analice otras ciudades además de la tuya** para comparar qué servicios ofrece el sector? (si sí, lista cuáles)
+1. **¿Cuál es el nombre del negocio?**
+2. **¿Cuál es el servicio principal?**
+3. **¿Cuál es la dirección completa?** (calle, número, CP y ciudad — si no la tiene aún, al menos la ciudad)
+4. **¿Quieres que analice otras ciudades además de la tuya** para comparar qué servicios ofrece el sector? (si sí, lista cuáles)
 
 No empieces la investigación hasta tener estas respuestas.
 
