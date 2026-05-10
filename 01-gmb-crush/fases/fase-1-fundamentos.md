@@ -1,4 +1,4 @@
-## 3. Fase 1 — Fundamentos y Arquitectura
+## Fase 1 — Fundamentos y Arquitectura
 
 > **Si has llegado aquí, estás en el lugar correcto.** Lee este archivo completo antes de producir ningún output. Los patrones de URL, la fórmula de páginas y las convenciones de naming están en las secciones siguientes — no en el SISTEMA.md.
 
@@ -13,25 +13,25 @@ Cada output de esta fase tiene una fuente y un método concreto. Síguelos en or
 
 ### 3.2 Primary Category
 - **Dato que buscamos:** La categoría GBP principal (ej: "Fontanero", "Cerrajero", "Instalador de climatización").
-- **Cómo se obtiene:** Tomar la "Categoría GBP más frecuente" del **Informe de Competidores** producido en Fase 0. Marcar `confirmed`.
+- **Cómo se obtiene:** Tomar la "Categoría GBP más frecuente" del **Informe de Competidores** producido en Investigación. Marcar `confirmed`.
 - **Fuente:** `Doctrina + Local Pack`.
 - **Si ninguna categoría aparece en 3+ de 5 perfiles del informe:** Elegir la que aparece en 2 de 5. Si hay empate, elegir la más específica. Si solo aparece en 1, usar esa (es la mejor señal disponible) y marcarlo en notas.
-- **Si no existe el Informe de Competidores:** Vuelve a Fase 0 y ejecútala. **Esta fase no infiere categorías.** El Informe es el único origen válido.
+- **Si no existe el Informe de Competidores:** Vuelve a Investigación y ejecútala. **Esta fase no infiere categorías.** El Informe es el único origen válido.
 - **Slug:** La plantilla genera el slug automáticamente aplicando slugify al valor del output 1.5. No lo definas manualmente — la plantilla lo calcula.
 
 ### 3.3 Core Services (Variable S)
 - **Dato que buscamos:** Lista de servicios con intención de búsqueda diferenciada.
-- **Cómo se obtiene:** Tomar los servicios **confirmados por el operador** de la Matriz de Servicios del Informe de Competidores (Fase 0). Marcar `confirmed`.
-- **Multi-ciudad (opcional):** Si el operador declaró ciudades adicionales en el preflight, el Informe de Fase 0 ya cruza servicios entre ciudades. Los servicios que aparecen en 2+ ciudades del sector son los más sólidos. La arquitectura sigue siendo solo para la Main City.
+- **Cómo se obtiene:** Tomar los servicios **confirmados por el operador** de la Matriz de Servicios del Informe de Competidores (Investigación). Marcar `confirmed`.
+- **Multi-ciudad (opcional):** Si el operador declaró ciudades adicionales en el preflight, el Informe de Investigación ya cruza servicios entre ciudades. Los servicios que aparecen en 2+ ciudades del sector son los más sólidos. La arquitectura sigue siendo solo para la Main City.
 - **Fuente:** `Doctrina + Local Pack` + confirmación operador.
-- **Si no existe el Informe:** Vuelve a Fase 0. **Esta fase no infiere servicios.**
+- **Si no existe el Informe:** Vuelve a Investigación. **Esta fase no infiere servicios.**
 - **Regla anti-duplicación:** Si dos servicios responden a la misma búsqueda del usuario (test: "¿alguien buscaría esto por separado?"), fusionar en uno. En caso de duda, NO crear el servicio — es mejor tener S=4 sólidos que S=6 con canibalización.
 - **S es variable:** Puede ser 3, 4, 5, 6 o más. No forzar a 5.
 - **Criterio para fijar S:** Solo incluir servicios que (1) el negocio realmente ofrece Y (2) tienen intención de búsqueda propia verificable en el Informe. En caso de duda, S más bajo es mejor que S más alto.
 
 ### 3.4 Additional Categories (Variable A)
 - **Dato que buscamos:** Categorías GBP secundarias que necesitan página propia.
-- **Cómo se obtiene:** Cruzar las categorías secundarias extraídas en el Informe de Competidores (Fase 0) con los servicios del cliente. Descartar las ya cubiertas por un core service.
+- **Cómo se obtiene:** Cruzar las categorías secundarias extraídas en el Informe de Competidores (Investigación) con los servicios del cliente. Descartar las ya cubiertas por un core service.
 - **Fuente:** `Doctrina + Local Pack`.
 - **Si el Informe no muestra categoría adicional clara:** A=0. **No se inventa una categoría adicional.**
 - **Criterio:** Necesita página propia si (1) el negocio la ofrece Y (2) no es sinónimo ni subconjunto de un core service.
@@ -103,9 +103,9 @@ El sistema GMB Crush separa el territorio en 3 capas que NUNCA se mezclan:
 
 ### 3.6 Trust Signals
 - **Dato que buscamos:** Señales de confianza del sector (años, certificaciones, garantías, badges) + diferenciadores del cliente.
-- **Cómo se obtiene:** Tomar la columna "Trust signals" del Informe de Competidores (Fase 0). Las que aparecen en 3+ perfiles son "estándar del sector". Añadir diferenciadores que el cliente haya declarado.
+- **Cómo se obtiene:** Tomar la columna "Trust signals" del Informe de Competidores (Investigación). Las que aparecen en 3+ perfiles son "estándar del sector". Añadir diferenciadores que el cliente haya declarado.
 - **Fuente:** `Doctrina + Local Pack` (estándar del sector) + `Cliente preflight` (diferenciadores propios).
-- **Si no existe el Informe:** Vuelve a Fase 0. **Esta fase no infiere trust signals del sector.**
+- **Si no existe el Informe:** Vuelve a Investigación. **Esta fase no infiere trust signals del sector.**
 - **Se usa en:** Hero de Homepage, bloque de confianza, contenido de LBS.
 - **Regla:** Los trust signals que afirman algo del cliente (años, certificaciones, garantías) **solo aparecen si el cliente los declara** en el preflight. No inventar "250+ reseñas", "20 años de experiencia" ni nada similar. Estándares genéricos del sector ("presupuesto gratis", "24h") sí pueden venir del Informe si los competidores los muestran.
 

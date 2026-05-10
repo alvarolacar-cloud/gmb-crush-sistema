@@ -27,10 +27,10 @@ El `SISTEMA.md` condensa los 242 outputs en un flujo de 7 fases que una IA puede
 | Fase 1 (Arquitectura) | Bloque 1 — Pasos 1, 2, 3 | 42 |
 | Fase 2 (Contenido) | Bloque 2 — Pasos 4, 5, 6, 7 + Bloque 5 — Paso 15 | 57 + parte de 39 |
 | Fase 3 (6 Docs Canónicos) | No existía en el original (nuevo) | — |
-| Fase 4 (Test Doctrinal) | No existía en el original (nuevo) | — |
-| Fase 5 (Build) | Bloque 5 — Pasos 17, 18 | parte de 39 |
-| Fase 6 (Deploy) | Bloque 5 — Paso 18 | parte de 39 |
-| Fase 7 (Consolidación) | Bloque 6 (Info que falta) + Bloque 7 (GBP bloqueado) | 0 + 20 bloqueados |
+| Fase 5 (Test Doctrinal) | No existía en el original (nuevo) | — |
+| Fase 6 (Build) | Bloque 5 — Pasos 17, 18 | parte de 39 |
+| Fase 7 (Deploy) | Bloque 5 — Paso 18 | parte de 39 |
+| Fase 8 (Consolidación) | Bloque 6 (Info que falta) + Bloque 7 (GBP bloqueado) | 0 + 20 bloqueados |
 
 ---
 
@@ -40,8 +40,8 @@ Los Bloques 3 (Priorización, 43 outputs) y 4 (Automatización, 41 outputs) del 
 
 | Bloque | Qué producía | Dónde está ahora |
 |--------|-------------|------------------|
-| Bloque 3 — Priority Score | Puntuación por página para decidir orden de producción | Embebido en Fase 5 §5.4 como "Orden de construcción" fijo (HP→SO→GH→LBS→AC→GA) |
-| Bloque 3 — QA Checklist | Lista de checks por página antes de publicar | Embebido en Fase 4 como "Test Doctrinal" (gate pre-build) |
+| Bloque 3 — Priority Score | Puntuación por página para decidir orden de producción | Embebido en Fase 6 §5.4 como "Orden de construcción" fijo (HP→SO→GH→LBS→AC→GA) |
+| Bloque 3 — QA Checklist | Lista de checks por página antes de publicar | Embebido en Fase 5 como "Test Doctrinal" (gate pre-build) |
 | Bloque 3 — Producción en Fases | Calendario de publicación por fases | No incluido — la IA construye todo de una vez, no en fases separadas |
 | Bloque 4 — Pseudocódigo | Lógica del sistema en pseudocódigo | No incluido — el propio SISTEMA.md ES la lógica |
 | Bloque 4 — Master Prompt | El prompt que se le da a la IA | No incluido — el propio SISTEMA.md ES el master prompt |
@@ -56,7 +56,7 @@ La decisión fue: los Bloques 3 y 4 eran **meta-documentación sobre cómo ejecu
 | Elemento nuevo | Por qué se añadió |
 |----------------|-------------------|
 | **Fase 3 — 6 Docs Canónicos** | El sistema original no producía documentos formales intermedios. Se añadió para que el test doctrinal tenga algo concreto contra qué ejecutar los checks. |
-| **Fase 4 — Test Doctrinal como gate** | El test-doctrinal.md existía pero no estaba integrado en el flujo de ejecución. Ahora es un gate obligatorio antes del build. |
+| **Fase 5 — Test Doctrinal como gate** | El test-doctrinal.md existía pero no estaba integrado en el flujo de ejecución. Ahora es un gate obligatorio antes del build. |
 | **Pregunta de arranque** ("¿buscar datos reales o inferir?") | El sistema original asumía que la IA siempre tenía acceso a tools. Este sistema funciona con o sin acceso — el operador decide. |
 | **Regla "nunca te detienes"** | El sistema original toleraba `⚠` pero no lo declaraba como regla de hierro. Aquí es la primera convención. |
 | **Trust Signals como output explícito** | En el original estaba en el output 1.14 pero se perdía al condensar. Se recuperó como sección 3.6. |
@@ -72,7 +72,7 @@ La decisión fue: los Bloques 3 y 4 eran **meta-documentación sobre cómo ejecu
 - Las **8 fuentes canónicas** (Cliente preflight, Doctrina GMB Crush, Doctrina + Local Pack, Doctrina + Keyword Research, etc.).
 - La filosofía **web-first** (web sale con datos provisionales, GBP después).
 - La regla de que **LCAs no generan URLs**.
-- Los estados de output: `confirmed`, `validated`, `⚠ placeholder` (operador no aportó dato), `⚠ pendiente tokens` (deploy bloqueado), `⚠ pendiente diseño` (Fase 5 sin capacidades), `no aplica`. **El estado `⚠ inferido` fue eliminado** — la IA o tiene fuente verificable o para; ya no hay zona gris donde "razone con lógica del sector".
+- Los estados de output: `confirmed`, `validated`, `⚠ placeholder` (operador no aportó dato), `⚠ pendiente tokens` (deploy bloqueado), `⚠ pendiente diseño` (Fase 6 sin capacidades), `no aplica`. **El estado `⚠ inferido` fue eliminado** — la IA o tiene fuente verificable o para; ya no hay zona gris donde "razone con lógica del sector".
 - El concepto de **Bloque 6 como agregador** de pendientes que bloquea el GBP.
 
 ---

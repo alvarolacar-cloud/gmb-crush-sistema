@@ -1,61 +1,120 @@
 # AGENTS.md — Guía de arranque para agentes IA
 
-## 1. Qué construimos
+## Qué construimos
 
 Una web local SEO para un negocio (servicio + ciudad), desplegada en Cloudflare Pages, optimizada para Google Maps y búsqueda orgánica, más un Google Business Profile listo. Mismo input + mismo repo = mismo output reproducible.
 
-## 2. Qué pides al operador
+---
 
-Los datos que necesitas vienen de `INPUTS.md` (raíz del repo). Es la **única fuente** — no pidas datos en otro sitio.
+## Los 6 pasos
 
-**Bloqueantes para arrancar:** servicio principal + ciudad. Sin esos dos, paras y los pides. Todo lo demás se completa o queda como marcador visible (`[TELÉFONO]`, `[DIRECCIÓN]`).
+Esta es la secuencia completa que sigues con el operador. Cada paso tiene su propio archivo de referencia. No improvises orden — síguelo literal.
 
-## 3. Pre-flight de capacidades — antes de arrancar nada
+| # | Paso | Quién manda | Archivo de referencia | Para si... |
+|---|------|-------------|----------------------|------------|
+| 1 | **Explicación del sistema** | IA | esta sección §Paso 1 abajo | nunca paras — solo presentas |
+| 2 | **Test de herramientas** | IA | esta sección §Paso 2 abajo | falta capacidad crítica sin plan B |
+| 3 | **Inputs iniciales** | operador | `INPUTS.md` §Iniciales | falta servicio o ciudad |
+| 4 | **Investigación de mercado** | IA + operador | `00-investigacion/INVESTIGACION.md` | tras informe — esperar confirmación de servicios + web ref |
+| 5 | **Construcción de la web** (9 fases internas) | IA | `01-gmb-crush/SISTEMA.md` | dentro: paradas en Fase 5 (test) y Fase 6 (diseño) |
+| 6 | **Inputs finales** | operador + IA | `INPUTS.md` §Finales | hasta cerrar todos los `⚠ placeholder` (bloquea creación GBP) |
 
-Antes de pedir inputs al operador, **declaras qué herramientas tienes y a qué fase afecta cada una**. Formato exacto:
+---
+
+### Paso 1 — Explicación del sistema
+
+Al arrancar la sesión con un operador nuevo (o cuando vuelve a este repo después de tiempo), explica brevemente:
+
+> Vamos a construir una web local SEO para tu negocio. El proceso son 6 pasos. Yo te voy a guiar.
+>
+> 1. Te explico el sistema (esto).
+> 2. Hago un self-check de mis herramientas y te digo si necesito tu ayuda en alguna fase.
+> 3. Te pido los datos del negocio (servicio, ciudad, dirección, etc.).
+> 4. Investigo el sector en Google Maps y te entrego un informe; tú confirmas los servicios a incluir y una web de referencia de diseño.
+> 5. Construyo la web (9 fases internas; te pararé solo dos veces: tras el test doctrinal y tras la propuesta de diseño).
+> 6. Cuando la web está live, te paso un informe final con lo que falta para cerrar (teléfono, GBP, tokens, etc.) y rebuild/redeploy a medida que tú lo cierras.
+>
+> Resultado: web desplegada en Cloudflare + tabla de pendientes + GBP listo cuando todo esté cerrado.
+
+Si el operador ya conoce el sistema, dilo en una línea y pasa a Paso 2.
+
+---
+
+### Paso 2 — Test de herramientas
+
+Antes de pedir nada al operador, **declaras qué capacidades tienes en esta sesión y a qué paso/fase afecta cada una**. Formato exacto:
 
 ```
 Capacidades disponibles para este proyecto:
 
-✓/✗ Navegador real (Maps, web ref)   → Fase 0 (investigación), Fase 5 (diseño)
-✓/✗ Screenshot capability             → Fase 5 (diseño)
-✓/✗ CSS inspection (DevTools/JS eval) → Fase 5 (diseño)
-✓/✗ Shell (bash/PowerShell)           → Fase 6, Fase 7
-✓/✗ Git + gh CLI                      → Fase 7 (deploy)
-✓/✗ pnpm                              → Fase 6, Fase 7
+✓/✗ Navegador real (Google Maps, web ref)  → Paso 4, Fase 6
+✓/✗ Screenshot capability                   → Fase 6
+✓/✗ CSS inspection (DevTools / JS eval)     → Fase 6
+✓/✗ Shell (bash/PowerShell)                 → Fase 7, Fase 8
+✓/✗ Git + gh CLI                            → Fase 8
+✓/✗ pnpm                                    → Fase 7, Fase 8
 
 Resumen: [todo OK / falta X — plan B: el operador hace Y manualmente]
 ```
 
-Si alguna capacidad falta, **ofreces plan B en el momento del pre-flight, no a mitad de fase**. Ejemplos:
-- Sin navegador → operador busca en Maps manualmente y pega resultados (Fase 0).
-- Sin screenshot/CSS inspection → operador toma screenshots de la web ref y los pega; o el diseño queda como pendiente (Fase 5).
-- Sin tokens → build hasta `dist/`, deploy queda pendiente (Fase 7).
+Si alguna capacidad falta, **ofreces plan B en este momento, no a mitad de fase**. Ejemplos:
 
-## 4. Los pasos
+- Sin navegador → el operador busca en Maps manualmente y pega resultados (Paso 4).
+- Sin screenshot/CSS inspection → el operador pasa capturas full-page de la web ref; o el diseño queda como `⚠ pendiente diseño` (Fase 6).
+- Sin tokens GitHub/Cloudflare → build hasta `dist/`, deploy queda pendiente (Fase 8).
 
-| # | Paso | Archivo de referencia | Para si... |
-|---|------|----------------------|------------|
-| 0 | Recoger inputs + pre-flight de capacidades | `INPUTS.md` (esta sección §3) | falta servicio o ciudad |
-| 1 | Investigar competencia (Local Pack) | `00-investigacion/INVESTIGACION.md` | tras el informe — esperar confirmación de servicios + web ref |
-| 2 | Ejecutar Fase 1 → Fase 4 GMB Crush | `01-gmb-crush/SISTEMA.md` | tras Fase 4 si el Test Doctrinal falla |
-| 3 | Ejecutar Fase 5 (diseño) | `01-gmb-crush/fases/fase-5-diseno.md` | tras propuesta de diseño — esperar aprobación |
-| 4 | Ejecutar Fase 6 → Fase 7 (build + deploy) | `01-gmb-crush/fases/fase-6-build.md`, `fase-7-deploy.md` | si faltan tokens (deploy queda pendiente) |
-| 5 | Cerrar con Fase 8 (consolidación + informe final) | `01-gmb-crush/fases/fase-8-consolidacion.md` | hasta que todos los `⚠ placeholder` estén cerrados (bloquea creación GBP) |
+---
 
-**⚠ Antes de ejecutar cada fase, abre y lee su archivo completo.** Nunca ejecutes una fase de memoria. Los patrones exactos (URLs, fórmulas, schemas) viven en el archivo de fase, no en SISTEMA.md.
+### Paso 3 — Inputs iniciales
 
-## 5. Estructura — dos repos separados
+Lee `INPUTS.md` §Iniciales y pásale al operador el mensaje exacto que vive ahí. **No pidas inputs en otro sitio.** Si falta servicio o ciudad, no se arranca.
+
+---
+
+### Paso 4 — Investigación de mercado
+
+Lee `00-investigacion/INVESTIGACION.md` y ejecuta. Si no tienes navegador, plan B ya está documentado allí (entregar prompt al operador). Cuando entregues el informe, **paras** y esperas confirmación de:
+
+1. Servicios elegidos por el operador.
+2. URL de la web de referencia de diseño.
+
+---
+
+### Paso 5 — Construcción de la web
+
+Lee `01-gmb-crush/SISTEMA.md`. Ejecuta las 9 fases en orden. Las paradas oficiales dentro de este paso son SOLO dos:
+
+- **Fase 5 (Test Doctrinal)** — si falla, corriges y reejecutas. No avanzas a Fase 6 hasta pasar.
+- **Fase 6 (Diseño)** — esperas aprobación del operador antes de escribir tokens en `outputs.json`.
+
+La Fase 9 cierra el paso entregando `INFORME-FINAL.md` en `ejecuciones-webs/gmb-crush-ejecuciones/[slug]/`. Este informe es el input para el Paso 6.
+
+---
+
+### Paso 6 — Inputs finales
+
+Lee `INPUTS.md` §Finales y pide al operador lo que aún falta para cerrar el cluster (teléfono real, email, tokens de deploy, dominio definitivo, confirmación GBP). El operador va resolviendo cada `⚠ placeholder` del INFORME-FINAL.md y por cada cierre:
+
+1. Actualizas el contenido o schema afectado.
+2. Rebuild (`pnpm build`).
+3. Redeploy.
+4. Eliminas la fila correspondiente de la tabla de pendientes.
+
+Cuando la tabla esté vacía → creas el Google Business Profile y enlazas todo.
+
+---
+
+## Estructura del repo
 
 ```
 sistemas-creacion-webs/              ← ESTE repo — solo sistema, nunca datos de clientes
 ├── AGENTS.md                        ← estás aquí
-├── INPUTS.md                        ← fuente única de inputs del operador
+├── INPUTS.md                        ← inputs iniciales (§Paso 3) + inputs finales (§Paso 6)
 ├── README.md                        ← resumen para humanos
 ├── 00-investigacion/INVESTIGACION.md
 └── 01-gmb-crush/
-    ├── SISTEMA.md                   ← convenciones GMB Crush
-    ├── fases/                       ← fase-1...fase-8 (lee la que vas a ejecutar)
+    ├── SISTEMA.md                   ← convenciones GMB Crush + tabla de las 9 fases
+    ├── fases/                       ← fase-1...fase-9 (lee la que vas a ejecutar)
     ├── referencias/                 ← doctrina, ejemplos, test (consulta)
     └── plantilla-astro/             ← template Astro (se copia por cliente)
 
@@ -64,20 +123,24 @@ ejecuciones-webs/                    ← repo SEPARADO — datos de clientes
     ├── outputs.json                 ← outputs del cluster
     ├── web/                         ← copia de plantilla-astro renderizada
     ├── lessons.md                   ← memoria de errores específicos del proyecto
-    └── INFORME-FINAL.md             ← entregable Fase 8 (post-deploy)
+    └── INFORME-FINAL.md             ← entregable Fase 9 (post-deploy)
 ```
 
 **Nunca crees carpetas de cliente dentro del repo del sistema.** Datos de clientes → siempre en `ejecuciones-webs/`.
 
-## 6. Reglas inviolables
+---
+
+## Reglas inviolables
 
 1. **La IA no infiere ni fabrica.** O verifica con la fuente correcta, o para y pide al operador. Único hueco aceptado: marcadores visibles para datos que el operador no aportó (`[TELÉFONO]`, `[EMAIL]`, `[DIRECCIÓN]`, `⚠ placeholder`). Nunca un valor real fabricado.
 2. **No inventes** teléfono, email, dirección, años de experiencia, certificaciones, reseñas, fotos, valores de schema (rating, sameAs).
 3. **LCAs nunca generan URLs sin aprobación explícita del operador** (escrita en el chat). Implícita o sugerida no cuenta.
-4. **Si el Test Doctrinal de Fase 4 falla, no avances a Fase 5** aunque el operador lo pida. Explica qué falla primero.
+4. **Si el Test Doctrinal de Fase 5 falla, no avances a Fase 6** aunque el operador lo pida. Explica qué falla primero.
 5. **Datos inciertos = marcador visible** (`[TELÉFONO]`, `⚠ placeholder`). Nunca asumir como confirmado.
 
-## 7. Protocolos operativos
+---
+
+## Protocolos operativos
 
 ### lessons.md — memoria de errores por proyecto
 

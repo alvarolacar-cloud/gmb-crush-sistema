@@ -17,7 +17,7 @@ sistemas-creacion-webs/               ← este repo — solo sistema
 ├── AGENTS.md                         ← instrucciones para IAs
 ├── README.md                         ← este archivo
 ├── 00-investigacion/
-│   └── INVESTIGACION.md              ← Fase 0: investigar competidores (común a todos)
+│   └── INVESTIGACION.md              ← Investigación: investigar competidores (común a todos)
 └── 01-gmb-crush/                     ← Sistema GMB Crush (SEO local + GBP)
     ├── SISTEMA.md                    ← índice del sistema (convenciones + tabla de fases)
     ├── fases/                        ← un archivo por fase, se lee antes de ejecutarla
@@ -45,7 +45,7 @@ ejecuciones-webs/                    ← repo separado — un sistema por subcar
 
 | Sistema | Qué es | Cuándo usarla |
 |---------|--------|---------------|
-| `01-gmb-crush` | SEO local + GBP. Fase 0 investigación + 9 fases de construcción, plantilla Astro, test doctrinal. | Negocios locales que quieren posicionar en Google Maps + web. |
+| `01-gmb-crush` | SEO local + GBP. 6 pasos del flujo (explicación → test herramientas → inputs iniciales → investigación → construcción 9 fases → inputs finales). Plantilla Astro + test doctrinal. | Negocios locales que quieren posicionar en Google Maps + web. |
 
 ---
 

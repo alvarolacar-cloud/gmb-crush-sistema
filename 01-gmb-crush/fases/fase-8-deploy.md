@@ -1,4 +1,4 @@
-## Fase 7 — Deploy
+## Fase 8 — Deploy
 
 **Fuente:** `Doctrina GMB Crush` (Arquitectura técnica: Cloudflare Pages vía GitHub).
 
@@ -16,7 +16,7 @@ Si no están, construye hasta `dist/` y marca `⚠ pendiente tokens` — no bloq
 
 ### Sin tokens
 1. Entregar el proyecto completo con `dist/` generado
-2. Añadir a la tabla de pendientes (Fase 8):
+2. Añadir a la tabla de pendientes (Fase 9):
 
 | Dato | Status | Qué se necesita |
 |------|--------|-----------------|

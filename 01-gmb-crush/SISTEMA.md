@@ -12,8 +12,8 @@ Eres el motor de ejecución del sistema GMB Crush. Construyes webs locales SEO c
 
 La IA solo opera con datos verificados. Reglas:
 
-- **Datos del mercado** (categoría GBP, servicios del sector, trust signals dominantes): vienen del Local Pack ejecutado en Fase 0. Si no hubo acceso al navegador en Fase 0, el operador hizo la búsqueda manual y los pegó. Sin uno de esos dos, **no se ejecuta Fase 1**.
-- **Datos visuales** (colores, tipografías, layout): vienen de la web de referencia con screenshots reales + CSS computado. Sin esas capacidades, **no se ejecuta Fase 5** (queda como pendiente).
+- **Datos del mercado** (categoría GBP, servicios del sector, trust signals dominantes): vienen del Local Pack ejecutado en Investigación. Si no hubo acceso al navegador en Investigación, el operador hizo la búsqueda manual y los pegó. Sin uno de esos dos, **no se ejecuta Fase 1**.
+- **Datos visuales** (colores, tipografías, layout): vienen de la web de referencia con screenshots reales + CSS computado. Sin esas capacidades, **no se ejecuta Fase 6** (queda como pendiente).
 - **Datos del operador faltantes** (teléfono, email, dirección, nombre): van como marcador visible (`[TELÉFONO]`, `⚠ placeholder`). **Nunca un valor real fabricado.**
 - **Datos doctrinales** (URL patterns, schema por page type, fórmula maestra): vienen del repo. No se inventan.
 
@@ -23,10 +23,10 @@ Las paradas explícitas para el operador son exactamente estas — ni más ni me
 
 | # | Cuándo | Qué esperas |
 |---|--------|-------------|
-| 1 | **Antes de Fase 0** | Pre-flight de capacidades (declarado en AGENTS.md §3) + recogida de inputs (de `INPUTS.md`) |
-| 2 | **Fase 0 — tras el informe** | Confirmación de servicios elegidos + web de referencia de diseño |
-| 3 | **Fase 4 — Test Doctrinal** | Si falla: corrige, repite, presenta de nuevo. No avanzas a Fase 5 hasta que pase |
-| 4 | **Fase 5 — propuesta de diseño** | Aprobación del operador antes de escribir tokens en `outputs.json` |
+| 1 | **Antes de Investigación** | Pre-flight de capacidades (declarado en AGENTS.md §3) + recogida de inputs (de `INPUTS.md`) |
+| 2 | **Investigación — tras el informe** | Confirmación de servicios elegidos + web de referencia de diseño |
+| 3 | **Fase 5 — Test Doctrinal** | Si falla: corrige, repite, presenta de nuevo. No avanzas a Fase 6 hasta que pase |
+| 4 | **Fase 6 — propuesta de diseño** | Aprobación del operador antes de escribir tokens en `outputs.json` |
 
 Fuera de estas cuatro paradas: no preguntes, no pidas confirmación, no esperes. Verifica o marca `⚠ placeholder` y avanza.
 
@@ -42,7 +42,7 @@ Cada decisión declara su fuente:
 | `Doctrina GMB Crush` | La regla viene de la doctrina literal del repo |
 | `⚠ placeholder` | Falta input del operador; valor provisional visible |
 | `⚠ pendiente tokens` | Faltan credenciales de deploy |
-| `⚠ pendiente diseño` | No se pudo ejecutar Fase 5 (sin web ref ni screenshots) |
+| `⚠ pendiente diseño` | No se pudo ejecutar Fase 6 (sin web ref ni screenshots) |
 
 **No existe `⚠ inferido`.** La IA o tiene fuente verificable, o para y pide al operador.
 
@@ -72,11 +72,11 @@ Antes de pasar a la siguiente fase, ejecuta el gate de salida del archivo de esa
 | **Fase 1** — Fundamentos y Arquitectura | `fases/fase-1-fundamentos.md` | Main City, servicios, URLs, fórmula de páginas |
 | **Fase 2** — Contenido | `fases/fase-2-contenido.md` | Specs de páginas, schemas, enlaces internos |
 | **Fase 3** — Docs Canónicos | `fases/fase-3-docs-canonicos.md` | 6 documentos de referencia del cluster |
-| **Fase 3b** — Redacción de Contenido | `fases/fase-3b-redaccion.md` | Copy real de todas las páginas (HP, SO, LBS, GH, GA, contacto) |
-| **Fase 4** — Test Doctrinal | `fases/fase-4-test-doctrinal.md` | Validación doctrinal — gate obligatorio |
-| **Fase 5** — Diseño | `fases/fase-5-diseno.md` | Design tokens + Layout-Map definitivo |
-| **Fase 6** — Build | `fases/fase-6-build.md` | `outputs.json` + build Astro |
-| **Fase 7** — Deploy | `fases/fase-7-deploy.md` | Push GitHub + Cloudflare Pages |
-| **Fase 8** — Consolidación | `fases/fase-8-consolidacion.md` | Tabla de pendientes + INFORME-FINAL.md + bloqueo GBP |
+| **Fase 4** — Redacción de Contenido | `fases/fase-4-redaccion.md` | Copy real de todas las páginas (HP, SO, LBS, GH, GA, contacto) |
+| **Fase 5** — Test Doctrinal | `fases/fase-5-test-doctrinal.md` | Validación doctrinal — gate obligatorio |
+| **Fase 6** — Diseño | `fases/fase-6-diseno.md` | Design tokens + Layout-Map definitivo |
+| **Fase 7** — Build | `fases/fase-7-build.md` | `outputs.json` + build Astro |
+| **Fase 8** — Deploy | `fases/fase-8-deploy.md` | Push GitHub + Cloudflare Pages |
+| **Fase 9** — Consolidación | `fases/fase-9-consolidacion.md` | Tabla de pendientes + INFORME-FINAL.md + bloqueo GBP |
 
 Si necesitas más detalle sobre page types, consulta `referencias/page-type-specs.md`. Para ver un ejemplo doctrinal, consulta `referencias/ejemplo-cerrajeros.md`.

@@ -1,4 +1,4 @@
-## 8. Fase 6 — Construcción (Astro)
+## Fase 7 — Construcción (Astro)
 
 **Fuente:** `Doctrina GMB Crush` (Arquitectura técnica fija).
 
@@ -39,7 +39,7 @@ Los outputs mínimos que `outputs.json` debe contener para que la plantilla func
 | 1.14 | Trust Signals | Fase 1 (3.6) |
 | 3.2 | GeoHub URL Style | `/[main-city]/` |
 | 3.4 | GeoArticle Topics | Fase 1 (3.7) |
-| 16.1 | Design Tokens | Fase 5 |
+| 16.1 | Design Tokens | Fase 6 |
 
 ### 8.2 Copiar plantilla y configurar
 
@@ -81,7 +81,7 @@ Si `pnpm build` falla, no preguntes al operador — diagnostica y corrige:
 | `Cannot find module '@astrojs/tailwind'` | Se instaló Tailwind v4 en lugar de v3 | `pnpm remove tailwindcss && pnpm add -D tailwindcss@3.x @astrojs/tailwind` |
 | Build pasa en local pero falla en Cloudflare | Build command usa `npm` en Cloudflare | En Cloudflare Pages → Settings → Build command: `pnpm run build` (no `npm run build`) |
 | URLs en `dist/` no coinciden con URL Matrix | Directorio extra en `src/pages/` | La estructura de `src/pages/` debe replicar exactamente la URL Matrix. Ningún directorio extra. |
-| Schema `sameAs` apunta a GBP inexistente | Se añadió `sameAs` antes de crear el GBP | Omitir `sameAs` completamente si el GBP no existe. Añadirlo en Fase 8 cuando el GBP esté creado. |
+| Schema `sameAs` apunta a GBP inexistente | Se añadió `sameAs` antes de crear el GBP | Omitir `sameAs` completamente si el GBP no existe. Añadirlo en Fase 9 cuando el GBP esté creado. |
 | `<meta name="generator" content="Astro">` en HTML | No se eliminó en limpieza | Eliminar en `BaseLayout.astro` o `Layout.astro` |
 
 ### 8.4 Verificar

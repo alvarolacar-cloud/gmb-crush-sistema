@@ -1,10 +1,10 @@
-# Fase 5 — Extracción de Diseño y Layout
+# Fase 6 — Extracción de Diseño y Layout
 
 **Fuente:** `Cliente preflight` (web de referencia) + inspección directa.
 
 Esta fase extrae el diseño EXACTO de la web de referencia para replicarlo. No estimas ni inventas — trabajas con datos reales (screenshots para composición, CSS computado para valores).
 
-**Cuándo se ejecuta:** después de Fase 3b (Redacción). Antes de Fase 6 (Build). Cierra TODAS las decisiones estéticas — el constructor NO toma decisiones de diseño, solo ejecuta lo que produce esta fase.
+**Cuándo se ejecuta:** después de Fase 4 (Redacción). Antes de Fase 7 (Build). Cierra TODAS las decisiones estéticas — el constructor NO toma decisiones de diseño, solo ejecuta lo que produce esta fase.
 
 > **⛔ BLOQUEO:** No produzcas ningún output de diseño (tokens, layout-map, assets) sin haber completado los Pasos 1–3. Si te saltas la extracción producirás valores estimados y la web no se parecerá a la referencia.
 
@@ -33,7 +33,7 @@ Sin una de las tres, no se ejecuta esta fase. Nunca infieras tokens visuales des
 
 ### Obtener la URL de referencia
 
-- Si el operador la indicó en el preflight o en Fase 0 (Investigación): usar esa.
+- Si el operador la indicó en el preflight o en Investigación: usar esa.
 - Si no hay referencia: pedir al operador que elija una del informe de competidores.
 - Si no hay ninguna y el operador no la aporta: el diseño queda como `⚠ pendiente diseño`. **No se ejecuta esta fase ni se "infiere" un estilo genérico** — eso produce diseño basura que se vende como real.
 
@@ -247,7 +247,7 @@ Checklist del operador marcado como `status: "confirmed"`:
 
 ### Output 16.6 — Layout-Map definitivo
 
-Cruza el Layout-Map (16.2) con el copy redactado en Fase 3b. Receta literal para el constructor.
+Cruza el Layout-Map (16.2) con el copy redactado en Fase 4. Receta literal para el constructor.
 
 Para cada page type: lista numerada de secciones con el componente Astro, las props y los datos reales (h1 del output 15.x, cta del output 1.13, etc.).
 
@@ -264,20 +264,20 @@ Si hay placeholders: valor = `"[IMAGEN: descripción]"` y status = `"⚠ placeho
 
 ---
 
-## Gate de salida — Fase 5
+## Gate de salida — Fase 6
 
-**STOP antes de pasar a Fase 6 (Build):**
+**STOP antes de pasar a Fase 7 (Build):**
 
 - [ ] **16.1** — Design Tokens escritos con valores del CSS real (no estimados)
 - [ ] **16.2** — Layout Map con secciones en orden por page type
 - [ ] **16.3** — Diseño confirmado por operador (`status: "confirmed"`)
 - [ ] **16.5** — Reglas CSS por componente (hero alturas, botones, cards, grids)
-- [ ] **16.6** — Layout-Map definitivo cruzado con copy de Fase 3b
+- [ ] **16.6** — Layout-Map definitivo cruzado con copy de Fase 4
 - [ ] **16.7** — Inventario de imágenes (URLs CDN o placeholders documentados)
 
 Si cualquier output está como `⚠ placeholder` o `⚠ pendiente diseño` sin resolver: cerrar antes de build, o el build queda explícitamente bloqueado para esta fase.
 
-> **Principio irrenunciable:** El constructor (Fase 6) NO toma decisiones de diseño. Solo ejecuta lo que dice esta fase. Si una decisión de diseño se filtra al build, la consistencia visual se rompe y hay que volver atrás.
+> **Principio irrenunciable:** El constructor (Fase 7) NO toma decisiones de diseño. Solo ejecuta lo que dice esta fase. Si una decisión de diseño se filtra al build, la consistencia visual se rompe y hay que volver atrás.
 
 ---
 
@@ -287,4 +287,4 @@ Si cualquier output está como `⚠ placeholder` o `⚠ pendiente diseño` sin r
 - **Si la referencia tiene fotos propias:** No las copies. Genera equivalentes o marca placeholder.
 - **Si hay varios colores primarios:** El de los botones/CTAs es el primario.
 - **Anti-patrones:** Si la referencia tiene errores visuales (contraste bajo, layout roto en móvil), no los copies — anótalos en la propuesta del Paso 5 y propón alternativa.
-- **El Layout-Map es la fuente de verdad visual para Fase 6.** El código replica la estructura sección a sección tal como está en el layout-map.
+- **El Layout-Map es la fuente de verdad visual para Fase 7.** El código replica la estructura sección a sección tal como está en el layout-map.

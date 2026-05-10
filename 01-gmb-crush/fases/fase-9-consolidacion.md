@@ -1,17 +1,17 @@
-# Fase 8 — Consolidación, Informe Final y Bloqueo GBP
+# Fase 9 — Consolidación, Informe Final y Bloqueo GBP
 
 Esta fase cierra el proyecto. Produce dos entregables al operador y bloquea la creación del GBP hasta que el operador resuelva los pendientes.
 
 ---
 
-## 8.1 Entregable A — URL de la web
+## 9.1 Entregable A — URL de la web
 
-Si el deploy se ejecutó (Fase 7 con tokens), la URL de Cloudflare Pages.
+Si el deploy se ejecutó (Fase 8 con tokens), la URL de Cloudflare Pages.
 Si el deploy quedó pendiente, indicar dónde está `dist/` listo para subir manualmente.
 
 ---
 
-## 8.2 Entregable B — INFORME-FINAL.md
+## 9.2 Entregable B — INFORME-FINAL.md
 
 Crear el archivo `ejecuciones-webs/gmb-crush-ejecuciones/[slug]/INFORME-FINAL.md` con esta estructura exacta:
 
@@ -56,8 +56,8 @@ Crear el archivo `ejecuciones-webs/gmb-crush-ejecuciones/[slug]/INFORME-FINAL.md
 
 [Solo si el pre-flight de capacidades de AGENTS.md §3 reportó algo faltante. Ejemplo:]
 
-- **Fase 5 (Diseño):** No tenía capacidad de screenshot. El operador entregó capturas manuales de [URL ref]. Tokens extraídos: [resumen].
-- **Fase 7 (Deploy):** Sin tokens GitHub/Cloudflare. Build entregado en `dist/` para subida manual.
+- **Fase 6 (Diseño):** No tenía capacidad de screenshot. El operador entregó capturas manuales de [URL ref]. Tokens extraídos: [resumen].
+- **Fase 8 (Deploy):** Sin tokens GitHub/Cloudflare. Build entregado en `dist/` para subida manual.
 
 Si no hubo limitaciones, omitir esta sección.
 
@@ -101,7 +101,7 @@ Lista de outputs `confirmed` con su fuente, para que el operador pueda re-verifi
 
 ---
 
-## 8.3 Aviso al operador en el chat
+## 9.3 Aviso al operador en el chat
 
 Al cerrar la sesión, la IA dice exactamente esto:
 
@@ -118,7 +118,7 @@ Al cerrar la sesión, la IA dice exactamente esto:
 
 ---
 
-## 8.4 Cierre de pendientes (cuando el operador resuelve cada uno)
+## 9.4 Cierre de pendientes (cuando el operador resuelve cada uno)
 
 1. Actualizar contenido / schema afectado.
 2. Rebuild (`pnpm build`).

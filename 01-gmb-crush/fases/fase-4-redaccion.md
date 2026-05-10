@@ -1,8 +1,8 @@
-## Fase 3b — Redacción de Contenido
+## Fase 4 — Redacción de Contenido
 
-**Cuándo se ejecuta:** después de Fase 3 (docs canónicos). Antes de Fase 4 (Test Doctrinal).
+**Cuándo se ejecuta:** después de Fase 3 (docs canónicos). Antes de Fase 5 (Test Doctrinal).
 
-> Esta fase transforma la arquitectura definida en Fases 1-3 en copy real publicable. Sin esta fase el sistema produce "qué debería ir" pero no "qué va a leer el usuario". El constructor (Fase 6) consume este texto directamente.
+> Esta fase transforma la arquitectura definida en Fases 1-3 en copy real publicable. Sin esta fase el sistema produce "qué debería ir" pero no "qué va a leer el usuario". El constructor (Fase 7) consume este texto directamente.
 
 **Errores que previene:**
 - Publicar páginas con copy genérico sin contexto local
@@ -194,7 +194,7 @@ Contenido mínimo:
 
 ### 2b.10 — Validaciones al terminar la redacción
 
-Antes de pasar a Fase 4 (Test Doctrinal), validar:
+Antes de pasar a Fase 5 (Test Doctrinal), validar:
 
 **✅ Clusters completos por servicio**
 Cada core service tiene: 1 SO + 1 LBS + 3 GAs mínimo.
@@ -244,9 +244,9 @@ Los contenidos redactados se registran en `outputs.json` como entradas de la fam
 
 ---
 
-### Gate de salida — Fase 3b
+### Gate de salida — Fase 4
 
-**STOP antes de pasar a Fase 4 (Test Doctrinal):**
+**STOP antes de pasar a Fase 5 (Test Doctrinal):**
 
 - [ ] Todas las páginas redactadas (HP + S SO + S LBS + A AC + 1 GH + G×S GA + contacto)
 - [ ] 4 capas aplicadas en orden a cada página

@@ -1,4 +1,4 @@
-# Fase de Inicio — Investigación de Competidores
+# Investigación de Competidores — Paso 4 del flujo
 
 ## Objetivo
 
@@ -120,7 +120,7 @@ Con las confirmaciones del operador, arranca `01-gmb-crush/SISTEMA.md` pasando e
 | Categoría GBP más frecuente | Fase 1 — output 1.5 (Primary Category) |
 | Categorías secundarias de competidores | Fase 1 — output 1.6 (Additional Categories) |
 | Trust signals del sector | Fase 1 — output 1.14 |
-| Web de referencia de diseño | Fase 5 — Paso 0 |
+| Web de referencia de diseño | Fase 6 — Paso 0 |
 
 El agente que ejecuta GMB Crush **no repite la investigación de Local Pack** para estos datos — los toma del informe y los marca como `confirmed` directamente.
 
