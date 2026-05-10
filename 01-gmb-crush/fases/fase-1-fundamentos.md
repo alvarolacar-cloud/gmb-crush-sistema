@@ -6,33 +6,34 @@ Cada output de esta fase tiene una fuente y un método concreto. Síguelos en or
 
 ### 3.1 Main City
 - **Dato que buscamos:** La ciudad principal de operación.
-- **Cómo se obtiene:** Extraer el campo `City` de la dirección del preflight.
+- **Cómo se obtiene:** Extraer el campo `City` de la dirección del preflight (`INPUTS.md` campo 3, bloqueante).
 - **Fuente:** `Cliente preflight`.
-- **Si falta dirección:** Extraer la ciudad de la descripción ("fontanero en Barcelona" → Barcelona). Marcar `⚠ inferido`.
+- **Si falta dirección completa pero hay ciudad** (ej. operador dijo "fontanero en Barcelona"): la ciudad cuenta como `confirmed` por declaración del operador. Calle/número/CP van como `[DIRECCIÓN]` placeholder visible.
+- **Si falta también la ciudad:** STOP. La ciudad es bloqueante per `INPUTS.md`. Pídela al operador antes de continuar.
 
 ### 3.2 Primary Category
 - **Dato que buscamos:** La categoría GBP principal (ej: "Fontanero", "Cerrajero", "Instalador de climatización").
-- **Cómo se obtiene:** Si existe el Informe de Competidores (Fase 0) → tomar la "Categoría GBP más frecuente" del informe, marcar `confirmed`. Si no existe el informe → buscar `[servicio principal] [Main City]` en Google Maps → mirar los 5 primeros perfiles del Local Pack → la categoría primaria que aparece en 3+ de 5 es la elegida.
+- **Cómo se obtiene:** Tomar la "Categoría GBP más frecuente" del **Informe de Competidores** producido en Fase 0. Marcar `confirmed`.
 - **Fuente:** `Doctrina + Local Pack`.
-- **Si no tienes acceso a Maps:** Inferir la categoría más específica que cubra el servicio principal. Elegir siempre la más específica disponible ("Instalador de aerotermia" > "Empresa de climatización" > "Reformas"). Marcar `⚠ inferido` con razonamiento.
-- **Si ninguna categoría aparece en 3+ de 5:** Elegir la que aparece en 2 de 5. Si hay empate, elegir la más específica. Si solo aparece en 1, usar esa igualmente (es la mejor señal disponible). Marcar `⚠ inferido`.
+- **Si ninguna categoría aparece en 3+ de 5 perfiles del informe:** Elegir la que aparece en 2 de 5. Si hay empate, elegir la más específica. Si solo aparece en 1, usar esa (es la mejor señal disponible) y marcarlo en notas.
+- **Si no existe el Informe de Competidores:** Vuelve a Fase 0 y ejecútala. **Esta fase no infiere categorías.** El Informe es el único origen válido.
 - **Slug:** La plantilla genera el slug automáticamente aplicando slugify al valor del output 1.5. No lo definas manualmente — la plantilla lo calcula.
 
 ### 3.3 Core Services (Variable S)
 - **Dato que buscamos:** Lista de servicios con intención de búsqueda diferenciada.
-- **Cómo se obtiene:** Si existe el Informe de Competidores (Fase 0) → tomar los servicios confirmados por el operador de la Matriz de Servicios, marcar `confirmed`. Si no existe el informe → buscar `[categoría] [Main City]` en Google Maps → mirar los servicios listados en los 5 primeros perfiles → los que aparecen en 2+ perfiles son candidatos.
-- **Multi-ciudad (opcional):** Si el operador declaró ciudades adicionales en el preflight, analizar también el Local Pack de esas ciudades para cruzar servicios. Los servicios que aparecen en 2+ ciudades del sector son los más sólidos. La arquitectura sigue siendo solo para la Main City — las otras ciudades solo se usan para validar la selección de servicios.
-- **Fuente:** `Doctrina + Local Pack`.
-- **Si no tienes acceso a Maps:** Tomar los servicios que el operador declaró en el preflight. Si declaró menos de 4, proponer expansiones lógicas del sector marcadas `⚠ inferido`. Si no declaró ninguno, inferir 4-6 del sector.
+- **Cómo se obtiene:** Tomar los servicios **confirmados por el operador** de la Matriz de Servicios del Informe de Competidores (Fase 0). Marcar `confirmed`.
+- **Multi-ciudad (opcional):** Si el operador declaró ciudades adicionales en el preflight, el Informe de Fase 0 ya cruza servicios entre ciudades. Los servicios que aparecen en 2+ ciudades del sector son los más sólidos. La arquitectura sigue siendo solo para la Main City.
+- **Fuente:** `Doctrina + Local Pack` + confirmación operador.
+- **Si no existe el Informe:** Vuelve a Fase 0. **Esta fase no infiere servicios.**
 - **Regla anti-duplicación:** Si dos servicios responden a la misma búsqueda del usuario (test: "¿alguien buscaría esto por separado?"), fusionar en uno. En caso de duda, NO crear el servicio — es mejor tener S=4 sólidos que S=6 con canibalización.
 - **S es variable:** Puede ser 3, 4, 5, 6 o más. No forzar a 5.
-- **Criterio para fijar S:** Solo incluir servicios que (1) el negocio realmente ofrece Y (2) tienen intención de búsqueda propia verificable. Si no puedes verificar búsqueda, limitar a los servicios que el operador declaró + máximo 2 expansiones inferidas. En caso de duda, S más bajo es mejor que S más alto.
+- **Criterio para fijar S:** Solo incluir servicios que (1) el negocio realmente ofrece Y (2) tienen intención de búsqueda propia verificable en el Informe. En caso de duda, S más bajo es mejor que S más alto.
 
 ### 3.4 Additional Categories (Variable A)
 - **Dato que buscamos:** Categorías GBP secundarias que necesitan página propia.
-- **Cómo se obtiene:** Si existe el Informe de Competidores (Fase 0) → cruzar las categorías secundarias extraídas de los competidores con los servicios del cliente, descartar las ya cubiertas por un core service. Si no existe el informe → buscar categorías secundarias en los 5 perfiles del Local Pack → filtrar las que el negocio realmente ofrece → descartar las que ya están cubiertas por un core service.
+- **Cómo se obtiene:** Cruzar las categorías secundarias extraídas en el Informe de Competidores (Fase 0) con los servicios del cliente. Descartar las ya cubiertas por un core service.
 - **Fuente:** `Doctrina + Local Pack`.
-- **Si no tienes acceso a Maps:** Si hay una categoría obvia del sector que no encaja en los core services, proponerla como A=1 marcada `⚠ inferido`. Si no hay ninguna obvia, A=0.
+- **Si el Informe no muestra categoría adicional clara:** A=0. **No se inventa una categoría adicional.**
 - **Criterio:** Necesita página propia si (1) el negocio la ofrece Y (2) no es sinónimo ni subconjunto de un core service.
 
 ### 3.5 Local Coverage Areas (LCAs)
@@ -69,7 +70,7 @@ El sistema GMB Crush separa el territorio en 3 capas que NUNCA se mezclan:
   3. Aplicar el **test de coherencia GEO** a cada zona candidata.
   4. Las que pasan entran como contenido. Solo generan URL si pasan a AEA (post-launch).
 - **Fuente:** `Doctrina + Local Pack`.
-- **Si no tienes acceso a Maps:** Inferir 4-6 barrios/distritos adyacentes a la dirección. Marcar `⚠ inferido`.
+- **Si el Informe de Competidores no muestra zonas claras o no se ejecutó la búsqueda de áreas de servicio:** Candidate LCAs = ∅. **No se inventan barrios.** Solo quedan las Direct LCAs (las que salen del NAP).
 - **Máximo Candidate LCAs:** 8. Si hay más candidatas que pasan el test, elegir las más cercanas a la dirección física.
 
 #### Test de Coherencia GEO (3 de 6)
@@ -102,11 +103,11 @@ El sistema GMB Crush separa el territorio en 3 capas que NUNCA se mezclan:
 
 ### 3.6 Trust Signals
 - **Dato que buscamos:** Señales de confianza del sector (años, certificaciones, garantías, badges) + diferenciadores del cliente.
-- **Cómo se obtiene:** Si existe el Informe de Competidores (Fase 0) → tomar la columna "Trust signals" del informe, marcar `confirmed`. Si no existe el informe → extraer trust signals de los 5 perfiles top del Local Pack → las que aparecen en 3+ perfiles son "estándar del sector". Añadir diferenciadores propios del cliente si los declara.
-- **Fuente:** `Doctrina + Local Pack`.
-- **Si no tienes acceso a Maps:** Inferir los trust signals más comunes del sector (ej: fontanería → "24h", "sin desplazamiento", "presupuesto gratis"). Marcar `⚠ inferido`.
+- **Cómo se obtiene:** Tomar la columna "Trust signals" del Informe de Competidores (Fase 0). Las que aparecen en 3+ perfiles son "estándar del sector". Añadir diferenciadores que el cliente haya declarado.
+- **Fuente:** `Doctrina + Local Pack` (estándar del sector) + `Cliente preflight` (diferenciadores propios).
+- **Si no existe el Informe:** Vuelve a Fase 0. **Esta fase no infiere trust signals del sector.**
 - **Se usa en:** Hero de Homepage, bloque de confianza, contenido de LBS.
-- **Regla:** Los trust signals deben ser verificables (años reales, certificaciones reales, garantías reales). No inventar "250+ reseñas" ni datos que el cliente no pueda respaldar.
+- **Regla:** Los trust signals que afirman algo del cliente (años, certificaciones, garantías) **solo aparecen si el cliente los declara** en el preflight. No inventar "250+ reseñas", "20 años de experiencia" ni nada similar. Estándares genéricos del sector ("presupuesto gratis", "24h") sí pueden venir del Informe si los competidores los muestran.
 
 ### 3.7 GeoArticle Topics (Variable G)
 - **Dato que buscamos:** 3 topics por core service con intención informacional/precomercial.
@@ -197,10 +198,12 @@ Antes de pasar a Fase 2, muestra al operador este bloque exacto:
 - [ ] No hay dos URLs con la misma intención de búsqueda
 - [ ] Todos los ⚠ están declarados con razonamiento
 
-## ⚠ Datos inferidos o pendientes
-| Dato | Status | Razonamiento |
-|------|--------|--------------|
-| ... | ⚠ inferido | ... |
+## ⚠ Datos pendientes (placeholders del operador)
+| Dato | Status | Cómo cerrar |
+|------|--------|-------------|
+| Teléfono | ⚠ placeholder | Operador lo provee |
+| Email | ⚠ placeholder | Operador lo provee |
+| Dirección (calle/número/CP) | ⚠ placeholder | Operador la completa |
 ```
 
 **Si el operador corrige:** ajusta y vuelve a mostrar. **Si no dice nada:** avanza a Fase 2.

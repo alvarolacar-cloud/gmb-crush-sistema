@@ -1,119 +1,110 @@
-# AGENTS.md — Instrucciones para agentes IA
+# AGENTS.md — Guía de arranque para agentes IA
 
-## Qué es este repo
-Sistema para crear webs locales optimizadas para Google Maps y posicionamiento local.
-Contiene múltiples metodologías de construcción. Todas comparten el mismo punto de partida: investigación de competencia.
+## 1. Qué construimos
 
-## Estructura — dos repos separados
+Una web local SEO para un negocio (servicio + ciudad), desplegada en Cloudflare Pages, optimizada para Google Maps y búsqueda orgánica, más un Google Business Profile listo. Mismo input + mismo repo = mismo output reproducible.
+
+## 2. Qué pides al operador
+
+Los datos que necesitas vienen de `INPUTS.md` (raíz del repo). Es la **única fuente** — no pidas datos en otro sitio.
+
+**Bloqueantes para arrancar:** servicio principal + ciudad. Sin esos dos, paras y los pides. Todo lo demás se completa o queda como marcador visible (`[TELÉFONO]`, `[DIRECCIÓN]`).
+
+## 3. Pre-flight de capacidades — antes de arrancar nada
+
+Antes de pedir inputs al operador, **declaras qué herramientas tienes y a qué fase afecta cada una**. Formato exacto:
+
+```
+Capacidades disponibles para este proyecto:
+
+✓/✗ Navegador real (Maps, web ref)   → Fase 0 (investigación), Fase 5 (diseño)
+✓/✗ Screenshot capability             → Fase 5 (diseño)
+✓/✗ CSS inspection (DevTools/JS eval) → Fase 5 (diseño)
+✓/✗ Shell (bash/PowerShell)           → Fase 6, Fase 7
+✓/✗ Git + gh CLI                      → Fase 7 (deploy)
+✓/✗ pnpm                              → Fase 6, Fase 7
+
+Resumen: [todo OK / falta X — plan B: el operador hace Y manualmente]
+```
+
+Si alguna capacidad falta, **ofreces plan B en el momento del pre-flight, no a mitad de fase**. Ejemplos:
+- Sin navegador → operador busca en Maps manualmente y pega resultados (Fase 0).
+- Sin screenshot/CSS inspection → operador toma screenshots de la web ref y los pega; o el diseño queda como pendiente (Fase 5).
+- Sin tokens → build hasta `dist/`, deploy queda pendiente (Fase 7).
+
+## 4. Los pasos
+
+| # | Paso | Archivo de referencia | Para si... |
+|---|------|----------------------|------------|
+| 0 | Recoger inputs + pre-flight de capacidades | `INPUTS.md` (esta sección §3) | falta servicio o ciudad |
+| 1 | Investigar competencia (Local Pack) | `00-investigacion/INVESTIGACION.md` | tras el informe — esperar confirmación de servicios + web ref |
+| 2 | Ejecutar Fase 1 → Fase 4 GMB Crush | `01-gmb-crush/SISTEMA.md` | tras Fase 4 si el Test Doctrinal falla |
+| 3 | Ejecutar Fase 5 (diseño) | `01-gmb-crush/fases/fase-5-diseno.md` | tras propuesta de diseño — esperar aprobación |
+| 4 | Ejecutar Fase 6 → Fase 7 (build + deploy) | `01-gmb-crush/fases/fase-6-build.md`, `fase-7-deploy.md` | si faltan tokens (deploy queda pendiente) |
+| 5 | Cerrar con Fase 8 (consolidación + informe final) | `01-gmb-crush/fases/fase-8-consolidacion.md` | hasta que todos los `⚠ placeholder` estén cerrados (bloquea creación GBP) |
+
+**⚠ Antes de ejecutar cada fase, abre y lee su archivo completo.** Nunca ejecutes una fase de memoria. Los patrones exactos (URLs, fórmulas, schemas) viven en el archivo de fase, no en SISTEMA.md.
+
+## 5. Estructura — dos repos separados
 
 ```
 sistemas-creacion-webs/              ← ESTE repo — solo sistema, nunca datos de clientes
-├── AGENTS.md                        ← estás aquí — léelo primero
+├── AGENTS.md                        ← estás aquí
+├── INPUTS.md                        ← fuente única de inputs del operador
 ├── README.md                        ← resumen para humanos
-├── 00-investigacion/                ← PASO 0: común a todos los sistemas
-│   └── INVESTIGACION.md
-└── 01-gmb-crush/                    ← Sistema GMB Crush (web local + Google Maps)
-    ├── SISTEMA.md                   ← convenciones + arranque
-    ├── fases/                       ← un archivo por fase — léelo antes de ejecutar esa fase
-    │   ├── fase-1-fundamentos.md
-    │   ├── fase-2-contenido.md
-    │   ├── fase-3-docs-canonicos.md
-    │   ├── fase-3b-redaccion.md
-    │   ├── fase-4-test-doctrinal.md
-    │   ├── fase-5-diseno.md
-    │   ├── fase-6-build.md
-    │   ├── fase-7-deploy.md
-    │   └── fase-8-consolidacion.md
-    ├── referencias/                 ← doctrina, ejemplos, test — solo consulta
-    └── plantilla-astro/             ← template base — se copia por cliente, nunca se modifica aquí
+├── 00-investigacion/INVESTIGACION.md
+└── 01-gmb-crush/
+    ├── SISTEMA.md                   ← convenciones GMB Crush
+    ├── fases/                       ← fase-1...fase-8 (lee la que vas a ejecutar)
+    ├── referencias/                 ← doctrina, ejemplos, test (consulta)
+    └── plantilla-astro/             ← template Astro (se copia por cliente)
 
-ejecuciones-webs/                   ← repo SEPARADO — un sistema por subcarpeta
-│   GitHub: https://github.com/alvarolacar-cloud/ejecuciones-webs
-└── [nombre-negocio-slug]/          ← ej: reformaban-madrid/, fontaneria-ramos/
-    ├── outputs.json                 ← todos los outputs del cliente
-    └── web/                        ← copia de plantilla-astro con datos reales
+ejecuciones-webs/                    ← repo SEPARADO — datos de clientes
+└── gmb-crush-ejecuciones/[slug]/
+    ├── outputs.json                 ← outputs del cluster
+    ├── web/                         ← copia de plantilla-astro renderizada
+    ├── lessons.md                   ← memoria de errores específicos del proyecto
+    └── INFORME-FINAL.md             ← entregable Fase 8 (post-deploy)
 ```
 
-> Cuando se añadan nuevos sistemas aparecerán como `02-nombre-sistema/`, `03-nombre-sistema/`, etc.
+**Nunca crees carpetas de cliente dentro del repo del sistema.** Datos de clientes → siempre en `ejecuciones-webs/`.
 
-## Flujo obligatorio — síguelo en este orden
+## 6. Reglas inviolables
 
-### PASO 0 — Investigación — común a todos los sistemas
-> ⚠ Esta fase NO está en `fases/` — vive en `00-investigacion/INVESTIGACION.md`
-1. Lee `00-investigacion/INVESTIGACION.md` — ahí está el método exacto de búsqueda
-2. Busca en Google Maps los 5 primeros resultados del Local Pack para [servicio] + [ciudad] siguiendo las instrucciones de ese archivo
-3. Presenta tabla comparativa de competidores al operador
-4. **Para aquí** — espera que el operador confirme servicios y elija sistema antes de continuar
+1. **La IA no infiere ni fabrica.** O verifica con la fuente correcta, o para y pide al operador. Único hueco aceptado: marcadores visibles para datos que el operador no aportó (`[TELÉFONO]`, `[EMAIL]`, `[DIRECCIÓN]`, `⚠ placeholder`). Nunca un valor real fabricado.
+2. **No inventes** teléfono, email, dirección, años de experiencia, certificaciones, reseñas, fotos, valores de schema (rating, sameAs).
+3. **LCAs nunca generan URLs sin aprobación explícita del operador** (escrita en el chat). Implícita o sugerida no cuenta.
+4. **Si el Test Doctrinal de Fase 4 falla, no avances a Fase 5** aunque el operador lo pida. Explica qué falla primero.
+5. **Datos inciertos = marcador visible** (`[TELÉFONO]`, `⚠ placeholder`). Nunca asumir como confirmado.
 
-### PASO 1 — Ejecución GMB Crush (01-gmb-crush/)
-1. Clona el repo de ejecuciones: `https://github.com/alvarolacar-cloud/ejecuciones-webs`
-2. Crea la carpeta del cliente: `gmb-crush-ejecuciones/[slug-cliente]/` con `outputs.json` vacío y `web/` (copia de `plantilla-astro/`)
-3. Lee `01-gmb-crush/SISTEMA.md` completo — convenciones y tabla de fases
-4. **⚠ OBLIGATORIO: antes de ejecutar cada fase, lee su archivo en `fases/` completo** — nunca ejecutes una fase de memoria
-5. En Fase 4 ejecuta el Test Doctrinal completo, presenta resultados al operador y **para aquí** — espera aprobación antes de continuar a Fase 5
+## 7. Protocolos operativos
 
-### PASO 2 — Guardar resultados
-Los outputs de cada fase van a `gmb-crush-ejecuciones/[slug]/outputs.json`. El build va a `gmb-crush-ejecuciones/[slug]/web/`. Ya creaste esta estructura en PASO 1.
+### lessons.md — memoria de errores por proyecto
 
-**Nunca crees carpetas de cliente dentro del repo `sistemas-creacion-webs`.** Los datos de clientes van siempre en `gmb-crush-ejecuciones/`.
+Cada ejecución tiene `ejecuciones-webs/gmb-crush-ejecuciones/[slug]/lessons.md`.
 
-## lessons.md — Memoria de errores por proyecto
+- **Al iniciar sesión sobre un proyecto:** lee ese archivo si existe. Aplica cada lección antes de ejecutar.
+- **Tras cualquier corrección del operador:** documenta el patrón con formato:
+  ```markdown
+  ## [fecha] — [título corto del error]
+  **Qué pasé:** descripción breve.
+  **Por qué:** causa raíz.
+  **Regla:** lo que hago diferente a partir de ahora.
+  ```
+- Si no existe, créalo en la primera corrección.
 
-Cada ejecución tiene un archivo `gmb-crush-ejecuciones/[slug]/lessons.md`.
+### Propagación de cambios — obligatorio tras cualquier modificación
 
-**Al iniciar una sesión sobre un proyecto:**
-Lee `gmb-crush-ejecuciones/[slug]/lessons.md` si existe. Aplica cada lección antes de ejecutar nada.
+Cuando modifiques un archivo:
+1. Busca en todo el repo referencias al archivo y a los términos clave que cambiaste.
+2. Por cada referencia, evalúa si necesita actualizarse por coherencia.
+3. Si sí, actualízala sin preguntar.
+4. Repite hasta que no quede deuda.
 
-**Después de cualquier corrección del operador:**
-Documenta el patrón en ese archivo inmediatamente. Formato:
+**El operador no debería tener que pedirte que propagues. Es tu responsabilidad como parte del mismo cambio.**
 
-```markdown
-## [fecha] — [título corto del error]
-**Qué pasé:** descripción breve de lo que hice mal.
-**Por qué:** causa raíz.
-**Regla:** lo que hago diferente a partir de ahora.
-```
+### Antes de cualquier commit
 
-Si el archivo no existe, créalo en el momento de la primera corrección.
-
----
-
-## Propagación de cambios — obligatorio tras cualquier modificación
-
-Cada vez que modifiques un archivo, antes de dar el trabajo por terminado:
-
-1. Busca en todo el repo referencias al archivo modificado y a los términos clave que cambiaste (nombres de rutas, números de output, nombres de secciones, conceptos renombrados).
-2. Por cada referencia encontrada, analiza si necesita actualizarse por coherencia con el cambio que acabas de hacer.
-3. Si necesita actualizarse — actualízala sin preguntar.
-4. Repite hasta que no quede ninguna referencia desactualizada.
-
-**Ejemplos de qué buscar:**
-- Cambiaste una ruta (`ejecuciones/` → `gmb-crush-ejecuciones/`) → busca la ruta antigua en todos los `.md` y actualízala
-- Renombraste un output (`16.3` → `16.7`) → busca el número antiguo y actualiza todas las menciones
-- Moviste una sección → busca referencias a ese nombre de sección en otros archivos
-- Cambiaste el nombre de un archivo → busca ese nombre en todos los archivos que puedan enlazarlo
-
-**El operador no debería tener que pedirte que actualices las referencias — es tu responsabilidad hacerlo como parte del mismo cambio.**
-
----
-
-## Reglas que nunca puedes romper
-- Las LCAs (barrios, distritos, zonas) nunca generan URLs sin aprobación explícita del operador. **Aprobación explícita = el operador lo escribe en el chat**. Una aprobación implícita, sugerida o inferida no cuenta.
-- No inventes teléfono, dirección, reseñas, certificaciones ni fotos
-- Si el Test Doctrinal falla, no continúes a Fase 5 aunque el operador lo pida — explica qué falla primero
-- Todos los datos inciertos se marcan como ⚠ inferido o ⚠ placeholder, nunca se asumen como confirmados
-
-## Antes de hacer cualquier commit
-Antes de ejecutar `git commit`, haz siempre estos pasos en orden:
-1. Lee `README.md` completo — verifica que su contenido refleja el estado actual del repo
-2. Lee `AGENTS.md` completo — verifica que las rutas y el flujo siguen siendo correctos
-3. Si algo está desactualizado, corrígelo primero
-4. Incluye los cambios de docs en el mismo commit que el resto de cambios
-
-## Inputs mínimos para arrancar
-- Nombre del negocio
-- Servicio principal
-- Dirección completa (calle, número, CP, ciudad) — si no la tiene, al menos la ciudad
-- Teléfono
-
-Con eso puedes ejecutar el Paso 0. El resto se completa durante el flujo.
+1. Lee `README.md` y `AGENTS.md` completos — verifica que reflejan el estado real del repo.
+2. Si algo está desactualizado, corrígelo en el mismo commit.
+3. Ejecuta `sh scripts/check-coherence.sh` (lo hace el pre-commit hook si está activo).

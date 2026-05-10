@@ -72,7 +72,7 @@ La decisión fue: los Bloques 3 y 4 eran **meta-documentación sobre cómo ejecu
 - Las **8 fuentes canónicas** (Cliente preflight, Doctrina GMB Crush, Doctrina + Local Pack, Doctrina + Keyword Research, etc.).
 - La filosofía **web-first** (web sale con datos provisionales, GBP después).
 - La regla de que **LCAs no generan URLs**.
-- Los **5 estados** (confirmed, validated, ⚠ inferido, ⚠ placeholder, no aplica).
+- Los estados de output: `confirmed`, `validated`, `⚠ placeholder` (operador no aportó dato), `⚠ pendiente tokens` (deploy bloqueado), `⚠ pendiente diseño` (Fase 5 sin capacidades), `no aplica`. **El estado `⚠ inferido` fue eliminado** — la IA o tiene fuente verificable o para; ya no hay zona gris donde "razone con lógica del sector".
 - El concepto de **Bloque 6 como agregador** de pendientes que bloquea el GBP.
 
 ---

@@ -10,11 +10,32 @@ Esta fase extrae el diseño EXACTO de la web de referencia para replicarlo. No e
 
 ---
 
-## Paso 0 — Obtener la web de referencia
+## Paso 0 — Pre-condición de capacidades + obtener la web de referencia
+
+### Capacidades requeridas
+
+Antes de empezar, declara qué tienes. Si falta cualquiera, **no se ejecuta esta fase** — el diseño queda como `⚠ pendiente diseño` y el operador resuelve después.
+
+| Capacidad | Para qué |
+|-----------|----------|
+| Acceso a navegador real (Chrome MCP, Playwright, computer-use con DevTools) | Visitar la web de referencia |
+| Screenshot full-page | Mapear hero/header/footer/cards |
+| Inspección de CSS computado (DevTools o `javascript_eval`) | Extraer colores, fuentes, espaciados, sombras, radios reales |
+
+**Sin las tres capacidades, paras y entregas plan B al operador**:
+
+> ⚠ No tengo capacidades para extraer el diseño fielmente. Necesito que tú hagas una de estas tres:
+> 1. Tomes screenshots full-page de la web de referencia (Homepage + Service Page + Location Page) y me los pases.
+> 2. Conectes un MCP con navegador + DevTools (Chrome MCP o equivalente).
+> 3. Decidas que el diseño quede pendiente y se resuelva post-deploy.
+
+Sin una de las tres, no se ejecuta esta fase. Nunca infieras tokens visuales desde texto plano del DOM.
+
+### Obtener la URL de referencia
 
 - Si el operador la indicó en el preflight o en Fase 0 (Investigación): usar esa.
 - Si no hay referencia: pedir al operador que elija una del informe de competidores.
-- Si no hay ninguna: marcar diseño como `⚠ inferido`, usar estilo limpio genérico y **SALTAR al Paso 5**.
+- Si no hay ninguna y el operador no la aporta: el diseño queda como `⚠ pendiente diseño`. **No se ejecuta esta fase ni se "infiere" un estilo genérico** — eso produce diseño basura que se vende como real.
 
 ---
 
@@ -254,7 +275,7 @@ Si hay placeholders: valor = `"[IMAGEN: descripción]"` y status = `"⚠ placeho
 - [ ] **16.6** — Layout-Map definitivo cruzado con copy de Fase 3b
 - [ ] **16.7** — Inventario de imágenes (URLs CDN o placeholders documentados)
 
-Si cualquier output está como `⚠ inferido` sin confirmación del operador: resolver antes de build.
+Si cualquier output está como `⚠ placeholder` o `⚠ pendiente diseño` sin resolver: cerrar antes de build, o el build queda explícitamente bloqueado para esta fase.
 
 > **Principio irrenunciable:** El constructor (Fase 6) NO toma decisiones de diseño. Solo ejecuta lo que dice esta fase. Si una decisión de diseño se filtra al build, la consistencia visual se rompe y hay que volver atrás.
 

@@ -1,146 +1,82 @@
-# Sistema GMB Crush — Ejecución IA
+# Sistema GMB Crush — Doctrina de ejecución
 
-Eres el motor de ejecución del sistema GMB Crush. Construyes webs locales SEO completas a partir de inputs mínimos del operador. Cada decisión que tomas debe ser rastreable, auditable y coherente con la doctrina.
+Eres el motor de ejecución del sistema GMB Crush. Construyes webs locales SEO completas a partir de inputs mínimos del operador. Cada decisión declara su fuente. Cada uncertidumbre se marca visible.
+
+> **Antes de leer esto, asegúrate de haber leído `AGENTS.md` (raíz del repo).** AGENTS define el flujo macro (qué construyes, qué pides al operador, los pasos, las reglas inviolables). Este archivo solo contiene la doctrina específica de GMB Crush.
 
 ---
 
-## 1. Convenciones Operativas
+## 1. Convenciones operativas
 
-### 1.0 Gate de salida obligatorio en cada fase
-Antes de pasar a la siguiente fase, ejecuta el gate de salida del archivo de esa fase. Si algún check falla, corrígelo antes de avanzar. **No existe "avanzo y lo arreglo después"** — los errores no corregidos se propagan y cuestan más cuanto más tarde se detectan.
+### 1.1 Verifica o para — nunca infieras silenciosamente
 
-Las paradas explícitas para el operador son exactamente estas cuatro — ni más ni menos:
+La IA solo opera con datos verificados. Reglas:
+
+- **Datos del mercado** (categoría GBP, servicios del sector, trust signals dominantes): vienen del Local Pack ejecutado en Fase 0. Si no hubo acceso al navegador en Fase 0, el operador hizo la búsqueda manual y los pegó. Sin uno de esos dos, **no se ejecuta Fase 1**.
+- **Datos visuales** (colores, tipografías, layout): vienen de la web de referencia con screenshots reales + CSS computado. Sin esas capacidades, **no se ejecuta Fase 5** (queda como pendiente).
+- **Datos del operador faltantes** (teléfono, email, dirección, nombre): van como marcador visible (`[TELÉFONO]`, `⚠ placeholder`). **Nunca un valor real fabricado.**
+- **Datos doctrinales** (URL patterns, schema por page type, fórmula maestra): vienen del repo. No se inventan.
+
+### 1.2 Las 4 paradas oficiales
+
+Las paradas explícitas para el operador son exactamente estas — ni más ni menos:
 
 | # | Cuándo | Qué esperas |
 |---|--------|-------------|
-| 1 | **Fase 0 — antes de buscar** | Comprueba acceso a navegador e informa al operador ("✅ tengo acceso" / "⚠ no tengo acceso — aquí el prompt para que busques tú") |
-| 2 | **Fase 0 — tras el informe** | Espera confirmación de servicios elegidos y web de referencia de diseño |
-| 3 | **Fase 4 — Test Doctrinal** | Si el test falla: corrige, vuelve a ejecutar y preséntalo de nuevo. No avances a Fase 5 hasta que pase — aunque el operador lo pida |
-| 4 | **Fase 5 — propuesta de diseño** | Espera aprobación del operador antes de escribir los tokens en `outputs.json` |
+| 1 | **Antes de Fase 0** | Pre-flight de capacidades (declarado en AGENTS.md §3) + recogida de inputs (de `INPUTS.md`) |
+| 2 | **Fase 0 — tras el informe** | Confirmación de servicios elegidos + web de referencia de diseño |
+| 3 | **Fase 4 — Test Doctrinal** | Si falla: corrige, repite, presenta de nuevo. No avanzas a Fase 5 hasta que pase |
+| 4 | **Fase 5 — propuesta de diseño** | Aprobación del operador antes de escribir tokens en `outputs.json` |
 
-Fuera de estas cuatro paradas: no preguntes, no pidas confirmación, no esperes. Infiere o marca `⚠` y avanza.
-
-### 1.1 Nunca te detienes — una vez arrancado
-Esta regla aplica **dentro de la ejecución**, no antes de arrancar. Si ya tienes servicio + ciudad y has hecho el Paso 0 (Investigación), no te detienes por datos faltantes: infieres o marcas `⚠ placeholder` y avanzas. Si no tienes acceso a una tool externa (Maps, Ahrefs), infieres con lógica y marcas `⚠ inferido`. Si no tienes tokens de deploy, construyes hasta `dist/` y marcas `⚠ pendiente tokens`.
-
-**Excepción — antes de arrancar:** Si no tienes servicio principal ni ciudad, sí debes pedirlos. Sin esos dos datos no puedes ejecutar ni el Paso 0. Es el único momento en que parar a pedir datos está justificado.
-
-### 1.2 Lo que NO puedes inventar
-Teléfono, email, dirección física, años de experiencia, certificaciones, reseñas, fotos. Estos van como placeholder visible: `[TELÉFONO]`, `[EMAIL]`. Nunca publiques datos falsos del negocio.
+Fuera de estas cuatro paradas: no preguntes, no pidas confirmación, no esperes. Verifica o marca `⚠ placeholder` y avanza.
 
 ### 1.3 Trazabilidad obligatoria
-Cada decisión clave debe declarar su fuente. Las fuentes válidas son:
+
+Cada decisión declara su fuente:
 
 | Fuente | Cuándo se usa |
 |--------|---------------|
 | `Cliente preflight` | El operador lo declaró |
-| `Doctrina + Local Pack` | Buscaste en Google Maps top 5 |
-| `Doctrina + Keyword Research` | Usaste Ahrefs/Semrush/KP |
-| `Doctrina GMB Crush` | La regla viene de la doctrina literal |
-| `⚠ inferido` | No ejecutaste la tool; razonaste con lógica |
-| `⚠ placeholder` | Falta dato del cliente; valor provisional |
+| `Doctrina + Local Pack` | Búsqueda en Google Maps top 5 ejecutada (por la IA o por el operador en plan B) |
+| `Doctrina + Keyword Research` | Ahrefs/Semrush/KP ejecutado |
+| `Doctrina GMB Crush` | La regla viene de la doctrina literal del repo |
+| `⚠ placeholder` | Falta input del operador; valor provisional visible |
+| `⚠ pendiente tokens` | Faltan credenciales de deploy |
+| `⚠ pendiente diseño` | No se pudo ejecutar Fase 5 (sin web ref ni screenshots) |
+
+**No existe `⚠ inferido`.** La IA o tiene fuente verificable, o para y pide al operador.
 
 ### 1.4 Filosofía web-first
-La web se publica primero con datos provisionales. El GBP se crea DESPUÉS, cuando todos los pendientes estén cerrados. Nunca inventes GBP URL, `sameAs`, ni `aggregateRating` antes de que el GBP exista.
+
+La web se publica primero con marcadores visibles donde falten datos del operador. El GBP se crea **después**, cuando todos los `⚠` estén cerrados. Nunca inventes GBP URL, `sameAs`, ni `aggregateRating` antes de que el GBP exista.
+
+### 1.5 Gate de salida en cada fase
+
+Antes de pasar a la siguiente fase, ejecuta el gate de salida del archivo de esa fase. Si algún check falla, corrígelo antes de avanzar. **No existe "avanzo y lo arreglo después"** — los errores no corregidos se propagan y cuestan más cuanto más tarde se detectan.
 
 ---
 
-## 2. Pre-requisito — Fase de Investigación
-
-> **⛔ Antes de ejecutar GMB Crush, debe existir un Informe de Competidores.**
-
-El informe lo produce `00-investigacion/INVESTIGACION.md`. Si el operador no lo ha hecho:
-
-1. Lee `00-investigacion/INVESTIGACION.md`
-2. Ejecuta la investigación
-3. Presenta el informe al operador y **PARA** — espera confirmación de servicios y web de referencia
-4. Con esas confirmaciones, vuelve aquí y arranca las 9 fases
-
-**Si el operador ya tiene el informe:** toma los datos confirmados directamente y márcalos como `confirmed` en `outputs.json` sin repetir la búsqueda en Maps.
-
----
-
-## 3. Input del Operador (Preflight)
-
-Pide estos datos junto al informe de competidores. Con solo **"qué hace" + "ciudad"** ya arrancas.
-
-| Campo | Si falta |
-|-------|----------|
-| Nombre del negocio | Derivar de servicio + ciudad. Marcar `⚠ placeholder`. |
-| Qué hace (servicio principal) | **Sin esto no puedes arrancar. Pídelo.** |
-| Dirección completa (calle, número, CP, ciudad) | **Pídela siempre al inicio.** Si no la tiene aún, marcar `[DIRECCIÓN]` en schemas y NAP. Sin al menos la ciudad no puedes arrancar. |
-| Teléfono | Marcar `[TELÉFONO]` en contenido. |
-| Email | Marcar `[EMAIL]` en contenido. |
-| Estado GBP | Asumir `Not Created`. |
-| Ciudades Local Pack | Usar la Main City. |
-| Tokens (GitHub + Cloudflare) | Construir hasta `dist/`. Marcar deploy pendiente. |
-| Dominio | Derivar: `https://www.[slugify(nombre)].com/`. Marcar `⚠ placeholder`. |
-
----
-
-## 4. Las 9 Fases de GMB Crush
+## 2. Las 9 Fases de GMB Crush
 
 > ### ⛔ PROTOCOLO OBLIGATORIO — sin excepción
 >
 > **Tu primera acción al arrancar cada fase es abrir y leer el archivo de esa fase.**
-> No lo resumas, no lo recuerdes de contexto anterior, no lo infierras del SISTEMA.md.
-> **Abre el archivo. Léelo. Luego ejecuta.**
+> No lo resumas, no lo recuerdes de contexto anterior, no lo infieras del SISTEMA.md.
 >
-> **Por qué:** Este archivo contiene solo el resumen de cada fase. Los patrones exactos (URLs, fórmulas, schemas, naming) viven en el archivo de fase. Ejecutar sin leerlo produce outputs con la arquitectura correcta en concepto pero con errores de detalle — URLs mal formadas, páginas faltantes, fórmulas no verificadas. Estos errores se propagan a todas las fases siguientes.
+> **Por qué:** SISTEMA.md solo tiene el resumen de cada fase. Los patrones exactos (URLs, fórmulas, schemas, naming) viven en el archivo de fase. Ejecutar sin leerlo produce outputs con la arquitectura correcta en concepto pero con errores de detalle — URLs mal formadas, páginas faltantes, fórmulas no verificadas. Estos errores se propagan a todas las fases siguientes.
 >
 > **Este es el error operativo más común y más caro del sistema.**
 
 | Fase | Abre este archivo primero | Qué produces |
 |------|--------------------------|--------------|
 | **Fase 1** — Fundamentos y Arquitectura | `fases/fase-1-fundamentos.md` | Main City, servicios, URLs, fórmula de páginas |
-| **Fase 2** — Contenido | `fases/fase-2-contenido.md` | Textos, schemas, enlaces internos |
+| **Fase 2** — Contenido | `fases/fase-2-contenido.md` | Specs de páginas, schemas, enlaces internos |
 | **Fase 3** — Docs Canónicos | `fases/fase-3-docs-canonicos.md` | 6 documentos de referencia del cluster |
 | **Fase 3b** — Redacción de Contenido | `fases/fase-3b-redaccion.md` | Copy real de todas las páginas (HP, SO, LBS, GH, GA, contacto) |
 | **Fase 4** — Test Doctrinal | `fases/fase-4-test-doctrinal.md` | Validación doctrinal — gate obligatorio |
 | **Fase 5** — Diseño | `fases/fase-5-diseno.md` | Design tokens + Layout-Map definitivo |
 | **Fase 6** — Build | `fases/fase-6-build.md` | `outputs.json` + build Astro |
 | **Fase 7** — Deploy | `fases/fase-7-deploy.md` | Push GitHub + Cloudflare Pages |
-| **Fase 8** — Consolidación | `fases/fase-8-consolidacion.md` | Tabla de pendientes + bloqueo GBP |
+| **Fase 8** — Consolidación | `fases/fase-8-consolidacion.md` | Tabla de pendientes + INFORME-FINAL.md + bloqueo GBP |
 
----
-
-## 5. Estructura de Repos
-
-Este sistema opera con **dos repositorios separados**:
-
-| Repo | GitHub | Contiene |
-|------|--------|----------|
-| **Sistema** | `sistemas-creacion-webs/` | SISTEMA.md, fases, plantilla-astro, referencias |
-| **Ejecuciones** | `ejecuciones-webs/` | Subcarpeta `gmb-crush-ejecuciones/` con una carpeta por cliente |
-
-**Al arrancar una ejecución nueva:**
-1. Clona `https://github.com/alvarolacar-cloud/ejecuciones-webs`
-2. Crea la carpeta del cliente: `ejecuciones-webs/gmb-crush-ejecuciones/[slug-cliente]/`
-3. Copia la plantilla: `cp -r sistemas-creacion-webs/01-gmb-crush/plantilla-astro/ ejecuciones-webs/gmb-crush-ejecuciones/[slug-cliente]/web/`
-4. Trabaja desde `ejecuciones-webs/gmb-crush-ejecuciones/[slug-cliente]/` para todo lo del cliente
-5. Lee los archivos de fase desde el repo del sistema cuando los necesites
-
-**Nunca crees carpetas de cliente dentro del repo del sistema.**
-
----
-
-## 6. Instrucción de Arranque
-
-
-**Antes de ejecutar las 9 fases, pregunta al operador:**
-
-> ¿Quieres que busque datos reales (Local Pack, keyword research) o que infiera y avance rápido?
-
-Con la respuesta, decides cómo ejecutar las **Fases 1–8**:
-- **"Busca datos reales":** Ejecutas las fuentes canónicas (Google Maps top 5, Ahrefs/Semrush). Los outputs salen como `confirmed` o `validated`. Más lento, más preciso.
-- **"Infiere y avanza":** Infieres con lógica y marcas `⚠ inferido`. La tabla de pendientes indicará qué validar después. Más rápido, requiere validación posterior.
-
-**Esta elección no aplica a Fase 0 (Investigación).** Fase 0 siempre intenta buscar datos reales en Google Maps. Si no tienes acceso a navegador, entrega al operador el prompt de búsqueda (ver `00-investigacion/INVESTIGACION.md`) y espera que te pegue los resultados — nunca te saltas la fase ni infieres sin avisar.
-
-**Si el operador dice "busca" y tienes acceso a la tool, DEBES usarla.** No inferir por rapidez cuando el operador pidió datos reales.
-
-Después, pide el Preflight con este mensaje exacto:
-
-> Pásame los datos del preflight: nombre del negocio, servicio principal, dirección completa (calle, número, CP y ciudad) y teléfono. Recuerda indicarme también las ciudades que quieres que analice cuando investigue el Local Pack (tu ciudad principal + las que quieras para comparar servicios del sector).
-
-Cuando lo tengas, ejecuta las 9 fases en orden. Si necesitas más detalle sobre page types, consulta `referencias/page-type-specs.md`. Para ver un ejemplo completo, consulta `referencias/ejemplo-cerrajeros.md`.
+Si necesitas más detalle sobre page types, consulta `referencias/page-type-specs.md`. Para ver un ejemplo doctrinal, consulta `referencias/ejemplo-cerrajeros.md`.

@@ -13,14 +13,9 @@ Con esas decisiones confirmadas, se pasa a la forma de construcción elegida (ej
 
 ## Input necesario
 
-Antes de buscar nada, pregunta al operador:
+Los datos del operador vienen de [`INPUTS.md`](../INPUTS.md) (raíz del repo). Esta fase asume que ya están recogidos en bloque, **no los pidas aquí de nuevo**.
 
-1. **¿Cuál es el nombre del negocio?**
-2. **¿Cuál es el servicio principal?**
-3. **¿Cuál es la dirección completa?** (calle, número, CP y ciudad — si no la tiene aún, al menos la ciudad)
-4. **¿Quieres que analice otras ciudades además de la tuya** para comparar qué servicios ofrece el sector? (si sí, lista cuáles)
-
-No empieces la investigación hasta tener estas respuestas.
+Bloqueantes para arrancar la investigación: servicio principal + ciudad. Si el operador declaró ciudades adicionales para comparar el sector, repite la búsqueda en cada una.
 
 ---
 

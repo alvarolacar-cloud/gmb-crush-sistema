@@ -754,7 +754,7 @@ Pregunta:
 para que cuando construyamos la web, sepamos que va a estar bien?
 ```
 
-Los docs pueden tener `⚠ inferido` o `⚠ placeholder` en outputs (lo permite la doctrina) y aun así estar doctrinalmente bien diseñados.
+Los docs pueden tener `⚠ placeholder`, `⚠ pendiente tokens` o `⚠ pendiente diseño` en outputs (lo permite la doctrina) y aun así estar doctrinalmente bien diseñados. `⚠ inferido` ya no existe como estado válido — si lo ves, es un archivo desactualizado.
 
 Pero NO pueden estar doctrinalmente bien si:
 
