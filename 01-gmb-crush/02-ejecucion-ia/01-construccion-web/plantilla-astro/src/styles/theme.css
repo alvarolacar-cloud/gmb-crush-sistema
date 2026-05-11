@@ -1,0 +1,13 @@
+/*
+ * theme.css — Diseño visual del cliente (placeholder en la plantilla).
+ *
+ * Este archivo se SOBREESCRIBE por cliente durante Fase 7 (Build):
+ *   cp ejecuciones-webs/gmb-crush-ejecuciones/[slug]/theme.css \
+ *      sistemas-creacion-webs/01-gmb-crush/.../plantilla-astro/src/styles/theme.css
+ *
+ * Lo produce Fase 6 (Extracción de Diseño) extrayendo CSS real de la web de referencia
+ * y mapeándolo a las clases del contrato (`referencias/contrato-clases-css.md`).
+ *
+ * Si lo dejas vacío (este placeholder), la web se renderiza sin estilos visuales —
+ * HTML semántico desnudo. Útil solo para depuración.
+ */

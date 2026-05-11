@@ -128,33 +128,18 @@ export interface LCAs {
   candidate: string[];
 }
 
-export interface DesignTokens {
-  // Colores
-  color_primary: string;
-  color_primary_50: string;
-  color_primary_500: string;
-  color_primary_900: string;
-  color_accent: string;
-  color_bg_dark?: string;
-  color_bg_light?: string;
-  color_text_main?: string;
-  color_text_heading?: string;
-  // Tipografía
-  font_family: string;
-  h1_size?: string;
-  h2_size?: string;
-  body_size?: string;
-  body_line_height?: string;
-  // Botones
-  btn_radius?: string;
-  btn_padding?: string;
-  btn_transform?: "uppercase" | "none";
-  // Cards
-  card_radius?: string;
-  card_shadow?: string;
-  // Layout
-  hero_layout?: "centered" | "split" | "full-photo";
-}
+/**
+ * DesignTokens eliminado en v0.2.0.
+ *
+ * El diseño ya no se modela como tokens dentro de outputs.json. Ahora vive en
+ * un archivo CSS completo (`theme.css`) que Fase 6 produce por cliente y que
+ * Fase 7 (Build) copia a `src/styles/theme.css` durante la construcción.
+ *
+ * Ventaja: cero contradicción entre la plantilla y la web de referencia.
+ * El CSS aplica directamente a las clases del contrato
+ * (referencias/contrato-clases-css.md) y la plantilla emite HTML semántico
+ * sin decisiones visuales propias.
+ */
 
 /** Una sección del layout-map por tipo de página. */
 export interface LayoutSection {

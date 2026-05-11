@@ -6,27 +6,29 @@ const businessName = getBusinessName();
 const nap = getNAP();
 ---
 
-<BaseLayout title={`Aviso legal · ${businessName}`} description={`Aviso legal de ${businessName}.`}>
-  <section class="section">
-    <div class="container-narrow prose-styles">
-      <h1 class="mb-6">Aviso legal</h1>
-      <p class="text-gray-700 leading-7 mb-4">
-        En cumplimiento de la Ley 34/2002 de servicios de la sociedad de la información y de comercio
-        electrónico, se informa de los siguientes datos identificativos del titular de este sitio web:
-      </p>
-      <ul class="text-gray-700 space-y-2 mb-6">
-        <li><strong>Titular:</strong> {businessName}</li>
-        <li>
-          <strong>Dirección:</strong> {nap.street}, {nap.zip} {nap.city}, {nap.country}
-        </li>
-        <li><strong>Teléfono:</strong> {nap.phone}</li>
-        <li><strong>Email:</strong> {nap.email}</li>
-      </ul>
-      <p class="text-gray-600 text-sm">
-        [Texto legal completo pendiente. El operador debe completar este aviso con los datos legales reales
-        del titular: NIF/CIF, registro mercantil, condiciones de uso, propiedad intelectual, exclusión de
-        responsabilidad y legislación aplicable.]
-      </p>
-    </div>
+<BaseLayout
+  title={`Aviso legal · ${businessName}`}
+  description={`Aviso legal de ${businessName}.`}
+  pageType="auxiliary"
+>
+  <section class="content">
+    <h1 class="content__heading">Aviso legal</h1>
+    <p class="content__paragraph">
+      En cumplimiento de la Ley 34/2002 de servicios de la sociedad de la información y de comercio
+      electrónico, se informa de los siguientes datos identificativos del titular de este sitio web:
+    </p>
+    <ul class="content__list">
+      <li class="content__list-item"><strong class="content__strong">Titular:</strong> {businessName}</li>
+      <li class="content__list-item">
+        <strong class="content__strong">Dirección:</strong> {nap.street}, {nap.zip} {nap.city}, {nap.country}
+      </li>
+      <li class="content__list-item"><strong class="content__strong">Teléfono:</strong> {nap.phone}</li>
+      <li class="content__list-item"><strong class="content__strong">Email:</strong> {nap.email}</li>
+    </ul>
+    <p class="content__paragraph">
+      [Texto legal completo pendiente. El operador debe completar este aviso con los datos legales reales
+      del titular: NIF/CIF, registro mercantil, condiciones de uso, propiedad intelectual, exclusión de
+      responsabilidad y legislación aplicable.]
+    </p>
   </section>
 </BaseLayout>

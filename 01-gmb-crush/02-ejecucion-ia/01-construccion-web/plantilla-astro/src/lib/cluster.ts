@@ -14,7 +14,6 @@ import type {
   Cluster,
   Output,
   AdditionalCategory,
-  DesignTokens,
   FAQ,
   GeoArticleTopic,
   ImageInventory,
@@ -80,7 +79,8 @@ export const getPreferredCTA = () => getValue<string>("1.13");
 export const getTrustSignals = () => getValue<string[]>("1.14");
 export const getGeoHubURLStyle = () => getValue<string>("3.2");
 export const getGeoArticleTopics = () => getValue<GeoArticleTopic[]>("3.4");
-export const getDesignTokens = () => getValue<DesignTokens>("16.1");
+// getDesignTokens fue eliminado en v0.2.0 — el diseño ahora vive en src/styles/theme.css,
+// inyectado por Fase 6 desde el archivo theme.css del cliente.
 
 /** Layout map por tipo de página (16.2). Devuelve vacíos si no existe. */
 export function getLayoutMap(): LayoutMap {

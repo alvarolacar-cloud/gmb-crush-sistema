@@ -39,7 +39,10 @@ const cta = getPreferredCTA();
 
 const url = `${domain}${mainCitySlug}/`;
 const title = `Servicios en ${mainCity} · ${businessName}`;
-const description = `Cobertura completa en ${mainCity}: ${services.map((s) => s.name).join(", ")}. ${lcas.direct.join(", ")}, ${lcas.candidate.slice(0, 4).join(", ")} y más.`;
+const allCoverage = [...lcas.direct, ...lcas.candidate.slice(0, 4)];
+const description = `Cobertura completa en ${mainCity}: ${services.map((s) => s.name).join(", ")}.${
+  allCoverage.length ? ` Zonas: ${allCoverage.join(", ")}.` : ""
+}`;
 
 const schema = buildGeoHubSchemas({
   cityName: mainCity,
@@ -51,67 +54,64 @@ const schema = buildGeoHubSchemas({
 });
 ---
 
-<BaseLayout title={title} description={description} schema={schema}>
-  <section class="bg-gradient-to-b from-primary-50 to-white">
-    <div class="container-narrow py-16 md:py-24 text-center">
-      <h1 class="mb-6">Servicios en {mainCity}</h1>
-      <p class="text-lg text-gray-700 mb-8 max-w-prose mx-auto">
-        Cobertura completa en {mainCity}: {lcas.direct.join(", ")}, {lcas.candidate.slice(0, 4).join(", ")} y más.
+<BaseLayout title={title} description={description} schema={schema} pageType="geohub">
+  <section class="hero hero--solid">
+    <div class="hero__content">
+      <h1 class="hero__title">Servicios en {mainCity}</h1>
+      <p class="hero__subtitle">
+        Cobertura completa en {mainCity}{allCoverage.length ? `: ${allCoverage.join(", ")}` : ""}.
       </p>
-      <a href="/contacto/" class="btn-primary">{cta}</a>
-    </div>
-  </section>
-
-  <section class="section bg-gray-50">
-    <div class="container-wide">
-      <h2 class="text-center mb-10">Nuestros servicios en {mainCity}</h2>
-      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {services.map((s) => (
-          <a
-            href={`/${primaryCatSlug}/${mainCitySlug}/${s.slug}/`}
-            class="block bg-white rounded-xl p-6 shadow hover:shadow-lg transition-shadow no-underline"
-          >
-            <h3 class="text-lg font-bold text-primary-900 mb-2">{s.name}</h3>
-            <p class="text-sm text-gray-600">En {mainCity}, presupuesto sin compromiso.</p>
-          </a>
-        ))}
+      <div class="hero__actions">
+        <a href="/contacto/" class="hero__cta--primary">{cta}</a>
       </div>
     </div>
   </section>
 
+  <section class="services-grid">
+    <h2 class="services-grid__heading">Nuestros servicios en {mainCity}</h2>
+    <div class="services-grid__list">
+      {services.map((s) => (
+        <a href={`/${primaryCatSlug}/${mainCitySlug}/${s.slug}/`} class="service-card">
+          <h3 class="service-card__title">{s.name}</h3>
+          <p class="service-card__description">En {mainCity}, presupuesto sin compromiso.</p>
+        </a>
+      ))}
+    </div>
+  </section>
+
   {additionals.length > 0 && (
-    <section class="section">
-      <div class="container-wide">
-        <h2 class="text-center mb-10">Otros servicios</h2>
-        <div class="grid gap-6 md:grid-cols-2">
-          {additionals.map((ac) => (
-            <a
-              href={`/${primaryCatSlug}/${mainCitySlug}/${ac.page_slug}/`}
-              class="block bg-white rounded-xl p-6 shadow hover:shadow-lg no-underline"
-            >
-              <h3 class="text-lg font-bold text-primary-900 mb-2">{ac.category}</h3>
-            </a>
-          ))}
-        </div>
+    <section class="services-grid">
+      <h2 class="services-grid__heading">Otros servicios</h2>
+      <div class="services-grid__list">
+        {additionals.map((ac) => (
+          <a href={`/${primaryCatSlug}/${mainCitySlug}/${ac.page_slug}/`} class="service-card">
+            <h3 class="service-card__title">{ac.category}</h3>
+          </a>
+        ))}
       </div>
     </section>
   )}
 
   {topics.length > 0 && (
-    <section class="section bg-gray-50">
-      <div class="container-wide">
-        <h2 class="text-center mb-10">Guías sobre {mainCity}</h2>
-        <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {topics.slice(0, 12).map((t) => (
-            <a
-              href={`/${mainCitySlug}/${t.topic_slug}/`}
-              class="block bg-white rounded-xl p-4 hover:bg-primary-50 no-underline text-sm"
-            >
-              {t.title}
-            </a>
-          ))}
-        </div>
+    <section class="guides">
+      <h2 class="guides__heading">Guías sobre {mainCity}</h2>
+      <div class="guides__list">
+        {topics.slice(0, 12).map((t) => (
+          <a href={`/${mainCitySlug}/${t.topic_slug}/`} class="guides__item">{t.title}</a>
+        ))}
       </div>
+    </section>
+  )}
+
+  {allCoverage.length > 0 && (
+    <section class="lcas">
+      <h2 class="lcas__heading">Cobertura</h2>
+      <p class="lcas__intro">Trabajamos en {mainCity} con foco en estas zonas:</p>
+      <ul class="lcas__list">
+        {allCoverage.map((zona) => (
+          <li class="lcas__item">{zona}</li>
+        ))}
+      </ul>
     </section>
   )}
 

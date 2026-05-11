@@ -43,11 +43,17 @@ Los outputs mínimos que `outputs.json` debe contener para que la plantilla func
 
 ### 8.2 Copiar plantilla y configurar
 
-1. Copiar `plantilla-astro/` a la carpeta del cliente.
+1. Copiar `plantilla-astro/` a la carpeta del cliente: `cp -r plantilla-astro/ ejecuciones-webs/gmb-crush-ejecuciones/[slug]/web/`
 2. Colocar `outputs.json` en la raíz del proyecto.
-3. Asegurar que `outputs.json` tiene `"meta": {"catalog_version": "0.1.0"}` (debe coincidir con la versión del código).
+3. Asegurar que `outputs.json` tiene `"meta": {"catalog_version": "0.1.0"}`.
 4. Actualizar `astro.config.mjs`: `site` = dominio del cliente.
 5. Actualizar `package.json`: `name` = slug del negocio.
+6. **Copiar el `theme.css` del cliente** (producido en Fase 6) a la plantilla:
+   ```bash
+   cp ejecuciones-webs/gmb-crush-ejecuciones/[slug]/theme.css \
+      ejecuciones-webs/gmb-crush-ejecuciones/[slug]/web/src/styles/theme.css
+   ```
+   Si no existe `theme.css` en la carpeta del cliente (Fase 6 no se ejecutó), el archivo placeholder de la plantilla queda vacío y la web sale con HTML semántico sin estilos visuales (solo `global.css` reset). Esto se documenta como `⚠ pendiente diseño` en INFORME-FINAL.
 
 ### 8.3 Build
 

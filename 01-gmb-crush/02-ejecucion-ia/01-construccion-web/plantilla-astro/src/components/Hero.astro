@@ -7,7 +7,7 @@ interface Props {
   ctaPrimaryHref: string;
   ctaSecondary?: string;
   ctaSecondaryHref?: string;
-  /** URL de imagen CDN (output 16.7 hero_homepage). Si existe → foto de fondo con overlay. */
+  /** URL de imagen CDN (output 16.7). Si existe → .hero--with-image. Si no → .hero--solid. */
   heroImage?: string;
 }
 
@@ -21,69 +21,28 @@ const {
   ctaSecondaryHref,
   heroImage,
 } = Astro.props;
+
+const heroClass = heroImage ? "hero hero--with-image" : "hero hero--solid";
 ---
 
-<section
-  class="relative overflow-hidden text-white"
-  style={!heroImage ? "background-color: var(--color-primary-900)" : ""}
->
-  {/* Foto de fondo desde CDN (16.7) con overlay oscuro */}
+<section class={heroClass}>
   {heroImage && (
     <>
-      <img
-        src={heroImage}
-        alt=""
-        aria-hidden="true"
-        class="absolute inset-0 w-full h-full object-cover"
-        loading="eager"
-        decoding="async"
-      />
-      <div
-        class="absolute inset-0"
-        style="background-color: color-mix(in srgb, var(--color-primary-900) 75%, transparent)"
-      />
+      <img class="hero__image" src={heroImage} alt="" aria-hidden="true" loading="eager" decoding="async" />
+      <div class="hero__overlay"></div>
     </>
   )}
 
-  <div class="relative z-10 container-narrow py-20 md:py-28">
-    <div class="text-center max-w-3xl mx-auto">
+  <div class="hero__content">
+    <h1 class="hero__title">{h1}</h1>
+    <p class="hero__subtitle">{subtitle}</p>
+    {trustItem && <p class="hero__trust">{trustItem}</p>}
 
-      <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 leading-tight">
-        {h1}
-      </h1>
-
-      <p
-        class="text-lg md:text-xl mb-8 leading-relaxed max-w-prose mx-auto"
-        style="color: rgba(255,255,255,0.85)"
-      >
-        {subtitle}
-      </p>
-
-      {trustItem && (
-        <p class="text-sm mb-8" style="color: var(--color-accent)">
-          ★★★★★ {trustItem}
-        </p>
+    <div class="hero__actions">
+      <a href={ctaPrimaryHref} class="hero__cta--primary">{ctaPrimary}</a>
+      {ctaSecondary && ctaSecondaryHref && (
+        <a href={ctaSecondaryHref} class="hero__cta--secondary">{ctaSecondary}</a>
       )}
-
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a
-          href={ctaPrimaryHref}
-          class="inline-flex items-center justify-center px-8 py-4 font-bold text-base no-underline shadow-lg transition-opacity hover:opacity-90"
-          style="background-color: var(--color-accent); color: #111827; border-radius: var(--btn-radius)"
-        >
-          {ctaPrimary}
-        </a>
-
-        {ctaSecondary && ctaSecondaryHref && (
-          <a
-            href={ctaSecondaryHref}
-            class="btn-outline-white px-8 py-4 text-base"
-          >
-            {ctaSecondary}
-          </a>
-        )}
-      </div>
-
     </div>
   </div>
 </section>
