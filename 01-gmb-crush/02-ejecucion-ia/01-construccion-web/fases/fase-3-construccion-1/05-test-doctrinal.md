@@ -1,7 +1,7 @@
-## Fase 5 — Test Doctrinal (Gate Pre-Build)
+## Fase 3 · sub-fase 5 — Test Doctrinal (Gate Pre-Build)
 
-**Lee el checklist completo antes de continuar: `../referencias/test-doctrinal.md`**
-Ábrelo ahora y ejecútalo punto por punto contra los 6 docs producidos en Fase 3.
+**Lee el checklist completo antes de continuar: `../../referencias/test-doctrinal.md`**
+Ábrelo ahora y ejecútalo punto por punto contra los 6 docs producidos en la sub-fase 3.
 
 Para cada bloque del test, responde con:
 
@@ -10,7 +10,7 @@ Para cada bloque del test, responde con:
 - **Problema doctrinal** (si FAIL): qué regla se viola.
 - **Corrección** (si FAIL): qué cambiar para que pase.
 
-**Si todos los bloques dan PASS:** avanza a Fase 6 (Diseño).
+**Si todos los bloques dan PASS:** avanza a Fase 4 (Diseño).
 **Si algún bloque da FAIL:** corrige los 6 docs, re-ejecuta el test, y solo avanza cuando todo sea PASS.
 
 **Bloqueos automáticos** (FAIL instantáneo sin importar el score):

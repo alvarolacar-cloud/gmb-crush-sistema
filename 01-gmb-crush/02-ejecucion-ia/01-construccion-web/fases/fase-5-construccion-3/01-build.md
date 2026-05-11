@@ -1,4 +1,4 @@
-## Fase 7 — Construcción (Astro)
+## Fase 5 · sub-fase 1 — Build (Astro)
 
 **Fuente:** `Doctrina GMB Crush` (Arquitectura técnica fija).
 
@@ -30,16 +30,16 @@ Los outputs mínimos que `outputs.json` debe contener para que la plantilla func
 | 1.1 | Business Name | Preflight |
 | 1.2 | Canonical Domain | Preflight o derivado |
 | 1.4 | Full NAP (8 campos) | Preflight |
-| 1.5 | Primary Category | Fase 1 (3.2) |
-| 1.6 | Additional Categories | Fase 1 (3.4) |
-| 1.7 | Main City | Fase 1 (3.1) |
-| 1.9 | Core Services | Fase 1 (3.3) |
-| 1.10 | LCAs (direct + candidate) | Fase 1 (3.5) |
-| 1.13 | Preferred CTA | Fase 2 (4.3) |
-| 1.14 | Trust Signals | Fase 1 (3.6) |
+| 1.5 | Primary Category | Fase 3 · sub-fase 1 (3.2) |
+| 1.6 | Additional Categories | Fase 3 · sub-fase 1 (3.4) |
+| 1.7 | Main City | Fase 3 · sub-fase 1 (3.1) |
+| 1.9 | Core Services | Fase 3 · sub-fase 1 (3.3) |
+| 1.10 | LCAs (direct + candidate) | Fase 3 · sub-fase 1 (3.5) |
+| 1.13 | Preferred CTA | Fase 3 · sub-fase 2 (4.3) |
+| 1.14 | Trust Signals | Fase 3 · sub-fase 1 (3.6) |
 | 3.2 | GeoHub URL Style | `/[main-city]/` |
-| 3.4 | GeoArticle Topics | Fase 1 (3.7) |
-| 16.1 | Design Tokens | Fase 6 |
+| 3.4 | GeoArticle Topics | Fase 3 · sub-fase 1 (3.7) |
+| 16.1 | Design Tokens | Fase 4 |
 
 ### 8.2 Copiar plantilla y configurar
 
@@ -48,12 +48,12 @@ Los outputs mínimos que `outputs.json` debe contener para que la plantilla func
 3. Asegurar que `outputs.json` tiene `"meta": {"catalog_version": "0.1.0"}`.
 4. Actualizar `astro.config.mjs`: `site` = dominio del cliente.
 5. Actualizar `package.json`: `name` = slug del negocio.
-6. **Copiar el `theme.css` del cliente** (producido en Fase 6) a la plantilla:
+6. **Copiar el `theme.css` del cliente** (producido en Fase 4) a la plantilla:
    ```bash
    cp ejecuciones-webs/gmb-crush-ejecuciones/[slug]/theme.css \
       ejecuciones-webs/gmb-crush-ejecuciones/[slug]/web/src/styles/theme.css
    ```
-   Si no existe `theme.css` en la carpeta del cliente (Fase 6 no se ejecutó), el archivo placeholder de la plantilla queda vacío y la web sale con HTML semántico sin estilos visuales (solo `global.css` reset). Esto se documenta como `⚠ pendiente diseño` en INFORME-FINAL.
+   Si no existe `theme.css` en la carpeta del cliente (Fase 4 no se ejecutó), el archivo placeholder de la plantilla queda vacío y la web sale con HTML semántico sin estilos visuales (solo `global.css` reset). Esto se documenta como `⚠ pendiente diseño` en INFORME-FINAL.
 
 ### 8.3 Build
 
@@ -87,7 +87,7 @@ Si `pnpm build` falla, no preguntes al operador — diagnostica y corrige:
 | `Cannot find module '@astrojs/tailwind'` | Se instaló Tailwind v4 en lugar de v3 | `pnpm remove tailwindcss && pnpm add -D tailwindcss@3.x @astrojs/tailwind` |
 | Build pasa en local pero falla en Cloudflare | Build command usa `npm` en Cloudflare | En Cloudflare Pages → Settings → Build command: `pnpm run build` (no `npm run build`) |
 | URLs en `dist/` no coinciden con URL Matrix | Directorio extra en `src/pages/` | La estructura de `src/pages/` debe replicar exactamente la URL Matrix. Ningún directorio extra. |
-| Schema `sameAs` apunta a GBP inexistente | Se añadió `sameAs` antes de crear el GBP | Omitir `sameAs` completamente si el GBP no existe. Añadirlo en Fase 9 cuando el GBP esté creado. |
+| Schema `sameAs` apunta a GBP inexistente | Se añadió `sameAs` antes de crear el GBP | Omitir `sameAs` completamente si el GBP no existe. Añadirlo en Fase 6 (QA + Datos Finales) cuando el GBP esté creado. |
 | `<meta name="generator" content="Astro">` en HTML | No se eliminó en limpieza | Eliminar en `BaseLayout.astro` o `Layout.astro` |
 
 ### 8.4 Verificar

@@ -1,9 +1,9 @@
-## Fase 8 — Deploy
+## Fase 5 · sub-fase 2 — Deploy
 
 **Fuente:** `Doctrina GMB Crush` (Arquitectura técnica: Cloudflare Pages vía GitHub).
 
 ### Dónde están los tokens
-Los tokens de GitHub y Cloudflare los pasa el operador por chat al arrancar el sistema (ver `SISTEMA.md` §3).
+Los tokens de GitHub y Cloudflare son inputs finales del operador y se cierran en Fase 6 (ver `fase-2-inputs-investigacion/01-inputs.md` §Finales).
 Si no están, construye hasta `dist/` y marca `⚠ pendiente tokens` — no bloquees la ejecución.
 
 ### Con tokens
@@ -16,7 +16,7 @@ Si no están, construye hasta `dist/` y marca `⚠ pendiente tokens` — no bloq
 
 ### Sin tokens
 1. Entregar el proyecto completo con `dist/` generado
-2. Añadir a la tabla de pendientes (Fase 9):
+2. Añadir a la tabla de pendientes (se cerrará en Fase 6 — QA + Datos Finales):
 
 | Dato | Status | Qué se necesita |
 |------|--------|-----------------|

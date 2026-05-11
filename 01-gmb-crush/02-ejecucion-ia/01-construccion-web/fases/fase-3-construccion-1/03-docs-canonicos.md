@@ -1,6 +1,6 @@
-## Fase 3 — Producir los 6 Docs Canónicos
+## Fase 3 · sub-fase 3 — Producir los 6 Docs Canónicos
 
-Antes de construir, consolida todo lo producido en Fases 1 y 2 en estos 6 documentos. Son la fuente de verdad del cluster y el input del test doctrinal.
+Antes de construir, consolida todo lo producido en las sub-fases 1 y 2 en estos 6 documentos. Son la fuente de verdad del cluster y el input del test doctrinal (sub-fase 5).
 
 | # | Documento | Qué contiene |
 |---|-----------|---------------|

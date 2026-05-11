@@ -1,4 +1,4 @@
-## Fase 2 — Contenido
+## Fase 3 · sub-fase 2 — Contenido
 
 ### 4.1 Reglas generales de contenido
 - Cada página tiene contenido **único**. No copies bloques entre páginas. **Fuente:** `Doctrina GMB Crush`.
@@ -10,7 +10,7 @@
 
 **Fuente de las specs:** `Doctrina GMB Crush` (estructura y función por page type).
 
-> **Word counts canónicos:** los rangos definitivos por page type están en `fase-4-redaccion.md`. Los de esta tabla son orientativos para el brief; en caso de conflicto, prevalece Fase 4.
+> **Word counts canónicos:** los rangos definitivos por page type están en la sub-fase 4 (`./04-redaccion.md`). Los de esta tabla son orientativos para el brief; en caso de conflicto, prevalece la sub-fase 4.
 
 | Page Type | H1 | Word count | CTA | Secciones obligatorias |
 |-----------|----|-----------:|-----|------------------------|

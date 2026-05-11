@@ -1,4 +1,4 @@
-## Fase 1 — Fundamentos y Arquitectura
+## Fase 3 · sub-fase 1 — Fundamentos y Arquitectura
 
 > **Si has llegado aquí, estás en el lugar correcto.** Lee este archivo completo antes de producir ningún output. Los patrones de URL, la fórmula de páginas y las convenciones de naming están en las secciones siguientes — no en el SISTEMA.md.
 
@@ -155,7 +155,7 @@ Aplica estos patrones. **Trailing slash: siempre.** **Dominio canónico: https:/
 
 ### 3.10 GATE DOCTRINAL — Entrega al Operador
 
-Antes de pasar a Fase 2, muestra al operador este bloque exacto:
+Antes de pasar a la sub-fase 2 (Contenido), muestra al operador este bloque exacto:
 
 ```
 ## Arquitectura Propuesta
@@ -206,7 +206,7 @@ Antes de pasar a Fase 2, muestra al operador este bloque exacto:
 | Dirección (calle/número/CP) | ⚠ placeholder | Operador la completa |
 ```
 
-**Si el operador corrige:** ajusta y vuelve a mostrar. **Si no dice nada:** avanza a Fase 2.
+**Si el operador corrige:** ajusta y vuelve a mostrar. **Si no dice nada:** avanza a la sub-fase 2 (Contenido).
 
 ---
 

@@ -1,14 +1,14 @@
-# Fase 6 — Extracción de Diseño y `theme.css`
+# Fase 4 — Construcción Web II · Extracción de Diseño y `theme.css`
 
 **Fuente:** `Cliente preflight` (web de referencia) + inspección directa.
 
 > **Cambio doctrinal v0.2.0**: la plantilla Astro es **design-agnostic**. Emite HTML semántico con clases del contrato (`referencias/contrato-clases-css.md`) pero no decide colores, fuentes, layouts ni estilos. **El diseño vive 100% en un archivo `theme.css` por cliente**, que esta Fase produce extrayéndolo de la web de referencia.
 >
-> Esto elimina el conflicto que existía antes entre "Fase 6 promete réplica fiel" y "la plantilla tiene su propio diseño". Ahora la plantilla no opina; el `theme.css` decide. No hay rigidez visual.
+> Esto elimina el conflicto que existía antes entre "el diseño promete réplica fiel" y "la plantilla tiene su propio diseño". Ahora la plantilla no opina; el `theme.css` decide. No hay rigidez visual.
 
-**Cuándo se ejecuta:** después de Fase 4 (Redacción). Antes de Fase 7 (Build).
+**Cuándo se ejecuta:** después de Fase 3 (Construcción Web I). Antes de Fase 5 (Construcción Web III — Build + Deploy).
 
-**Sin parada oficial**: per `SISTEMA.md §1.2`, Fase 6 ya no requiere aprobación del operador. La plantilla no puede contradecir la referencia (no tiene opinión propia), así que la salida es directamente lo que extrae la IA.
+**Tipo de parada:** gate ligero. Per `SISTEMA.md §1.2`, Fase 4 no requiere aprobación del operador. La plantilla no puede contradecir la referencia (no tiene opinión propia), así que la salida es directamente lo que extrae la IA y se avanza automáticamente a Fase 5.
 
 ---
 
@@ -20,7 +20,7 @@
 | Screenshot full-page | Mapear hero/header/footer/cards |
 | Inspección de CSS computado (DevTools o `javascript_exec`) | Extraer valores reales |
 
-**Sin las tres capacidades → no se ejecuta esta fase.** El diseño queda como `⚠ pendiente diseño` y la web se entrega con HTML semántico sin estilos (solo `global.css` reset). Nunca se infieren tokens visuales desde texto.
+**Sin las tres capacidades → no se ejecuta esta fase** (ya debería haberse detectado en Fase 1 — Test de Herramientas). El diseño queda como `⚠ pendiente diseño` y la web se entrega con HTML semántico sin estilos (solo `global.css` reset). Nunca se infieren tokens visuales desde texto.
 
 Plan B si faltan capacidades:
 1. Operador toma screenshots full-page de la referencia y los pega.
@@ -43,7 +43,7 @@ Resumen de los bloques principales (ver el contrato para detalle completo):
 
 URL viene de:
 - `fase-2-inputs-investigacion/01-inputs.md` campo "Web actual del cliente" (preferida)
-- O Fase 0 (Investigación), si el operador eligió una de las webs del Local Pack.
+- O del Informe de Competidores de Fase 2 · sub-fase 2 (Investigación), si el operador eligió una de las webs del Local Pack.
 
 Si no hay URL → se entrega plan B al operador. **No se "infiere" un estilo genérico.**
 
@@ -177,11 +177,11 @@ h1, h2, h3 { font-family: var(--font-display); color: var(--color-text-dark); }
 ejecuciones-webs/gmb-crush-ejecuciones/[slug]/theme.css
 ```
 
-Fase 7 (Build) lo copiará a `plantilla-astro/src/styles/theme.css` durante la construcción.
+Fase 5 · sub-fase 1 (Build) lo copiará a `plantilla-astro/src/styles/theme.css` durante la construcción.
 
 ---
 
-## Gate de salida — Fase 6
+## Gate de salida — Fase 4
 
 - [ ] `theme.css` existe en `ejecuciones-webs/gmb-crush-ejecuciones/[slug]/`
 - [ ] Cubre todas las clases principales del contrato (header, hero, services-grid, trust-block, faq, cta-section, lcas, footer, content)
@@ -190,7 +190,7 @@ Fase 7 (Build) lo copiará a `plantilla-astro/src/styles/theme.css` durante la c
 - [ ] Tiene al menos un breakpoint responsive (móvil)
 - [ ] Los colores y fuentes coinciden razonablemente con la web de referencia
 
-Si no hay web de referencia O si Fase 6 no pudo ejecutarse por falta de capacidades: el cliente se entrega sin `theme.css` (HTML semántico desnudo solo con `global.css` reset) y queda como `⚠ pendiente diseño` en INFORME-FINAL.
+Si no hay web de referencia O si Fase 4 no pudo ejecutarse por falta de capacidades: el cliente se entrega sin `theme.css` (HTML semántico desnudo solo con `global.css` reset) y queda como `⚠ pendiente diseño` en INFORME-FINAL.
 
 ---
 
@@ -200,4 +200,4 @@ Si no hay web de referencia O si Fase 6 no pudo ejecutarse por falta de capacida
 - **No reutilices fotos propias de la referencia.** Genera equivalentes o usa placeholders documentados (output 16.7).
 - **Si la referencia usa fuentes de pago** (ej. `freight-display-pro`), sustituye por equivalente gratuita de Google Fonts (`Playfair Display`, `EB Garamond`, etc.) e indícalo en notes.
 - **Si la referencia tiene errores visuales** (contraste bajo, layout roto en móvil), no los copies — anótalos y propón corrección.
-- **El `theme.css` es la fuente de verdad visual para Fase 7.** El constructor no toma decisiones de diseño, solo copia el theme.
+- **El `theme.css` es la fuente de verdad visual para Fase 5 · sub-fase 1 (Build).** El constructor no toma decisiones de diseño, solo copia el theme.
