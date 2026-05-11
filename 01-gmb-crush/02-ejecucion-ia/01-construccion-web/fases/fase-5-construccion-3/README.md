@@ -1,5 +1,14 @@
 # Fase 5 — Construcción Web III (build + deploy)
 
+## Contrato
+
+- **Inputs esperados:** Fase 3 cerrada (Test Doctrinal PASS + `.astro` escritas en `web/src/pages/` + `outputs.json` en raíz) + Fase 4 cerrada (theme.css + global.css en `web/src/styles/`).
+- **Outputs producidos:** `dist/` con HTML estático + sitemap.xml + (si hay tokens) URL live en Cloudflare Pages + estado `confirmed` o `⚠ pendiente tokens`.
+- **Gate de salida:** build OK + (deploy OK O `dist/` entregado con plan de cierre documentado).
+- **Si falta un input bloqueante:** build FAIL tras 3 intentos → para y reporta al operador. Sin tokens → ver Opción C en sub-fase 2.
+
+---
+
 **Cuándo se ejecuta:** después de Fase 4 (Diseño). Antes de Fase 6 (QA + datos finales).
 
 **Tipo de parada:** **gate ligero**. La fase muestra resultados al final pero AVANZA automáticamente a Fase 6 si build pasa y deploy se ejecuta (o se entrega `dist/` si faltan tokens).

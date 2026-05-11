@@ -1,5 +1,14 @@
 # Fase 2 · sub-fase 1 — Inputs del Operador
 
+## Contrato
+
+- **Inputs esperados:** Fase 1 cerrada.
+- **Outputs producidos:** 5 campos del negocio (nombre, servicio, dirección, web actual, ciudades adicionales) → cada uno marcado `confirmed`, `⚠ placeholder` o `no aplica`. Listo para escribir output `1.4 NAP` en `outputs.json`.
+- **Gate de salida:** servicio + ciudad confirmados (los dos bloqueantes). El resto va como placeholder si falta.
+- **Si falta un input bloqueante:** sin servicio principal o ciudad → para y pregunta al operador con el mensaje de §Iniciales. No inventes.
+
+---
+
 Único archivo donde se declara qué pide el sistema al operador. Toda la información que cualquier fase necesita está aquí, partida en dos momentos: **Iniciales** (sub-fase 1 de Fase 2) y **Finales** (Fase 6 — QA + Datos Finales).
 
 > **Si encuentras OTRO archivo del repo pidiendo inputs al operador, es un bug.** Repórtalo o redirígelo aquí. No dupliques listas.

@@ -1,5 +1,14 @@
 ## Fase 3 · sub-fase 4 — Redacción + Página Astro por URL
 
+### Contrato
+
+- **Inputs esperados:** sub-fase 3 cerrada (6 docs canónicos disponibles, especialmente Content Pack con brief por URL y Schema Map) + theme.css de Fase 4 si ya está disponible (la coordinación de clases CSS sucede aquí).
+- **Outputs producidos:** proyecto Astro completo en `ejecuciones-webs/[slug]/web/` bootstrapeado desde snippets de la doctrina + una `.astro` por URL de la URL Matrix (siguiendo el brief del Content Pack + las 4 capas de redacción + las 4 reglas de calidad) + `outputs.json` con FAQs por page type (`15.1`–`15.6`) y body content (`15.7` HP, `15.8` GH si aplica).
+- **Gate de salida:** 17 (u N) `.astro` escritas, word counts dentro del rango doctrinal por page type, cluster completo por servicio (1 SO + 1 LBS + G GAs), 0 placeholders literales en HTML estático, 3 puentes en cada GA a LBS padre.
+- **Si falta un input bloqueante:** Content Pack incompleto → vuelve a sub-fase 3. theme.css aún no producido → puedes redactar primero y coordinar clases con Fase 4 después, pero documenta la lista de clases que usarás para que Fase 4 las estilice.
+
+---
+
 **Cuándo se ejecuta:** después de la sub-fase 3 (docs canónicos). Antes de la sub-fase 5 (Test Doctrinal).
 
 > **Cambio v0.3.0 (slim plantilla):** esta sub-fase produce **dos cosas** por cada URL de la matrix:

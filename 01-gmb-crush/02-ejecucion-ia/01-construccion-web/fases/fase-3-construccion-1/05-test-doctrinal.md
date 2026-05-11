@@ -1,5 +1,14 @@
 ## Fase 3 · sub-fase 5 — Test Doctrinal (Gate Pre-Build)
 
+### Contrato
+
+- **Inputs esperados:** sub-fases 1-4 cerradas (arquitectura + schemas + linking + docs canónicos + .astro escritas + outputs.json poblado).
+- **Outputs producidos:** resultado PASS/FAIL del test doctrinal por cada bloque, con evidencia concreta + correcciones aplicadas si hubo FAIL.
+- **Gate de salida:** **PASS en todos los bloques bloqueantes.** Sin PASS → no avanzar a Fase 4 aunque el operador lo pida (regla inviolable §4).
+- **Si falta un input bloqueante:** algún output de sub-fases 1-4 ausente → vuelve a la sub-fase correspondiente. No se ejecuta el test sobre docs incompletos.
+
+---
+
 **Lee el checklist completo antes de continuar: `../../referencias/test-doctrinal.md`**
 Ábrelo ahora y ejecútalo punto por punto contra los 6 docs producidos en la sub-fase 3.
 

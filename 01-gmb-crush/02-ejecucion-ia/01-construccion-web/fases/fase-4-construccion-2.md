@@ -1,5 +1,14 @@
 # Fase 4 — Construcción Web II · Extracción de Diseño y `theme.css`
 
+## Contrato
+
+- **Inputs esperados:** Fase 3 cerrada (Test Doctrinal PASS) + URL de web de referencia confirmada por el operador en Fase 2 + capacidades de navegador/screenshot/CSS-inspection confirmadas en Fase 1.
+- **Outputs producidos:** `theme.css` en `ejecuciones-webs/[slug]/web/src/styles/` + `global.css` reset + (recomendado) `patrones.md` con composición sección a sección de la referencia + assets descargados a `web/public/` si aplica.
+- **Gate de salida:** theme.css cubre todas las clases que las `.astro` de Fase 3 sub-4 usan + paleta y tipografía coinciden razonablemente con la referencia + breakpoint responsive declarado.
+- **Si falta un input bloqueante:** sin web de referencia → diseño queda como `⚠ pendiente diseño`, web se entrega solo con `global.css` reset. Sin capacidades de navegador → ver §Paso 0 (3 opciones).
+
+---
+
 **Fuente:** `Cliente preflight` (web de referencia) + inspección directa.
 
 > **Cambio doctrinal v0.3.0**: la plantilla Astro es **slim** — solo provee BaseLayout + helpers (schemas, slugify, sitemap). Las páginas `.astro` las escribe la IA por cliente en Fase 3 sub-fase 4 con HTML libre. Esta Fase produce **dos cosas**: (1) `theme.css` con tokens visuales + (2) **mapa de patrones de composición** (split-hero, media-block, gallery, etc.) que la IA usa al escribir las `.astro` en sub-fase 4.
@@ -20,12 +29,18 @@
 | Screenshot full-page | Mapear hero/header/footer/cards |
 | Inspección de CSS computado (DevTools o `javascript_exec`) | Extraer valores reales |
 
-**Sin las tres capacidades → no se ejecuta esta fase** (ya debería haberse detectado en Fase 1 — Test de Herramientas). El diseño queda como `⚠ pendiente diseño` y la web se entrega con HTML semántico sin estilos (solo `global.css` reset). Nunca se infieren tokens visuales desde texto.
+**Sin las tres capacidades → no se ejecuta esta fase con vía directa** (ya debería haberse detectado en Fase 1 — Test de Herramientas). Nunca se infieren tokens visuales desde texto.
 
-Plan B si faltan capacidades:
-1. Operador toma screenshots full-page de la referencia y los pega.
-2. Operador conecta un MCP con navegador + DevTools.
-3. El diseño queda pendiente y se resuelve post-deploy.
+**Vías según capacidades disponibles:**
+
+**Opción A (preferida) — Chrome MCP / Playwright / computer-use con DevTools:**
+La IA navega a la web de referencia, toma screenshots full-page, ejecuta `javascript_exec` para extraer CSS computado de elementos clave (h1, h2, h3, p, botones, body, header), mapea layout sección a sección, descarga assets a `web/public/`. Procede con el resto de los pasos de esta fase.
+
+**Opción B — sin navegador, operador aporta material:**
+El operador pega: (1) screenshots full-page desktop+mobile de la home + 1-2 páginas internas, (2) opcionalmente un volcado del CSS computado de elementos clave usando un snippet en consola del navegador del operador. Con eso la IA produce un theme.css aproximado. Calidad inferior a la Opción A; documenta las diferencias visuales en INFORME-FINAL.
+
+**Opción C — ni Opción A ni B viables:**
+El diseño queda como `⚠ pendiente diseño`. La web se entrega solo con `global.css` reset (HTML semántico sin estilos). Operador resuelve post-deploy en una iteración posterior.
 
 ---
 

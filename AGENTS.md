@@ -28,6 +28,32 @@ Secuencia completa del flujo. La IA ejecuta cada fase en orden, abre primero el 
 
 **⚠ Antes de ejecutar cada fase, abre y lee su archivo completo** (o el README + sub-archivos si tiene carpeta). Nunca ejecutes una fase de memoria.
 
+### Flujo macro visual
+
+```
+┌─────────────────┐   ┌─────────────────────┐   ┌────────────────────────┐
+│ F1              │   │ F2                  │   │ F3 Construcción Web I  │
+│ Test            │ → │ Inputs +            │ → │ sub-1 Fundamentos      │
+│ Herramientas    │   │ Investigación       │   │ sub-2 Contenido        │
+│                 │   │   sub-1 Inputs      │   │ sub-3 Docs Canónicos   │
+│ 🛑 blocking     │   │   sub-2 Local Pack  │   │ sub-4 Redacción + .astro│
+│                 │   │ 🛑 blocking         │   │ sub-5 Test Doctrinal    │
+└─────────────────┘   └─────────────────────┘   │ ⚙ gate ligero          │
+                                                 └────────────┬────────────┘
+                                                              ▼
+┌──────────────────┐   ┌──────────────────────┐   ┌───────────────────────┐
+│ F4               │   │ F5 Construcción III  │   │ F6                    │
+│ Construcción II  │ → │   sub-1 Build        │ → │ QA Final +            │
+│ Diseño +         │   │   sub-2 Deploy       │   │ Datos Finales         │
+│ theme.css        │   │ ⚙ gate ligero        │   │ 🛑 blocking           │
+│ ⚙ gate ligero    │   │                      │   │ (operador cierra      │
+│                  │   │                      │   │  placeholders + GBP)  │
+└──────────────────┘   └──────────────────────┘   └───────────────────────┘
+
+  🛑 = parada blocking (la IA espera al operador)
+  ⚙  = gate ligero (la IA avanza salvo fallo técnico)
+```
+
 ---
 
 ## Inputs del operador

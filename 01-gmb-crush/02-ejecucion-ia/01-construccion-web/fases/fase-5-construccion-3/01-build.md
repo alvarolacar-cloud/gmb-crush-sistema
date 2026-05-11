@@ -1,5 +1,14 @@
 ## Fase 5 · sub-fase 1 — Build (Astro)
 
+### Contrato
+
+- **Inputs esperados:** proyecto Astro bootstrapeado en `ejecuciones-webs/[slug]/web/` con `.astro` por URL, `outputs.json` en raíz, `theme.css` + `global.css` en `src/styles/`, dependencias instaladas.
+- **Outputs producidos:** `dist/` con HTML estático + sitemap.xml auto-generado + verificaciones pasadas (cluster completo, links válidos, schemas embebidos).
+- **Gate de salida:** `pnpm build` exit 0 + sin `<meta name="generator">` + sitemap incluye todas las URLs de la matrix + cluster completo (cada servicio con SO + LBS + GAs).
+- **Si falta un input bloqueante:** build FAIL → protocolo Autonomous Bug Fixing (3 intentos). Tras 3, para y reporta al operador con error exacto + intentos.
+
+---
+
 **Fuente:** `Doctrina GMB Crush` (Arquitectura técnica fija).
 
 Esta fase usa la **plantilla Astro** (`plantilla-astro/`) que ya existe en el repo. La IA NO crea un proyecto desde cero — produce un `outputs.json` y la plantilla lo renderiza.

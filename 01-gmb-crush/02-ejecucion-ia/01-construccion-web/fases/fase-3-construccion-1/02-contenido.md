@@ -1,5 +1,14 @@
 ## Fase 3 · sub-fase 2 — Contenido
 
+### Contrato
+
+- **Inputs esperados:** sub-fase 1 cerrada (arquitectura + URL Matrix + servicios + LCAs + trust signals).
+- **Outputs producidos:** Schema Map (§4.5 — schemas asignados por page type usando vocabulario de `schema-helpers.ts`) + Internal Linking Plan (§4.6) + decisión de CTA principal (output `1.13`) + reglas de LCAs en contenido por page type (§4.4).
+- **Gate de salida:** decisiones declaradas en `outputs.json` + listas para que sub-fase 3 (Docs Canónicos) las consolide.
+- **Si falta un input bloqueante:** sub-fase 1 no cerrada → vuelve atrás.
+
+---
+
 ### 4.1 Reglas generales de contenido
 - Cada página tiene contenido **único**. No copies bloques entre páginas. **Fuente:** `Doctrina GMB Crush`.
 - Los GeoArticles **responden preguntas** (informacional). No venden. **Fuente:** `Doctrina GMB Crush`.

@@ -1,5 +1,14 @@
 # Fase 6 — QA Final + Datos Finales
 
+## Contrato
+
+- **Inputs esperados:** Fase 5 cerrada (`dist/` construido + idealmente URL live; si no, `dist/` entregado).
+- **Outputs producidos:** QA visual contra web de referencia + `INFORME-FINAL.md` (7 secciones) en `ejecuciones-webs/[slug]/` + cierre iterativo de `⚠ placeholder` con datos finales del operador + (cuando todos cierren) creación del GBP.
+- **Gate de salida:** QA sin 🔴 bloqueantes + INFORME-FINAL generado + tabla de pendientes vacía o reducida a items que el operador decidió no cerrar. Proyecto entregado.
+- **Si falta un input bloqueante:** operador no aporta los inputs finales → la fase queda en espera indefinida. La IA puede pausar y retomar cuando el operador aporte. El GBP no se crea hasta cerrar todos los `⚠`.
+
+---
+
 **Cuándo se ejecuta:** después de Fase 5 (Build + Deploy). Es la última fase del flujo.
 
 **Tipo de parada:** **blocking**. Esta fase combina entrega del proyecto + recogida de inputs finales del operador (teléfono, email, tokens, dominio definitivo, GBP). El operador tarda en aportar; la IA espera.

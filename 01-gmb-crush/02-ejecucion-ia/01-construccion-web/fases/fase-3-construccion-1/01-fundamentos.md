@@ -1,5 +1,14 @@
 ## Fase 3 · sub-fase 1 — Fundamentos y Arquitectura
 
+### Contrato
+
+- **Inputs esperados:** NAP + servicios confirmados (Fase 2 sub-1) + Informe de Competidores con categoría GBP + trust signals dominantes (Fase 2 sub-2).
+- **Outputs producidos:** outputs `1.5` (Primary Category), `1.6` (Additional Categories), `1.7` (Main City), `1.9` (Core Services), `1.10` (LCAs Direct + Candidate), `1.14` (Trust Signals), `3.1` (URL Matrix completa con shape canónico), `3.4` (GeoArticle Topics).
+- **Gate de salida:** GATE DOCTRINAL §3.10 — entrega al operador de la Arquitectura Propuesta + checklist + datos pendientes.
+- **Si falta un input bloqueante:** sin ciudad → STOP, pide al operador (§3.1). Sin Informe de Competidores → vuelve a Fase 2 sub-2. Sin dirección → STOP antes de definir LCAs (§3.5 gate previo).
+
+---
+
 > **Si has llegado aquí, estás en el lugar correcto.** Lee este archivo completo antes de producir ningún output. Los patrones de URL, la fórmula de páginas y las convenciones de naming están en las secciones siguientes — no en el SISTEMA.md.
 
 Cada output de esta fase tiene una fuente y un método concreto. Síguelos en orden.

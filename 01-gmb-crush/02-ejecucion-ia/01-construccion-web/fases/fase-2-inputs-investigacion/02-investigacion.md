@@ -1,5 +1,14 @@
 # Fase 2 · sub-fase 2 — Investigación de Mercado (Local Pack)
 
+## Contrato
+
+- **Inputs esperados:** sub-fase 1 cerrada (servicio + ciudad confirmados).
+- **Outputs producidos:** Informe de Competidores (top 5 Local Pack + matriz de servicios + categoría GBP más frecuente + trust signals dominantes + webs de referencia recomendadas).
+- **Gate de salida:** parada blocking — operador confirma servicios elegidos + URL de web de referencia.
+- **Si falta un input bloqueante:** sin acceso a navegador real → ejecutar Opción B (operador hace la búsqueda manual y pega resultados). Ver §Procedimiento.
+
+---
+
 ## Objetivo
 
 Antes de construir la web, la IA investiga el Local Pack del sector y entrega al operador un informe visual con los competidores. El operador decide:
@@ -19,12 +28,18 @@ Los datos del operador ya están recogidos en la sub-fase anterior [`01-inputs.m
 
 ## Procedimiento
 
-### Paso previo — Comprobar acceso al navegador
+### Paso previo — Elegir vía según capacidades
 
-> **Nota:** este check ya se hizo en Fase 1 (Test de Herramientas). Si Fase 1 declaró `✗ Navegador real`, entrega directamente el prompt de plan B al operador.
+(Las capacidades se verificaron en Fase 1.)
 
-- **Si tienes acceso a navegador real** (Chrome MCP, computer-use o similar): di exactamente esto → *"✅ Tengo acceso al navegador. Voy a buscar datos reales en Google Maps."* y continúa con el método de búsqueda manual.
-- **Si no tienes acceso** (declarado ya en Fase 1): di exactamente esto → *"⚠ No tengo acceso al navegador. Para que la investigación sea real, necesito que hagas tú la búsqueda y me pegues los resultados. Aquí tienes las instrucciones:"* y entrega el prompt de plan B abajo.
+**Opción A (preferida) — Chrome MCP / computer-use / Playwright MCP disponible:**
+Di al operador: *"✅ Tengo acceso al navegador. Voy a buscar datos reales en Google Maps."* y continúa con el método de búsqueda manual de abajo.
+
+**Opción B — sin navegador:**
+Di al operador: *"⚠ No tengo acceso al navegador. Para que la investigación sea real, necesito que hagas tú la búsqueda y me pegues los resultados. Aquí tienes las instrucciones:"* y entrega el prompt de plan B abajo. La IA no inventa el Local Pack — siempre operador.
+
+**Opción C — operador no quiere/puede hacer plan B:**
+Marca la investigación como `⚠ pendiente investigación`. **Fase 3 no puede arrancar** sin Local Pack porque la primary category, los servicios y los trust signals salen de ahí. Para y pide al operador alternativa.
 
 **Prompt de plan B para el operador** (entrégalo cuando no tengas acceso al navegador):
 

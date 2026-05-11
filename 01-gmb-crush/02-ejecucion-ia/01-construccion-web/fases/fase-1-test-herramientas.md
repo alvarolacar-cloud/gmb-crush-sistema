@@ -1,5 +1,14 @@
 # Fase 1 — Test de Herramientas
 
+## Contrato
+
+- **Inputs esperados:** ninguno. Es la primera fase.
+- **Outputs producidos:** tabla de capacidades disponibles + plan B por cada capacidad faltante + decisión del operador.
+- **Gate de salida:** operador dice «arranca» (explícito o tácito si todo ✓) o «conecto X primero» (espera).
+- **Si falta un input bloqueante:** no aplica — esta fase no depende de inputs.
+
+---
+
 **Cuándo se ejecuta:** lo primero. Antes de cualquier interacción significativa con el operador.
 
 **Tipo de parada:** blocking. La IA no pasa a Fase 2 hasta presentar este test al operador y, si falta capacidad crítica, ofrecer plan B y esperar decisión.

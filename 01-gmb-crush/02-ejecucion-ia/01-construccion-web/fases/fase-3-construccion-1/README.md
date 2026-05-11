@@ -1,5 +1,14 @@
 # Fase 3 — Construcción Web I (arquitectura → contenido → test doctrinal)
 
+## Contrato
+
+- **Inputs esperados:** Fase 2 cerrada (NAP + servicios confirmados + web ref + Informe de Competidores).
+- **Outputs producidos:** arquitectura completa del cluster (URL Matrix, Page Type Map, Internal Linking Plan, Content Pack, Schema Map, Tabla de Pendientes) + proyecto Astro bootstrapeado con `.astro` por URL + Test Doctrinal PASS.
+- **Gate de salida:** Test Doctrinal sub-fase 5 da PASS en todos los bloques. Sin PASS → no avanzar a Fase 4 aunque el operador lo pida (regla inviolable §4 de AGENTS).
+- **Si falta un input bloqueante:** servicios o web ref sin confirmar → vuelve a Fase 2.
+
+---
+
 **Cuándo se ejecuta:** después de Fase 2 (inputs + investigación confirmados). Antes de Fase 4 (Diseño).
 
 **Tipo de parada:** **gate ligero**. La fase muestra resultados al final pero AVANZA automáticamente a Fase 4 salvo que el Test Doctrinal falle. Si falla, paras y corriges hasta que pase.

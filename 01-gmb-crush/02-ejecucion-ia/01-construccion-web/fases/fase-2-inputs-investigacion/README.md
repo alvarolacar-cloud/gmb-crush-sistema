@@ -1,5 +1,14 @@
 # Fase 2 — Inputs + Investigación de Mercado
 
+## Contrato
+
+- **Inputs esperados:** Fase 1 cerrada (capacidades + plan B confirmados).
+- **Outputs producidos:** datos del negocio (NAP + servicios + web ref) + Informe de Competidores (top 5 Local Pack + matriz de servicios + categorías GBP + recomendaciones).
+- **Gate de salida:** 2 confirmaciones explícitas del operador → servicios elegidos + URL de web de referencia.
+- **Si falta un input bloqueante:** sin servicio principal o ciudad → para y pide al operador. No inventes.
+
+---
+
 **Cuándo se ejecuta:** después de Fase 1 (Test de Herramientas). Antes de Fase 3 (Construcción I).
 
 **Tipo de parada:** blocking. Tras presentar el Informe de Competidores, la IA espera dos confirmaciones explícitas del operador: servicios a incluir + web de referencia de diseño.
