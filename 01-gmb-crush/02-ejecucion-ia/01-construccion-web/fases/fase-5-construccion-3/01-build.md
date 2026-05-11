@@ -41,20 +41,39 @@ Los outputs mínimos que `outputs.json` debe contener para que la plantilla func
 | 3.4 | GeoArticle Topics | Fase 3 · sub-fase 1 (3.7) |
 | 16.1 | Design Tokens | Fase 4 |
 
-### 8.2 Copiar plantilla y configurar
+### 8.2 Bootstrap del proyecto Astro (no hay plantilla compartida)
 
-1. Copiar `plantilla-astro/` (slim) a la carpeta del cliente: `cp -r plantilla-astro/ ejecuciones-webs/gmb-crush-ejecuciones/[slug]/web/`
-2. **Borrar el `index.astro` placeholder** de la plantilla (`web/src/pages/index.astro`) — será sobreescrito por las páginas reales del cliente.
-3. **Copiar las páginas `.astro` redactadas en Fase 3 sub-fase 4** a `web/src/pages/`. Una `.astro` por cada URL de la URL Matrix.
-4. Colocar `outputs.json` (output de Fase 3) en la raíz del proyecto.
-5. Actualizar `astro.config.mjs`: `site` = dominio del cliente.
-6. Actualizar `package.json`: `name` = slug del negocio.
-7. **Copiar el `theme.css` del cliente** (producido en Fase 4) a `web/src/styles/theme.css`:
-   ```bash
-   cp ejecuciones-webs/gmb-crush-ejecuciones/[slug]/theme.css \
-      ejecuciones-webs/gmb-crush-ejecuciones/[slug]/web/src/styles/theme.css
-   ```
-   Si no existe `theme.css` (Fase 4 no se ejecutó), el placeholder de la plantilla queda vacío y la web sale con HTML sin estilos visuales (solo `global.css` reset). Se documenta como `⚠ pendiente diseño`.
+A partir de v0.4.0 **no existe `plantilla-astro/`** en el repo del sistema. El proyecto Astro del cliente se crea desde cero siguiendo los snippets canónicos de la doctrina. Esto garantiza que cada cliente bootstrapea con la versión más actualizada de la doctrina, sin código compartido que pueda quedar obsoleto.
+
+**Estado al llegar a esta sub-fase:** Fase 3 sub-fase 4 ya escribió en `ejecuciones-webs/[slug]/web/` la estructura completa:
+
+```
+ejecuciones-webs/[slug]/web/
+├── astro.config.mjs         (snippet de fase-3 sub-4, con site=dominio del cliente)
+├── package.json             (snippet de fase-3 sub-4, con name=slug del cliente)
+├── tsconfig.json            (snippet de fase-3 sub-4)
+├── outputs.json             (output consolidado de Fase 3)
+└── src/
+    ├── layouts/BaseLayout.astro   (snippet de fase-3 sub-4)
+    ├── lib/
+    │   ├── cluster.ts             (snippet de fase-3 sub-4)
+    │   ├── slugify.ts             (snippet de fase-3 sub-1)
+    │   ├── schema-helpers.ts      (snippet de fase-3 sub-2)
+    │   └── types.ts               (snippet de fase-3 sub-4)
+    ├── pages/
+    │   ├── index.astro            (escrita por la IA — HP)
+    │   ├── [resto de .astro]      (escritas por la IA — una por URL)
+    │   └── sitemap.xml.ts         (snippet de fase-3 sub-1)
+    └── styles/
+        ├── global.css             (snippet de fase-4)
+        └── theme.css              (output de fase-4)
+```
+
+**Lo único que esta sub-fase añade:**
+
+1. Verificar que todos los archivos esperados existen (script de chequeo opcional).
+2. Si falta `theme.css` (Fase 4 no se ejecutó por falta de capacidades), crear un `theme.css` vacío y marcar `⚠ pendiente diseño` en INFORME-FINAL.
+3. Ejecutar `pnpm install` + build (paso 8.3).
 
 ### 8.3 Build
 

@@ -59,14 +59,16 @@ sistemas-creacion-webs/                            ← ESTE repo — solo sistem
             │   ├── fase-4-construccion-2.md
             │   ├── fase-5-construccion-3/         (carpeta con README + 2 sub-archivos)
             │   └── fase-6-qa-datos-finales.md
-            ├── referencias/                       ← doctrina, ejemplos, test (consulta)
-            └── plantilla-astro/                   ← template Astro (se copia por cliente)
+            └── referencias/                       ← doctrina, ejemplos, test (consulta)
+
+(Desde v0.4.0 no existe `plantilla-astro/`. Cada cliente bootstrapea su proyecto
+ Astro desde los snippets canónicos de la doctrina — ver SISTEMA.md §3.)
 
 ejecuciones-webs/                                  ← repo SEPARADO — datos de clientes
 └── gmb-crush-ejecuciones/[slug]/
-    ├── outputs.json                               ← outputs del cluster
+    ├── outputs.json                               ← outputs consolidados del cluster
     ├── theme.css                                  ← CSS extraído de la web de referencia (Fase 4)
-    ├── web/                                       ← copia de plantilla-astro renderizada
+    ├── web/                                       ← proyecto Astro bootstrap del cliente (Fase 3 sub-4)
     ├── lessons.md                                 ← memoria de errores específicos del proyecto
     └── INFORME-FINAL.md                           ← entregable Fase 6 (post-deploy)
 ```

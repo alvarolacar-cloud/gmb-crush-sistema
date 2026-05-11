@@ -93,3 +93,58 @@ Cuando vayas cerrando cada uno, me lo dices y rebuild + redeploy. Cuando la tabl
 2. Espera la respuesta. Marca cada campo aportado como `confirmed`; los faltantes como `⚠ placeholder` (operador-dependientes) o `⚠ pendiente tokens` (deploy).
 3. **Si faltan los dos bloqueantes** (servicio principal o ciudad) → para y pide de nuevo.
 4. Con servicio + ciudad mínimos → pasa a sub-fase 2 (`02-investigacion.md`).
+
+---
+
+## Contratos técnicos producidos por esta sub-fase
+
+### Shape canónico del NAP — output `1.4` en `outputs.json`
+
+El `NAP` (Name + Address + Phone) es el bloque más reutilizado del cliente. Vive en el output `1.4` de `outputs.json` con este shape exacto (TypeScript):
+
+```ts
+export interface NAP {
+  name: string;       // razón social o nombre comercial. Si falta → "[NOMBRE]"
+  street: string;     // "Calle Gallarza 22". Si falta → "[DIRECCIÓN]"
+  city: string;       // "Madrid". BLOQUEANTE — sin esto no se arranca.
+  state: string;      // provincia/comunidad. Por defecto = city si España.
+  zip: string;        // "28002". Si falta → "[CP]"
+  country: string;    // ISO-2: "ES", "MX", "AR", etc.
+  phone: string;      // E.164 sin separadores ideal. Si falta → "[TELÉFONO]"
+  email: string;      // Si falta → "[EMAIL]"
+}
+```
+
+Ejemplo de output `1.4` válido cuando aún falta phone/email:
+
+```json
+{
+  "id": "1.4",
+  "name": "Full NAP",
+  "value": {
+    "name": "[NOMBRE]",
+    "street": "Calle Gallarza 22",
+    "city": "Madrid",
+    "state": "Madrid",
+    "zip": "28002",
+    "country": "ES",
+    "phone": "[TELÉFONO]",
+    "email": "[EMAIL]"
+  },
+  "status": "⚠ placeholder",
+  "fuente": "Cliente preflight",
+  "source": "Operador 2026-MM-DD — dirección confirmed, resto pendiente",
+  "bloque": 1
+}
+```
+
+**Reglas del shape:**
+- Las 8 claves son **obligatorias**. Si un dato no se conoce, va el placeholder visible entre corchetes, nunca `null`/`""`/omitido.
+- `city` es bloqueante — el operador la aporta o no se arranca.
+- Cualquier otra clave faltante → marcador (`[NOMBRE]`, `[TELÉFONO]`, etc.) y el output entero queda `status: "⚠ placeholder"`.
+- Fase 6 cierra estos placeholders al final del proyecto (ver §Finales).
+
+Este shape lo consumen:
+- Schema `LocalBusiness.address` (Fase 3 sub-2)
+- Bloque NAP del footer y página de Contacto (Fase 3 sub-4)
+- Sitemap (indirectamente, vía el dominio del output `1.2`)

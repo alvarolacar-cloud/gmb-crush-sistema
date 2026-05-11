@@ -269,3 +269,268 @@ Los contenidos redactados se registran en `outputs.json` como entradas de la fam
 Si cualquier check falla → corregir antes de avanzar.
 
 ---
+
+## Contratos técnicos producidos por esta sub-fase
+
+Esta sub-fase **crea el proyecto Astro completo desde cero** en `ejecuciones-webs/[slug]/web/`. No existe plantilla compartida — la IA reproduce los snippets de abajo en archivos físicos del cliente. Si la doctrina cambia, la próxima ejecución incorpora el cambio.
+
+### Estructura objetivo
+
+```
+ejecuciones-webs/[slug]/web/
+├── astro.config.mjs
+├── package.json
+├── tsconfig.json
+└── src/
+    ├── layouts/
+    │   └── BaseLayout.astro
+    ├── lib/
+    │   ├── cluster.ts
+    │   ├── slugify.ts             (copia desde fase-3 sub-1)
+    │   ├── schema-helpers.ts      (copia desde fase-3 sub-2)
+    │   └── types.ts
+    ├── pages/
+    │   ├── index.astro            (HP — Fase 3 sub-4 escribe el HTML)
+    │   ├── [una .astro por URL de la matrix]
+    │   └── sitemap.xml.ts         (copia desde fase-3 sub-1)
+    └── styles/
+        ├── global.css             (copia desde fase-4)
+        └── theme.css              (sobreescrito por Fase 4)
+```
+
+### `package.json`
+
+```json
+{
+  "name": "[slug]",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "astro": "^5.1.0",
+    "typescript": "^5.7.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0"
+  }
+}
+```
+
+### `astro.config.mjs`
+
+```js
+// @ts-check
+import { defineConfig } from "astro/config";
+
+export default defineConfig({
+  site: "https://www.[dominio].com",  // ← sustituir con output 1.2
+  trailingSlash: "always",
+  build: { format: "directory" },
+  output: "static",
+});
+```
+
+### `tsconfig.json`
+
+```json
+{
+  "extends": "astro/tsconfigs/strict",
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@layouts/*": ["src/layouts/*"],
+      "@lib/*": ["src/lib/*"]
+    }
+  }
+}
+```
+
+### `src/lib/types.ts`
+
+Tipos compartidos entre `cluster.ts` y las `.astro`. Reúne shapes que vienen de fases anteriores.
+
+```ts
+export type Status =
+  | "confirmed"
+  | "validated"
+  | "⚠ placeholder"
+  | "⚠ pendiente tokens"
+  | "⚠ pendiente diseño"
+  | "no aplica";
+
+// Shape canónico — definido en fase-2-inputs-investigacion/01-inputs.md
+export interface NAP {
+  name: string; street: string; city: string; state: string;
+  zip: string; country: string; phone: string; email: string;
+}
+
+// Shape canónico — definido en fase-3/01-fundamentos.md
+export interface LCAs { direct: string[]; candidate: string[]; }
+
+export interface FAQ { q: string; a: string; }
+```
+
+### `src/lib/cluster.ts`
+
+Loader de `outputs.json` + getters genéricos. Lo consumen todas las `.astro` que la IA escriba.
+
+```ts
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
+import { slugify } from "./slugify.ts";
+
+interface ClusterOutput<T = unknown> {
+  id: string; name: string; value: T; status: string;
+  fuente: string; source: string; hereda_de?: string[];
+  bloque?: number; notes?: string;
+}
+
+interface ClusterFile {
+  slug: string; fecha_arranque: string;
+  meta: { updated_at?: string; catalog_version?: string };
+  outputs: Record<string, ClusterOutput>;
+}
+
+const CLUSTER_PATH = process.env.CLUSTER_PATH;
+if (!CLUSTER_PATH) {
+  throw new Error("CLUSTER_PATH no definido. Ej: CLUSTER_PATH=./outputs.json pnpm build");
+}
+
+const absolutePath = resolve(process.cwd(), CLUSTER_PATH);
+export const cluster: ClusterFile = JSON.parse(readFileSync(absolutePath, "utf-8"));
+
+export function getOutput<T = unknown>(id: string): ClusterOutput<T> {
+  const output = cluster.outputs[id];
+  if (!output) throw new Error(`Output ${id} no existe en outputs.json`);
+  return output as ClusterOutput<T>;
+}
+
+export function getValue<T = unknown>(id: string): T {
+  return getOutput<T>(id).value;
+}
+
+export function getValueOptional<T = unknown>(id: string): T | undefined {
+  return cluster.outputs[id]?.value as T | undefined;
+}
+
+export const getDomain = () => getValue<string>("1.2");
+export const getBusinessName = () => getValueOptional<string>("1.1") ?? "[NOMBRE]";
+export const getSlug = () => cluster.slug;
+
+export { slugify };
+```
+
+### `src/layouts/BaseLayout.astro`
+
+Chassis HTML mínimo. Cada `.astro` lo importa y pinta el `<slot>`.
+
+```astro
+---
+import "../styles/global.css";
+import "../styles/theme.css";
+import { getDomain } from "@lib/cluster";
+
+interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+  schema?: Record<string, unknown>[];
+  bodyClass?: string;
+  ogImage?: string;
+}
+
+const { title, description, canonical, schema = [], bodyClass = "", ogImage } = Astro.props;
+const canonicalUrl = canonical ?? new URL(Astro.url.pathname, getDomain()).href;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:locale" content="es_ES" />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    {schema.map((s) => (
+      <script is:inline type="application/ld+json" set:html={JSON.stringify(s)} />
+    ))}
+  </head>
+  <body class={bodyClass}>
+    <slot />
+  </body>
+</html>
+```
+
+### Patrón de cada página `.astro`
+
+Por cada entrada de la URL Matrix (output `3.1`), la IA escribe una `.astro` en `src/pages/` siguiendo este patrón:
+
+```astro
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { getValue, getDomain, getBusinessName } from "@lib/cluster";
+import { organization, localBusiness, breadcrumb, faqPage } from "@lib/schema-helpers";
+
+// 1. Lee datos del cluster
+const name = getBusinessName();
+const domain = getDomain();
+const nap = getValue<NAP>("1.4");
+const faqs = getValue<FAQ[]>("15.1");  // FAQ específicos por page type
+
+// 2. Construye los schemas que el Schema Map (fase-3 sub-2) dice para esta URL
+const schemas = [
+  organization({ name, url: domain }),
+  localBusiness({
+    name, url: domain,
+    address: {
+      streetAddress: nap.street, postalCode: nap.zip,
+      addressLocality: nap.city, addressCountry: nap.country,
+    },
+    // sameAs OMITIDO si GBP no existe
+    // telephone OMITIDO si nap.phone === "[TELÉFONO]"
+  }),
+  breadcrumb([{ name: "Inicio", url: domain }]),  // HP no tiene breadcrumb visible pero el list sí
+];
+
+// 3. Title + description (≤ 60 / ≤ 160 chars)
+const title = `${name} — Reformas de baños en Madrid`;
+const description = `Reformas integrales de baño en Madrid. Presupuesto sin compromiso.`;
+---
+
+<BaseLayout title={title} description={description} schema={schemas} bodyClass="page--home">
+  <!-- HTML libre, fiel a la web de referencia (Fase 4 mapa de patrones).
+       La IA decide la composición: split hero, lifestyle sections, etc. -->
+  <header class="site-header">...</header>
+  <section class="hero">...</section>
+  ...
+</BaseLayout>
+```
+
+### Reglas inviolables al escribir las `.astro`
+
+1. **Una página por URL de la matrix.** Si la matrix tiene 17 URLs, hay 17 `.astro` (más `sitemap.xml.ts`).
+2. **Cada `.astro` invoca exactamente los `schema_ids` declarados** en su entrada de la URL Matrix.
+3. **Cero placeholders literales `[Pendiente]` en HTML estático.** Si una sección está pendiente, no la pintes — déjala fuera.
+4. **Las clases CSS las decide la IA en coordinación con Fase 4** (Diseño). Evita inventar clases que el `theme.css` no estiliza.
+5. **`title` ≤ 60 chars, `description` ≤ 160 chars.** Verifica antes de cerrar la página.
+6. **3 puentes a LBS padre en cada GA** (regla doctrinal §4 de redacción).

@@ -210,3 +210,137 @@ Antes de pasar a la sub-fase 2 (Contenido), muestra al operador este bloque exac
 
 ---
 
+## Contratos técnicos producidos por esta sub-fase
+
+Esta sub-fase decide la columna vertebral del cluster: ciudad, categoría, servicios, LCAs, URL Matrix. Los snippets de abajo son **lo que la IA reproduce en el proyecto del cliente en sub-fase 4** — no hay plantilla compartida.
+
+### 1) Slugify — `src/lib/slugify.ts`
+
+Función canónica para convertir cualquier label a un slug URL. Toda URL generada en la URL Matrix pasa por aquí.
+
+```ts
+/**
+ * Reglas:
+ *   1. lowercase
+ *   2. sin acentos / diacríticos (NFD + remove combining marks)
+ *   3. kebab-case (separador `-`)
+ *   4. solo [a-z0-9-]
+ *   5. sin guiones consecutivos
+ *   6. sin guion al inicio o final
+ */
+const COMBINING_MARKS_RE = /[̀-ͯ]/g;
+
+export function slugify(input: string): string {
+  return input
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(COMBINING_MARKS_RE, "")
+    .replace(/[^a-z0-9\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+```
+
+**Prohibido en slugs** (validación adicional, no automática — la IA debe respetarla):
+- `near-me`, `best`, `cheap`, `top-rated`, `urgente` (salvo que sea el nombre real del servicio).
+
+### 2) Shape de LCAs — output `1.10` en `outputs.json`
+
+```ts
+export interface LCAs {
+  direct: string[];     // Barrios/distritos del NAP. Generan contenido, NUNCA URLs.
+  candidate: string[];  // Barrios validados por el test de coherencia GEO. Tampoco generan URLs salvo aprobación post-launch.
+}
+```
+
+Ejemplo:
+
+```json
+{
+  "id": "1.10",
+  "name": "Local Coverage Areas",
+  "value": {
+    "direct": ["Lista", "Salamanca"],
+    "candidate": []
+  },
+  "status": "confirmed",
+  "fuente": "Cliente preflight",
+  "source": "NAP Calle Gallarza 22, 28002 → barrio Lista, distrito Salamanca",
+  "bloque": 1
+}
+```
+
+### 3) Shape de URL Matrix — output `3.1` en `outputs.json`
+
+```ts
+export interface UrlMatrixEntry {
+  url: string;                  // Path relativo, empezando por "/", terminando en "/". Ej: "/reformas-banos/madrid/reforma-integral/"
+  page_type: "HP" | "SO" | "LBS" | "AC" | "GH" | "GA" | "AUX";
+  parent?: string;              // Path del padre en la jerarquía (para breadcrumbs)
+  schema_ids: string[];         // Ej: ["organization", "localBusiness", "breadcrumb"] — nombres de helpers (ver sub-fase 2)
+  lastmod?: string;             // ISO date para sitemap
+  priority?: number;            // 0.0–1.0 para sitemap
+  changefreq?: "daily" | "weekly" | "monthly" | "yearly";
+  status: "confirmed" | "⚠ placeholder";
+}
+```
+
+Ejemplo de output `3.1`:
+
+```json
+{
+  "id": "3.1",
+  "name": "URL Matrix",
+  "value": [
+    {"url": "/", "page_type": "HP", "schema_ids": ["organization", "website", "localBusiness"], "priority": 1.0, "changefreq": "weekly", "status": "confirmed"},
+    {"url": "/madrid/", "page_type": "GH", "parent": "/", "schema_ids": ["collectionPage", "breadcrumb"], "priority": 0.8, "changefreq": "monthly", "status": "confirmed"}
+  ],
+  "status": "confirmed",
+  "fuente": "Doctrina GMB Crush",
+  "source": "Aplicación de fórmula maestra + slugify",
+  "bloque": 1
+}
+```
+
+### 4) Sitemap endpoint — `src/pages/sitemap.xml.ts`
+
+Astro endpoint que lee la URL Matrix y emite `/sitemap.xml`. Snippet canónico:
+
+```ts
+import type { APIRoute } from "astro";
+import { getDomain, getValueOptional } from "@lib/cluster";
+
+interface UrlMatrixEntry {
+  url: string;
+  lastmod?: string;
+  priority?: number;
+  changefreq?: "daily" | "weekly" | "monthly" | "yearly";
+}
+
+export const GET: APIRoute = async () => {
+  const domain = getDomain().replace(/\/$/, "");
+  let urls = getValueOptional<UrlMatrixEntry[]>("3.1") ?? [];
+  if (urls.length === 0) urls = [{ url: "/", priority: 1.0, changefreq: "weekly" }];
+
+  const body = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls
+  .map((e) => {
+    const loc = `${domain}${e.url.startsWith("/") ? e.url : "/" + e.url}`;
+    const parts = ["  <url>", `    <loc>${loc}</loc>`];
+    if (e.lastmod) parts.push(`    <lastmod>${e.lastmod}</lastmod>`);
+    if (e.changefreq) parts.push(`    <changefreq>${e.changefreq}</changefreq>`);
+    if (e.priority !== undefined) parts.push(`    <priority>${e.priority.toFixed(1)}</priority>`);
+    parts.push("  </url>");
+    return parts.join("\n");
+  })
+  .join("\n")}
+</urlset>`;
+
+  return new Response(body, { headers: { "Content-Type": "application/xml; charset=utf-8" } });
+};
+```
+
+La IA copia este archivo tal cual al proyecto del cliente en sub-fase 4.
+

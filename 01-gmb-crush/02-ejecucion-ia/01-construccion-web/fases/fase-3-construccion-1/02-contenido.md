@@ -93,3 +93,126 @@ El breadcrumb se refleja en el `BreadcrumbList` del Schema JSON-LD.
 
 ---
 
+## Contratos técnicos producidos por esta sub-fase
+
+### Schema helpers — `src/lib/schema-helpers.ts`
+
+Vocabulario cerrado de constructores JSON-LD que esta sub-fase usa al producir el Schema Map (§4.5). Los nombres son los que aparecen en el campo `schema_ids` de la URL Matrix (output `3.1`).
+
+```ts
+type Schema = Record<string, unknown>;
+
+interface BreadcrumbItem { name: string; url?: string; }
+
+export function breadcrumb(items: BreadcrumbItem[]): Schema {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((it, i) => ({
+      "@type": "ListItem", position: i + 1, name: it.name,
+      ...(it.url ? { item: it.url } : {}),
+    })),
+  };
+}
+
+interface OrganizationInput { name: string; url: string; logo?: string; sameAs?: string[]; }
+export function organization(i: OrganizationInput): Schema {
+  const s: Schema = { "@context": "https://schema.org", "@type": "Organization", name: i.name, url: i.url };
+  if (i.logo) s.logo = i.logo;
+  if (i.sameAs?.length) s.sameAs = i.sameAs;
+  return s;
+}
+
+export function website({ url, name }: { url: string; name: string }): Schema {
+  return { "@context": "https://schema.org", "@type": "WebSite", url, name };
+}
+
+interface LocalBusinessInput {
+  name: string; url: string;
+  address?: { streetAddress?: string; postalCode?: string; addressLocality?: string; addressCountry?: string };
+  telephone?: string; email?: string; image?: string;
+  areaServed?: Array<{ type: "City" | "AdministrativeArea"; name: string }>;
+}
+export function localBusiness(i: LocalBusinessInput): Schema {
+  const s: Schema = { "@context": "https://schema.org", "@type": "LocalBusiness", name: i.name, url: i.url };
+  if (i.address && Object.values(i.address).some(Boolean)) s.address = { "@type": "PostalAddress", ...i.address };
+  if (i.telephone) s.telephone = i.telephone;
+  if (i.email) s.email = i.email;
+  if (i.image) s.image = i.image;
+  if (i.areaServed?.length) s.areaServed = i.areaServed.map((a) => ({ "@type": a.type, name: a.name }));
+  return s;
+}
+
+interface ServiceInput { name: string; url: string; description?: string; provider?: { name: string; url: string }; areaServed?: string; }
+export function service(i: ServiceInput): Schema {
+  const s: Schema = { "@context": "https://schema.org", "@type": "Service", name: i.name, url: i.url };
+  if (i.description) s.description = i.description;
+  if (i.provider) s.provider = { "@type": "Organization", ...i.provider };
+  if (i.areaServed) s.areaServed = { "@type": "City", name: i.areaServed };
+  return s;
+}
+
+interface ArticleInput { headline: string; url: string; description?: string; datePublished?: string; author?: { name: string; url: string }; image?: string; }
+export function article(i: ArticleInput): Schema {
+  const s: Schema = { "@context": "https://schema.org", "@type": "Article", headline: i.headline, url: i.url };
+  if (i.description) s.description = i.description;
+  if (i.datePublished) s.datePublished = i.datePublished;
+  if (i.author) s.author = { "@type": "Organization", ...i.author };
+  if (i.image) s.image = i.image;
+  return s;
+}
+
+export function faqPage(faqs: Array<{ q: string; a: string }>): Schema {
+  return {
+    "@context": "https://schema.org", "@type": "FAQPage",
+    mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+  };
+}
+
+interface ContactPointInput { organizationName: string; telephone?: string; email?: string; url: string; }
+export function contactPoint(i: ContactPointInput): Schema {
+  return {
+    "@context": "https://schema.org", "@type": "Organization",
+    name: i.organizationName, url: i.url,
+    contactPoint: {
+      "@type": "ContactPoint",
+      ...(i.telephone ? { telephone: i.telephone } : {}),
+      ...(i.email ? { email: i.email } : {}),
+      contactType: "customer service",
+    },
+  };
+}
+
+export function collectionPage({ name, url }: { name: string; url: string }): Schema {
+  return { "@context": "https://schema.org", "@type": "CollectionPage", name, url };
+}
+
+export function webPage({ name, url, description }: { name: string; url: string; description?: string }): Schema {
+  const s: Schema = { "@context": "https://schema.org", "@type": "WebPage", name, url };
+  if (description) s.description = description;
+  return s;
+}
+```
+
+### Mapping Schema Map (§4.5) ↔ helpers
+
+| Page type | `schema_ids` en URL Matrix |
+|---|---|
+| HP | `["organization", "website", "localBusiness"]` |
+| SO | `["service", "webPage", "breadcrumb"]` |
+| LBS | `["localBusiness", "faqPage", "breadcrumb"]` |
+| GH | `["collectionPage", "breadcrumb"]` |
+| GA | `["article", "faqPage", "breadcrumb"]` |
+| AC | `["service", "breadcrumb"]` |
+| AUX (contacto) | `["contactPoint", "organization"]` |
+
+**Reglas de omisión obligatorias** (las funciones ya las aplican):
+- `sameAs` se omite si el GBP no existe — no pasar el array.
+- `address` se omite si los campos están en placeholder — no pasar el objeto.
+- `telephone`/`email` se omiten si son placeholder — no pasarlos.
+- `aggregateRating` no existe como helper — nunca se inventa.
+
+### Si necesitas un schema nuevo
+
+Si una página requiere un schema que no está en la lista (ej. `Event`, `Course`, `Product`), **añade el helper a este archivo de la doctrina antes de usarlo en una URL Matrix**. La regla doctrinal es: vocabulario cerrado, ampliable solo por edición consciente.
+

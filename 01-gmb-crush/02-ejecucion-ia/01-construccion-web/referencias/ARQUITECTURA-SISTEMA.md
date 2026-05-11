@@ -90,16 +90,23 @@ La decisión fue: los Bloques 3 y 4 eran **meta-documentación sobre cómo ejecu
 
 ---
 
-## Plantilla Astro + outputs.json
+## Bootstrap del proyecto Astro (v0.4.0+)
 
-La carpeta `plantilla-astro/` viene del repo [`5demayoconsolidado`](https://github.com/alvarolacar-cloud/gmb-crush-ejecucion/tree/main/5demayoconsolidado/PLANTILLA-CLUSTER) (Sistema 3 validado 94/100 PASS). Es un proyecto Astro 5 + Tailwind v3 real que consume un archivo `outputs.json` y genera todas las páginas del cluster automáticamente.
+**Cambio histórico:** la carpeta `plantilla-astro/` existía hasta v0.3.0 como plantilla compartida. En v0.4.0 se eliminó. Ahora la doctrina misma contiene los snippets de código que la IA reproduce por cliente.
 
-La IA no crea un proyecto Astro desde cero cada vez. En su lugar:
-1. Produce un `outputs.json` con los datos del cluster (IDs, valores, status, fuentes).
-2. La plantilla importa ese JSON y renderiza las páginas.
-3. `pnpm build` genera el `dist/` listo para deploy.
+Cómo bootstrapea ahora la IA en Fase 3 sub-fase 4:
+1. Crea `ejecuciones-webs/[slug]/web/` desde cero.
+2. Reproduce los snippets canónicos de la doctrina (ver `SISTEMA.md §3`):
+   - `package.json`, `astro.config.mjs`, `tsconfig.json` ← `fase-3/04-redaccion.md`
+   - `src/lib/{slugify, schema-helpers, cluster, types}.ts` ← snippets repartidos por fase
+   - `src/layouts/BaseLayout.astro` ← `fase-3/04-redaccion.md`
+   - `src/pages/sitemap.xml.ts` ← `fase-3/01-fundamentos.md`
+3. Escribe una `.astro` por URL de la URL Matrix (output `3.1`) con HTML libre fiel a la web de referencia (output de Fase 4).
+4. Coloca `outputs.json` consolidado en la raíz del proyecto.
+5. Fase 4 produce `theme.css` + `global.css` en `src/styles/`.
+6. Fase 5 ejecuta `pnpm install && CLUSTER_PATH=./outputs.json pnpm build`.
 
-La estructura del `outputs.json` está definida en `plantilla-astro/src/lib/types.ts`. La plantilla valida que el JSON sea correcto antes de construir (`validateCluster()` en `cluster.ts`).
+La estructura del `outputs.json` está definida fase a fase (cada fase declara los outputs que produce con su shape exacto). El consumo lo hace `src/lib/cluster.ts` (snippet canónico en `fase-3/04-redaccion.md`).
 
 ---
 

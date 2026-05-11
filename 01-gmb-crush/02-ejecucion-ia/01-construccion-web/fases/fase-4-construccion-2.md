@@ -201,3 +201,39 @@ Si no hay web de referencia O si Fase 4 no pudo ejecutarse por falta de capacida
 - **Si la referencia usa fuentes de pago** (ej. `freight-display-pro`), sustituye por equivalente gratuita de Google Fonts (`Playfair Display`, `EB Garamond`, etc.) e indícalo en notes.
 - **Si la referencia tiene errores visuales** (contraste bajo, layout roto en móvil), no los copies — anótalos y propón corrección.
 - **El `theme.css` es la fuente de verdad visual para Fase 5 · sub-fase 1 (Build).** El constructor no toma decisiones de diseño, solo copia el theme.
+
+---
+
+## Contratos técnicos producidos por esta sub-fase
+
+### `global.css` — reset de referencia
+
+El `theme.css` que produzcas se carga **después** de un `global.css` neutral (sin opiniones de color/fuente). Snippet canónico a poner en `src/styles/global.css` del proyecto del cliente:
+
+```css
+/* Reset mínimo. Sin opiniones de diseño. El theme.css decide la apariencia. */
+
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; padding: 0; }
+
+html { -webkit-text-size-adjust: 100%; -moz-tab-size: 4; tab-size: 4; }
+body { min-height: 100vh; line-height: 1.5; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; display: flex; flex-direction: column; }
+main { flex: 1; }
+img, picture, video, canvas, svg { display: block; max-width: 100%; }
+input, button, textarea, select { font: inherit; }
+p, h1, h2, h3, h4, h5, h6 { overflow-wrap: break-word; }
+button { background: none; border: none; cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+ul, ol { list-style: none; }
+```
+
+### `theme.css` — clases las decide la IA
+
+A diferencia del modelo anterior, **no hay contrato cerrado de clases CSS**. La IA decide qué clases usa en las `.astro` (sub-fase 4 de Fase 3) y qué clases estiliza en el `theme.css`. Las dos cosas se coordinan en esta fase + sub-fase 4.
+
+**Orden recomendado:**
+1. Esta Fase 4 produce primero **el mapa de patrones** (composición sección a sección de la referencia) y **propone una lista de clases CSS** que la IA va a usar.
+2. Esta Fase 4 produce el `theme.css` estilizando esas clases.
+3. Sub-fase 4 de Fase 3 escribe las `.astro` usando exactamente esas clases.
+
+Si en sub-fase 4 hace falta una clase nueva → añadirla al theme primero, luego usarla en el HTML.

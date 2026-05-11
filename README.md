@@ -22,8 +22,10 @@ sistemas-creacion-webs/                        ← este repo — solo sistema
     └── 02-ejecucion-ia/
         └── 01-construccion-web/
             ├── fases/                         ← 6 fases (archivos sueltos o carpetas con README)
-            ├── referencias/                   ← doctrina, ejemplos, tests
-            └── plantilla-astro/               ← template Astro parametrizable
+            └── referencias/                   ← doctrina, ejemplos, tests
+                                               (no hay plantilla compartida — cada
+                                                cliente bootstrapea desde los
+                                                snippets de la doctrina)
 
 ejecuciones-webs/                              ← repo separado — datos de clientes
 └── gmb-crush-ejecuciones/[slug]/
@@ -54,13 +56,14 @@ ejecuciones-webs/                              ← repo separado — datos de cl
 
 ## Checks automáticos
 
-El repo tiene tres checks que corren en CI y pueden ejecutarse en local. Detectan deriva entre docs cuando un cambio no se propaga.
+El repo tiene dos checks que corren en CI y pueden ejecutarse en local. Detectan deriva entre docs cuando un cambio no se propaga.
 
 | Check | Qué hace | Cómo correrlo en local |
 |-------|----------|------------------------|
 | **Coherencia** (`scripts/check-coherence.sh`) | Verifica que el nº de fases sea idéntico en SISTEMA.md, README.md y `fases/`, y que no haya archivos huérfanos. | `sh scripts/check-coherence.sh` |
 | **Enlaces rotos** (lychee) | Detecta cualquier `.md` que referencie un archivo o ancla inexistente. | `lychee --offline --no-progress --root-dir "$(pwd)" './**/*.md'` |
-| **Build del fixture** | Construye `01-gmb-crush/02-ejecucion-ia/01-construccion-web/plantilla-astro/` con `outputs.example.json`. Garantiza que `types.ts` y el ejemplo siguen casados. | `cd 01-gmb-crush/02-ejecucion-ia/01-construccion-web/plantilla-astro && pnpm install && CLUSTER_PATH=./outputs.example.json pnpm build` |
+
+(El antiguo «Build del fixture» se eliminó en v0.4.0 al borrar `plantilla-astro/`. El build se valida en la ejecución de cada cliente.)
 
 ### Pre-commit hook local
 
@@ -70,4 +73,4 @@ Para que los checks se ejecuten antes de cada `git commit` (aborta si falla):
 git config core.hooksPath .githooks
 ```
 
-El hook ejecuta coherencia siempre, lychee si está instalado, y el build del fixture solo si exportas `PRE_COMMIT_FIXTURE=1` (es lento).
+El hook ejecuta coherencia siempre y lychee si está instalado.

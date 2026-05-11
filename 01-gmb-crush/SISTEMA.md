@@ -78,29 +78,31 @@ Si necesitas más detalle sobre page types, consulta `02-ejecucion-ia/01-constru
 
 ---
 
-## 3. Modelo de plantilla (slim) — qué hace y qué NO hace
+## 3. Modelo zero-shared-code — la doctrina ES la plantilla
 
-La plantilla Astro (`02-ejecucion-ia/01-construccion-web/plantilla-astro/`) es **infraestructura técnica**, no opina sobre composición visual ni doctrinal:
+**A partir de v0.4.0 no existe `plantilla-astro/` en el repo del sistema.** Cada cliente bootstrapea su proyecto Astro desde cero siguiendo los snippets canónicos que viven en la doctrina de cada fase.
 
-**Provee:**
-- Build pipeline (Astro 5 + pnpm + Cloudflare Pages compatible)
-- `BaseLayout.astro`: chassis HTML (head, meta, canonical, OG, schema JSON-LD slot, body wrapper). Sin Header/Footer hardcoded.
-- `lib/cluster.ts`: loader de `outputs.json` + getters genéricos (`getValue<T>(id)`).
-- `lib/schema-helpers.ts`: funciones constructoras de schemas (`organization()`, `localBusiness()`, `article()`, `faqPage()`, `breadcrumb()`, etc.) — **qué schema va en qué página lo decide la fase**, no la plantilla.
-- `lib/slugify.ts`: regla doctrinal de slugify.
-- `pages/sitemap.xml.ts`: genera sitemap leyendo el output `3.1 URL Matrix` de `outputs.json`.
-- `styles/global.css`: reset mínimo.
-- `styles/theme.css`: placeholder — Fase 4 lo sobreescribe con el theme del cliente.
+**Por qué este cambio:**
+- Una plantilla compartida (incluso slim) acoplaba decisiones implícitas (shape de NAP, IDs de outputs, API de BaseLayout, lista de schemas) que doctrinalmente pertenecen a las fases.
+- Si la plantilla cambiaba, la doctrina no se enteraba; si la doctrina cambiaba, había que sincronizar plantilla.
+- Con la doctrina como fuente única de verdad, el sistema es más auditable y más fácil de evolucionar.
 
-**NO provee:**
-- Páginas HTML opinadas por page type (`index.astro`, `[category]/[service]/index.astro`, etc.). **Cada cliente** las escribe en su carpeta de ejecución según el output de Fase 3 sub-fase 4 (Redacción) y Fase 4 (Diseño).
-- Componentes visuales fijos (Hero, ServicesGrid, TrustBlock, FAQs, Header, Footer). **No existe contrato cerrado de clases CSS.** El cliente puede usar las clases que decida en su HTML + theme.css.
-- Asignación schema-por-page-type, lista hardcoded de page types, internal linking topology. Todo eso es output de Fase 3, no decisión de la plantilla.
+**Dónde vive cada contrato técnico ahora:**
+
+| Contrato | Doctrina canónica |
+|---|---|
+| Shape `NAP` (output `1.4`) | `fases/fase-2-inputs-investigacion/01-inputs.md` §Contratos técnicos |
+| Regla `slugify` (código) | `fases/fase-3-construccion-1/01-fundamentos.md` §Contratos técnicos |
+| Shape `LCAs` (output `1.10`) | `fases/fase-3-construccion-1/01-fundamentos.md` §Contratos técnicos |
+| Shape URL Matrix (output `3.1`) + endpoint `sitemap.xml.ts` | `fases/fase-3-construccion-1/01-fundamentos.md` §Contratos técnicos |
+| Schema helpers (10 funciones) + Schema Map mapping | `fases/fase-3-construccion-1/02-contenido.md` §Contratos técnicos |
+| `package.json`, `astro.config.mjs`, `tsconfig.json`, `BaseLayout.astro`, `cluster.ts`, `types.ts`, patrón `.astro` | `fases/fase-3-construccion-1/04-redaccion.md` §Contratos técnicos |
+| `global.css` reset | `fases/fase-4-construccion-2.md` §Contratos técnicos |
+| `theme.css` por cliente | Output de Fase 4 |
 
 **Workflow por cliente:**
-1. Copiar plantilla a `ejecuciones-webs/[slug]/web/`
-2. Pegar `outputs.json` (output de Fase 3) en raíz
-3. Pegar `theme.css` (output de Fase 4) en `src/styles/`
-4. **Escribir `.astro` por cada URL del output `3.1` (URL Matrix)** en `src/pages/`, usando `BaseLayout` + helpers
-5. `CLUSTER_PATH=./outputs.json pnpm build` → `dist/`
-6. Deploy (Fase 5 sub-fase 2)
+1. Fase 3 sub-fase 4 (Redacción) **crea el proyecto Astro desde cero** en `ejecuciones-webs/[slug]/web/`, reproduciendo los snippets de la doctrina + escribiendo una `.astro` por URL de la matrix con HTML libre fiel a la web de referencia.
+2. Fase 4 (Diseño) escribe `theme.css` + `global.css` en `src/styles/`.
+3. Fase 5 (Build + Deploy) verifica estructura, hace `pnpm install` + build, deploya a Cloudflare Pages.
+
+**Consecuencia honesta:** hay redundancia entre clientes (cada uno tiene su propia copia de `slugify.ts`, `cluster.ts`, etc.). Es deliberado — el precio de que la doctrina sea la fuente de verdad sin acoplamiento implícito. Si la doctrina cambia, los clientes antiguos siguen como están; los nuevos incorporan el cambio.
