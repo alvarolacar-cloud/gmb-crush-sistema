@@ -6,10 +6,10 @@ Cada output de esta fase tiene una fuente y un método concreto. Síguelos en or
 
 ### 3.1 Main City
 - **Dato que buscamos:** La ciudad principal de operación.
-- **Cómo se obtiene:** Extraer el campo `City` de la dirección del preflight (`INPUTS.md` campo 3, bloqueante).
+- **Cómo se obtiene:** Extraer el campo `City` de la dirección del preflight (`01-gmb-crush/01-input-humano.md` campo 3, bloqueante).
 - **Fuente:** `Cliente preflight`.
 - **Si falta dirección completa pero hay ciudad** (ej. operador dijo "fontanero en Barcelona"): la ciudad cuenta como `confirmed` por declaración del operador. Calle/número/CP van como `[DIRECCIÓN]` placeholder visible.
-- **Si falta también la ciudad:** STOP. La ciudad es bloqueante per `INPUTS.md`. Pídela al operador antes de continuar.
+- **Si falta también la ciudad:** STOP. La ciudad es bloqueante per `01-gmb-crush/01-input-humano.md`. Pídela al operador antes de continuar.
 
 ### 3.2 Primary Category
 - **Dato que buscamos:** La categoría GBP principal (ej: "Fontanero", "Cerrajero", "Instalador de climatización").

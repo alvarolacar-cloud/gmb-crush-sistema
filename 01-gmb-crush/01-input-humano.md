@@ -1,4 +1,4 @@
-# INPUTS.md — Datos del Operador (fuente única)
+# 01 INPUT humano — Datos del Operador (fuente única)
 
 Único archivo donde se declara qué pide el sistema al operador. Toda la información que cualquier paso o fase necesita está aquí, partida en dos momentos: **Iniciales** (al arrancar) y **Finales** (al cerrar el proyecto).
 
@@ -83,4 +83,4 @@ Cuando vayas cerrando cada uno, me lo dices y rebuild + redeploy. Cuando la tabl
 - **Campos bloqueantes:** sin servicio principal o sin ciudad, el agente no arranca. Para y los pide.
 - **El agente no infiere datos del operador.** Si el operador no aporta un campo recomendable, va como marcador visible. El agente nunca fabrica un valor real.
 - **Datos prohibidos de inventar bajo cualquier circunstancia:** años de experiencia, número de reseñas, certificaciones, fotos, valores de schema (rating, sameAs antes del GBP). Si el operador los aporta → `confirmed`. Si no → quedan fuera del contenido publicado.
-- **Único punto de entrada:** este archivo. Cualquier IA que pida inputs al operador en otro sitio está duplicando — apúntala a `INPUTS.md`.
+- **Único punto de entrada:** este archivo. Cualquier IA que pida inputs al operador en otro sitio está duplicando — apúntala a `01-gmb-crush/01-input-humano.md`.

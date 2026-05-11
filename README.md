@@ -13,21 +13,26 @@ Repo con sistemas para crear webs locales SEO. Tiene tres capas:
 ## Estructura — dos repos
 
 ```
-sistemas-creacion-webs/               ← este repo — solo sistema
-├── AGENTS.md                         ← instrucciones para IAs
-├── README.md                         ← este archivo
-├── 00-investigacion/
-│   └── INVESTIGACION.md              ← Investigación: investigar competidores (común a todos)
-└── 01-gmb-crush/                     ← Sistema GMB Crush (SEO local + GBP)
-    ├── SISTEMA.md                    ← índice del sistema (convenciones + tabla de fases)
-    ├── fases/                        ← un archivo por fase, se lee antes de ejecutarla
-    ├── referencias/                  ← test doctrinal, specs, ejemplo y doctrina
-    └── plantilla-astro/              ← proyecto Astro parametrizable — se copia por cliente
+sistemas-creacion-webs/                        ← este repo — solo sistema
+├── AGENTS.md                                  ← instrucciones para IAs
+├── README.md                                  ← este archivo
+├── scripts/                                   ← coherence + utilidades
+└── 01-gmb-crush/                              ← Sistema GMB Crush (SEO local + GBP)
+    ├── SISTEMA.md                             ← convenciones + tabla de fases
+    ├── 01-input-humano.md                     ← inputs del operador (§Iniciales + §Finales)
+    └── 02-ejecucion-ia/
+        ├── 00-investigacion/INVESTIGACION.md  ← Paso 4 — Local Pack
+        └── 01-construccion-web/
+            ├── fases/                         ← 9 fases (lee la que vas a ejecutar)
+            ├── referencias/                   ← doctrina, ejemplos, tests
+            └── plantilla-astro/               ← template Astro parametrizable
 
-ejecuciones-webs/                    ← repo separado — un sistema por subcarpeta
-└── [nombre-negocio-slug]/
+ejecuciones-webs/                              ← repo separado — datos de clientes
+└── gmb-crush-ejecuciones/[slug]/
     ├── outputs.json
-    └── web/
+    ├── web/
+    ├── lessons.md
+    └── INFORME-FINAL.md
 ```
 
 ---
@@ -57,7 +62,7 @@ El repo tiene tres checks que corren en CI y pueden ejecutarse en local. Detecta
 |-------|----------|------------------------|
 | **Coherencia** (`scripts/check-coherence.sh`) | Verifica que el nº de fases sea idéntico en SISTEMA.md, README.md y `fases/`, y que no haya archivos huérfanos. | `sh scripts/check-coherence.sh` |
 | **Enlaces rotos** (lychee) | Detecta cualquier `.md` que referencie un archivo o ancla inexistente. | `lychee --offline --no-progress --root-dir "$(pwd)" './**/*.md'` |
-| **Build del fixture** | Construye `01-gmb-crush/plantilla-astro/` con `outputs.example.json`. Garantiza que `types.ts` y el ejemplo siguen casados. | `cd 01-gmb-crush/plantilla-astro && pnpm install && CLUSTER_PATH=./outputs.example.json pnpm build` |
+| **Build del fixture** | Construye `01-gmb-crush/02-ejecucion-ia/01-construccion-web/plantilla-astro/` con `outputs.example.json`. Garantiza que `types.ts` y el ejemplo siguen casados. | `cd 01-gmb-crush/02-ejecucion-ia/01-construccion-web/plantilla-astro && pnpm install && CLUSTER_PATH=./outputs.example.json pnpm build` |
 
 ### Pre-commit hook local
 

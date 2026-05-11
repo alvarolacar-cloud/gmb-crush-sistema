@@ -23,7 +23,7 @@ Las paradas explícitas para el operador son exactamente estas — ni más ni me
 
 | # | Cuándo | Qué esperas |
 |---|--------|-------------|
-| 1 | **Antes de Investigación** | Pre-flight de capacidades (declarado en AGENTS.md §3) + recogida de inputs (de `INPUTS.md`) |
+| 1 | **Antes de Investigación** | Pre-flight de capacidades (declarado en AGENTS.md §3) + recogida de inputs (de `01-gmb-crush/01-input-humano.md`) |
 | 2 | **Investigación — tras el informe** | Confirmación de servicios elegidos + web de referencia de diseño |
 | 3 | **Fase 5 — Test Doctrinal** | Si falla: corrige, repite, presenta de nuevo. No avanzas a Fase 6 hasta que pase |
 | 4 | **Fase 6 — propuesta de diseño** | Aprobación del operador antes de escribir tokens en `outputs.json` |
@@ -69,14 +69,14 @@ Antes de pasar a la siguiente fase, ejecuta el gate de salida del archivo de esa
 
 | Fase | Abre este archivo primero | Qué produces |
 |------|--------------------------|--------------|
-| **Fase 1** — Fundamentos y Arquitectura | `fases/fase-1-fundamentos.md` | Main City, servicios, URLs, fórmula de páginas |
-| **Fase 2** — Contenido | `fases/fase-2-contenido.md` | Specs de páginas, schemas, enlaces internos |
-| **Fase 3** — Docs Canónicos | `fases/fase-3-docs-canonicos.md` | 6 documentos de referencia del cluster |
-| **Fase 4** — Redacción de Contenido | `fases/fase-4-redaccion.md` | Copy real de todas las páginas (HP, SO, LBS, GH, GA, contacto) |
-| **Fase 5** — Test Doctrinal | `fases/fase-5-test-doctrinal.md` | Validación doctrinal — gate obligatorio |
-| **Fase 6** — Diseño | `fases/fase-6-diseno.md` | Design tokens + Layout-Map definitivo |
-| **Fase 7** — Build | `fases/fase-7-build.md` | `outputs.json` + build Astro |
-| **Fase 8** — Deploy | `fases/fase-8-deploy.md` | Push GitHub + Cloudflare Pages |
-| **Fase 9** — Consolidación | `fases/fase-9-consolidacion.md` | Tabla de pendientes + INFORME-FINAL.md + bloqueo GBP |
+| **Fase 1** — Fundamentos y Arquitectura | `02-ejecucion-ia/01-construccion-web/fases/fase-1-fundamentos.md` | Main City, servicios, URLs, fórmula de páginas |
+| **Fase 2** — Contenido | `02-ejecucion-ia/01-construccion-web/fases/fase-2-contenido.md` | Specs de páginas, schemas, enlaces internos |
+| **Fase 3** — Docs Canónicos | `02-ejecucion-ia/01-construccion-web/fases/fase-3-docs-canonicos.md` | 6 documentos de referencia del cluster |
+| **Fase 4** — Redacción de Contenido | `02-ejecucion-ia/01-construccion-web/fases/fase-4-redaccion.md` | Copy real de todas las páginas (HP, SO, LBS, GH, GA, contacto) |
+| **Fase 5** — Test Doctrinal | `02-ejecucion-ia/01-construccion-web/fases/fase-5-test-doctrinal.md` | Validación doctrinal — gate obligatorio |
+| **Fase 6** — Diseño | `02-ejecucion-ia/01-construccion-web/fases/fase-6-diseno.md` | Design tokens + Layout-Map definitivo |
+| **Fase 7** — Build | `02-ejecucion-ia/01-construccion-web/fases/fase-7-build.md` | `outputs.json` + build Astro |
+| **Fase 8** — Deploy | `02-ejecucion-ia/01-construccion-web/fases/fase-8-deploy.md` | Push GitHub + Cloudflare Pages |
+| **Fase 9** — Consolidación | `02-ejecucion-ia/01-construccion-web/fases/fase-9-consolidacion.md` | Tabla de pendientes + INFORME-FINAL.md + bloqueo GBP |
 
-Si necesitas más detalle sobre page types, consulta `referencias/page-type-specs.md`. Para ver un ejemplo doctrinal, consulta `referencias/ejemplo-cerrajeros.md`.
+Si necesitas más detalle sobre page types, consulta `02-ejecucion-ia/01-construccion-web/referencias/page-type-specs.md`. Para ver un ejemplo doctrinal, consulta `02-ejecucion-ia/01-construccion-web/referencias/ejemplo-cerrajeros.md`.

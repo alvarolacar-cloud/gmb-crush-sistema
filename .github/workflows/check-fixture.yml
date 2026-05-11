@@ -3,12 +3,12 @@ name: Build plantilla-astro fixture
 on:
   pull_request:
     paths:
-      - '01-gmb-crush/plantilla-astro/**'
+      - '01-gmb-crush/02-ejecucion-ia/01-construccion-web/plantilla-astro/**'
       - '.github/workflows/check-fixture.yml'
   push:
     branches: [main]
     paths:
-      - '01-gmb-crush/plantilla-astro/**'
+      - '01-gmb-crush/02-ejecucion-ia/01-construccion-web/plantilla-astro/**'
       - '.github/workflows/check-fixture.yml'
   workflow_dispatch:
 
@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: 01-gmb-crush/plantilla-astro
+        working-directory: 01-gmb-crush/02-ejecucion-ia/01-construccion-web/plantilla-astro
     steps:
       - uses: actions/checkout@v4
 
@@ -32,7 +32,7 @@ jobs:
         with:
           node-version: 20
           cache: pnpm
-          cache-dependency-path: 01-gmb-crush/plantilla-astro/pnpm-lock.yaml
+          cache-dependency-path: 01-gmb-crush/02-ejecucion-ia/01-construccion-web/plantilla-astro/pnpm-lock.yaml
 
       - name: Install
         run: pnpm install --frozen-lockfile

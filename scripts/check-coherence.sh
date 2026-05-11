@@ -15,7 +15,7 @@ set -e
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
-FASES_DIR="01-gmb-crush/fases"
+FASES_DIR="01-gmb-crush/02-ejecucion-ia/01-construccion-web/fases"
 SISTEMA="01-gmb-crush/SISTEMA.md"
 CRUSH_ROOT="01-gmb-crush"
 

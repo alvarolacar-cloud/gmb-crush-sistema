@@ -14,10 +14,10 @@ Esta es la secuencia completa que sigues con el operador. Cada paso tiene su pro
 |---|------|-------------|----------------------|------------|
 | 1 | **Explicación del sistema** | IA | esta sección §Paso 1 abajo | nunca paras — solo presentas |
 | 2 | **Test de herramientas** | IA | esta sección §Paso 2 abajo | falta capacidad crítica sin plan B |
-| 3 | **Inputs iniciales** | operador | `INPUTS.md` §Iniciales | falta servicio o ciudad |
-| 4 | **Investigación de mercado** | IA + operador | `00-investigacion/INVESTIGACION.md` | tras informe — esperar confirmación de servicios + web ref |
+| 3 | **Inputs iniciales** | operador | `01-gmb-crush/01-input-humano.md` §Iniciales | falta servicio o ciudad |
+| 4 | **Investigación de mercado** | IA + operador | `01-gmb-crush/02-ejecucion-ia/00-investigacion/INVESTIGACION.md` | tras informe — esperar confirmación de servicios + web ref |
 | 5 | **Construcción de la web** (9 fases internas) | IA | `01-gmb-crush/SISTEMA.md` | dentro: paradas en Fase 5 (test) y Fase 6 (diseño) |
-| 6 | **Inputs finales** | operador + IA | `INPUTS.md` §Finales | hasta cerrar todos los `⚠ placeholder` (bloquea creación GBP) |
+| 6 | **Inputs finales** | operador + IA | `01-gmb-crush/01-input-humano.md` §Finales | hasta cerrar todos los `⚠ placeholder` (bloquea creación GBP) |
 
 ---
 
@@ -67,13 +67,13 @@ Si alguna capacidad falta, **ofreces plan B en este momento, no a mitad de fase*
 
 ### Paso 3 — Inputs iniciales
 
-Lee `INPUTS.md` §Iniciales y pásale al operador el mensaje exacto que vive ahí. **No pidas inputs en otro sitio.** Si falta servicio o ciudad, no se arranca.
+Lee `01-gmb-crush/01-input-humano.md` §Iniciales y pásale al operador el mensaje exacto que vive ahí. **No pidas inputs en otro sitio.** Si falta servicio o ciudad, no se arranca.
 
 ---
 
 ### Paso 4 — Investigación de mercado
 
-Lee `00-investigacion/INVESTIGACION.md` y ejecuta. Si no tienes navegador, plan B ya está documentado allí (entregar prompt al operador). Cuando entregues el informe, **paras** y esperas confirmación de:
+Lee `01-gmb-crush/02-ejecucion-ia/00-investigacion/INVESTIGACION.md` y ejecuta. Si no tienes navegador, plan B ya está documentado allí (entregar prompt al operador). Cuando entregues el informe, **paras** y esperas confirmación de:
 
 1. Servicios elegidos por el operador.
 2. URL de la web de referencia de diseño.
@@ -93,7 +93,7 @@ La Fase 9 cierra el paso entregando `INFORME-FINAL.md` en `ejecuciones-webs/gmb-
 
 ### Paso 6 — Inputs finales
 
-Lee `INPUTS.md` §Finales y pide al operador lo que aún falta para cerrar el cluster (teléfono real, email, tokens de deploy, dominio definitivo, confirmación GBP). El operador va resolviendo cada `⚠ placeholder` del INFORME-FINAL.md y por cada cierre:
+Lee `01-gmb-crush/01-input-humano.md` §Finales y pide al operador lo que aún falta para cerrar el cluster (teléfono real, email, tokens de deploy, dominio definitivo, confirmación GBP). El operador va resolviendo cada `⚠ placeholder` del INFORME-FINAL.md y por cada cierre:
 
 1. Actualizas el contenido o schema afectado.
 2. Rebuild (`pnpm build`).
@@ -107,23 +107,27 @@ Cuando la tabla esté vacía → creas el Google Business Profile y enlazas todo
 ## Estructura del repo
 
 ```
-sistemas-creacion-webs/              ← ESTE repo — solo sistema, nunca datos de clientes
-├── AGENTS.md                        ← estás aquí
-├── INPUTS.md                        ← inputs iniciales (§Paso 3) + inputs finales (§Paso 6)
-├── README.md                        ← resumen para humanos
-├── 00-investigacion/INVESTIGACION.md
+sistemas-creacion-webs/                        ← ESTE repo — solo sistema, nunca datos de clientes
+├── AGENTS.md                                  ← estás aquí
+├── README.md                                  ← resumen para humanos
+├── scripts/                                   ← check-coherence.sh y otros
 └── 01-gmb-crush/
-    ├── SISTEMA.md                   ← convenciones GMB Crush + tabla de las 9 fases
-    ├── fases/                       ← fase-1...fase-9 (lee la que vas a ejecutar)
-    ├── referencias/                 ← doctrina, ejemplos, test (consulta)
-    └── plantilla-astro/             ← template Astro (se copia por cliente)
+    ├── SISTEMA.md                             ← convenciones GMB Crush + tabla de las 9 fases
+    ├── 01-input-humano.md                     ← inputs iniciales (§Paso 3) + finales (§Paso 6)
+    └── 02-ejecucion-ia/
+        ├── 00-investigacion/
+        │   └── INVESTIGACION.md               ← Paso 4 del flujo
+        └── 01-construccion-web/
+            ├── fases/                         ← fase-1...fase-9 (lee la que vas a ejecutar)
+            ├── referencias/                   ← doctrina, ejemplos, test (consulta)
+            └── plantilla-astro/               ← template Astro (se copia por cliente)
 
-ejecuciones-webs/                    ← repo SEPARADO — datos de clientes
+ejecuciones-webs/                              ← repo SEPARADO — datos de clientes
 └── gmb-crush-ejecuciones/[slug]/
-    ├── outputs.json                 ← outputs del cluster
-    ├── web/                         ← copia de plantilla-astro renderizada
-    ├── lessons.md                   ← memoria de errores específicos del proyecto
-    └── INFORME-FINAL.md             ← entregable Fase 9 (post-deploy)
+    ├── outputs.json                           ← outputs del cluster
+    ├── web/                                   ← copia de plantilla-astro renderizada
+    ├── lessons.md                             ← memoria de errores específicos del proyecto
+    └── INFORME-FINAL.md                       ← entregable Fase 9 (post-deploy)
 ```
 
 **Nunca crees carpetas de cliente dentro del repo del sistema.** Datos de clientes → siempre en `ejecuciones-webs/`.

@@ -13,7 +13,7 @@ Con esas decisiones confirmadas, se pasa a la forma de construcción elegida (ej
 
 ## Input necesario
 
-Los datos del operador vienen de [`INPUTS.md`](../INPUTS.md) (raíz del repo). Esta fase asume que ya están recogidos en bloque, **no los pidas aquí de nuevo**.
+Los datos del operador vienen de [`01-gmb-crush/01-input-humano.md`](../01-input-humano.md) (raíz del repo). Esta fase asume que ya están recogidos en bloque, **no los pidas aquí de nuevo**.
 
 Bloqueantes para arrancar la investigación: servicio principal + ciudad. Si el operador declaró ciudades adicionales para comparar el sector, repite la búsqueda en cada una.
 
