@@ -23,7 +23,7 @@ sistemas-creacion-webs/                        ← este repo — solo sistema
     └── 02-ejecucion-ia/
         ├── 00-investigacion/INVESTIGACION.md  ← Paso 4 — Local Pack
         └── 01-construccion-web/
-            ├── fases/                         ← 9 fases (lee la que vas a ejecutar)
+            ├── fases/                         ← 6 fases (archivos sueltos o carpetas con README)
             ├── referencias/                   ← doctrina, ejemplos, tests
             └── plantilla-astro/               ← template Astro parametrizable
 
@@ -50,7 +50,7 @@ ejecuciones-webs/                              ← repo separado — datos de cl
 
 | Sistema | Qué es | Cuándo usarla |
 |---------|--------|---------------|
-| `01-gmb-crush` | SEO local + GBP. 6 pasos del flujo (explicación → test herramientas → inputs iniciales → investigación → construcción 9 fases → inputs finales). Plantilla Astro + test doctrinal. | Negocios locales que quieren posicionar en Google Maps + web. |
+| `01-gmb-crush` | SEO local + GBP. **Variante de 6 fases lineales**: (1) test herramientas · (2) inputs + investigación · (3) construcción web I (arquitectura → test doctrinal) · (4) diseño (theme.css) · (5) build + deploy · (6) QA + datos finales. Plantilla Astro design-agnostic + test doctrinal. | Negocios locales que quieren posicionar en Google Maps + web. |
 
 ---
 

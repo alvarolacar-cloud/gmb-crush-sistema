@@ -1,12 +1,13 @@
 #!/bin/sh
-# check-coherence.sh — Verifica que valores canónicos repetidos en varios docs no se contradigan.
+# check-coherence.sh — Verifica coherencia entre docs canónicos y estructura de fases.
+#
+# Variante 6 fases — cada fase es un archivo `fase-N-*.md` O una carpeta `fase-N-*/` con README.md
 #
 # Comprueba:
-#   1. Nº de archivos en 01-gmb-crush/fases/ coincide con "Las N Fases" de SISTEMA.md
-#   2. README.md y SISTEMA.md están de acuerdo en el número de fases
-#   3. Cada fase referenciada en AGENTS.md o SISTEMA.md existe en fases/
-#   4. Cada archivo en fases/ está referenciado en AGENTS.md o SISTEMA.md (orfano si no)
-#   5. Cada archivo *.md en 01-gmb-crush/ raíz está referenciado en AGENTS, README o SISTEMA
+#   1. Nº de fases coincide entre fases/, SISTEMA.md y README.md
+#   2. SISTEMA.md no se contradice consigo mismo en el nº de fases
+#   3. Cada entry de fase (archivo o carpeta) tiene su entrypoint (.md o README.md)
+#   4. Cada archivo .md en 01-gmb-crush/ raíz está referenciado en AGENTS, README o SISTEMA
 #
 # Salida 0 si todo coherente, 1 si hay discrepancias.
 
@@ -34,10 +35,22 @@ section() {
 # ─────────────────────────────────────────────────────────────────────
 section '[1] Número de fases coherente entre fases/, SISTEMA.md, README.md'
 
-N_FILES=$(find "$FASES_DIR" -maxdepth 1 -type f -name '*.md' | wc -l | tr -d ' ')
-ok "fases/ contiene $N_FILES archivos .md"
+# Cuenta entradas en fases/ que son fase válida:
+#  - archivo: fase-N-*.md a nivel 1
+#  - carpeta: fase-N-*/ a nivel 1 (con README.md dentro)
+N_FILES=$(find "$FASES_DIR" -maxdepth 1 -mindepth 1 -type f -name 'fase-*.md' | wc -l | tr -d ' ')
+N_DIRS=$(find "$FASES_DIR" -maxdepth 1 -mindepth 1 -type d -name 'fase-*' | wc -l | tr -d ' ')
+N_TOTAL=$((N_FILES + N_DIRS))
+ok "fases/ contiene $N_TOTAL fases (${N_FILES} archivos + ${N_DIRS} carpetas)"
 
-# Recoge TODOS los números distintos que cada archivo declara
+# Verificar que cada carpeta tiene README.md
+for d in "$FASES_DIR"/fase-*/; do
+  [ -d "$d" ] || continue
+  if [ ! -f "$d/README.md" ]; then
+    fail "$d carpeta sin README.md (entrypoint requerido)"
+  fi
+done
+
 distinct_counts() {
   grep -oiE '[0-9]+[[:space:]]+fases' "$1" 2>/dev/null \
     | grep -oE '[0-9]+' | sort -u | tr '\n' ' '
@@ -51,7 +64,6 @@ R_NUMS=$(distinct_counts README.md)
 [ -n "$R_NUMS" ] && ok "README.md menciona números: $R_NUMS" \
                 || ok 'README.md no declara nº explícito'
 
-# Contradicción intra-archivo: más de un número distinto
 S_COUNT=$(echo $S_NUMS | wc -w | tr -d ' ')
 R_COUNT=$(echo $R_NUMS | wc -w | tr -d ' ')
 if [ "$S_COUNT" -gt 1 ]; then
@@ -61,38 +73,55 @@ if [ "$R_COUNT" -gt 1 ]; then
   fail "README.md se contradice — menciona $R_COUNT números distintos: $R_NUMS"
 fi
 
-# Comparación con el conteo real de archivos
 for n in $S_NUMS; do
-  if [ "$n" != "$N_FILES" ]; then
-    fail "SISTEMA.md dice \"$n fases\" pero fases/ tiene $N_FILES archivos"
+  if [ "$n" != "$N_TOTAL" ]; then
+    fail "SISTEMA.md dice \"$n fases\" pero fases/ tiene $N_TOTAL entradas"
   fi
 done
 for n in $R_NUMS; do
-  if [ "$n" != "$N_FILES" ]; then
-    fail "README.md dice \"$n fases\" pero fases/ tiene $N_FILES archivos"
+  if [ "$n" != "$N_TOTAL" ]; then
+    fail "README.md dice \"$n fases\" pero fases/ tiene $N_TOTAL entradas"
   fi
 done
 
 # ─────────────────────────────────────────────────────────────────────
 section '[2] Cada fase referenciada en AGENTS.md o SISTEMA.md existe'
 
-REFS=$(grep -hoE 'fase-[0-9a-z]+-[a-z-]+\.md' AGENTS.md "$SISTEMA" 2>/dev/null | sort -u)
-for f in $REFS; do
-  if [ ! -f "$FASES_DIR/$f" ]; then
-    fail "Doctrina referencia $f pero el archivo no existe en $FASES_DIR/"
+# Busca referencias a archivos o carpetas de fase
+REFS_FILES=$(grep -hoE 'fase-[0-9a-z]+-[a-z0-9-]+\.md' AGENTS.md "$SISTEMA" 2>/dev/null | sort -u)
+REFS_DIRS=$(grep -hoE 'fase-[0-9a-z]+-[a-z0-9-]+/README\.md' AGENTS.md "$SISTEMA" 2>/dev/null | sort -u)
+
+for f in $REFS_FILES; do
+  # Skip si es un README.md dentro de carpeta (ya cubierto por REFS_DIRS)
+  case "$f" in
+    *README.md) continue ;;
+  esac
+  if [ -f "$FASES_DIR/$f" ]; then
+    ok "$f existe (referenciado como archivo)"
+  fi
+done
+
+for ref in $REFS_DIRS; do
+  if [ -f "$FASES_DIR/$ref" ]; then
+    ok "$ref existe (referenciado como carpeta)"
   else
-    ok "$f existe (referenciado)"
+    fail "Doctrina referencia $ref pero no existe"
   fi
 done
 
 # ─────────────────────────────────────────────────────────────────────
-section '[3] Cada archivo en fases/ está referenciado en AGENTS.md o SISTEMA.md'
+section '[3] Cada entrada en fases/ está referenciada en AGENTS o SISTEMA'
 
-for FILE in "$FASES_DIR"/*.md; do
-  [ -f "$FILE" ] || continue
-  BASENAME=$(basename "$FILE")
-  if ! grep -qF "$BASENAME" AGENTS.md "$SISTEMA" 2>/dev/null; then
-    fail "$BASENAME existe en fases/ pero no aparece en AGENTS.md ni SISTEMA.md (orfano)"
+for entry in "$FASES_DIR"/fase-*; do
+  [ -e "$entry" ] || continue
+  BASENAME=$(basename "$entry")
+  if [ -d "$entry" ]; then
+    PATTERN="$BASENAME/README.md"
+  else
+    PATTERN="$BASENAME"
+  fi
+  if ! grep -qF "$PATTERN" AGENTS.md "$SISTEMA" 2>/dev/null; then
+    fail "$PATTERN existe pero no aparece en AGENTS.md ni SISTEMA.md (orfano)"
   fi
 done
 
@@ -102,7 +131,6 @@ section '[4] Archivos en 01-gmb-crush/ raíz referenciados en docs canónicos'
 for FILE in "$CRUSH_ROOT"/*.md; do
   [ -f "$FILE" ] || continue
   BASENAME=$(basename "$FILE")
-  # Skip SISTEMA.md mismo (es el referente, no el referenciado en este check)
   [ "$BASENAME" = "SISTEMA.md" ] && continue
   REFCOUNT=$(grep -lF "$BASENAME" AGENTS.md README.md "$SISTEMA" 2>/dev/null | wc -l | tr -d ' ')
   if [ "$REFCOUNT" = "0" ]; then
