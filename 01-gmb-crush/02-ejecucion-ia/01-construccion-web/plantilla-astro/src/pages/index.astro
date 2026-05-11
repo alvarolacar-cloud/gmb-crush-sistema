@@ -16,7 +16,6 @@ import {
   getLCAs,
   getTrustSignals,
   getPreferredCTA,
-  getValue,
   getPrimaryCategory,
   phoneHref,
   getFaqsHomepage,
@@ -31,21 +30,30 @@ const mainCitySlug = getMainCitySlug();
 const lcas = getLCAs();
 const trustSignals = getTrustSignals();
 const cta = getPreferredCTA();
-const shortDescription = getValue<string>("Pre.2");
 const primaryCategory = getPrimaryCategory();
 const faqs = getFaqsHomepage();
 const images = getImages();
 
-const title = `${businessName} · ${shortDescription} en ${mainCity}`;
-const description = `${shortDescription}. Cobertura todo ${mainCity}: ${lcas.direct.join(", ")}, ${lcas.candidate.slice(0, 4).join(", ")}. ${trustSignals[0] ?? ""}.`;
+const title = `${businessName} · ${primaryCategory} en ${mainCity}`;
+const description = `${primaryCategory} en ${mainCity}${
+  lcas.direct.length ? `: ${lcas.direct.join(", ")}` : ""
+}.${trustSignals[0] ? ` ${trustSignals[0]}.` : ""}`;
 
 const schema = buildHomepageSchemas();
+
+// H1 doctrinal: Primary Category + Main City. NO concatena Pre.2 (que ya puede incluir ciudad).
+const heroTitle = `${primaryCategory} en ${mainCity}`;
+const heroSubtitle = `Especialistas en ${primaryCategory.toLowerCase()}${
+  lcas.direct.length
+    ? ` con cobertura en zonas como ${lcas.direct.join(", ")}`
+    : ` en ${mainCity}`
+}.`;
 ---
 
-<BaseLayout title={title} description={description} schema={schema}>
+<BaseLayout title={title} description={description} schema={schema} pageType="home">
   <Hero
-    h1={`${shortDescription} en ${mainCity}`}
-    subtitle={`Especialistas en ${primaryCategory.toLowerCase()} con cobertura en todo ${mainCity}: ${lcas.direct.join(", ")}, ${lcas.candidate.slice(0, 4).join(", ")} y más.`}
+    h1={heroTitle}
+    subtitle={heroSubtitle}
     trustItem={trustSignals[0]}
     ctaPrimary={cta}
     ctaPrimaryHref="/contacto/"
@@ -60,21 +68,17 @@ const schema = buildHomepageSchemas();
 
   <Faqs faqs={faqs} />
 
-  <section class="section bg-primary-50">
-    <div class="container-narrow text-center">
-      <h2 class="mb-4">¿Empezamos?</h2>
-      <p class="text-lg text-gray-700 mb-8">
-        Presupuesto sin compromiso en 24h. Trabajamos en todo {mainCity}.
-      </p>
-      <a href="/contacto/" class="btn-primary">{cta}</a>
-    </div>
+  <section class="cta-section">
+    <h2 class="cta-section__title">¿Empezamos?</h2>
+    <p class="cta-section__description">
+      Presupuesto sin compromiso en 24h. Trabajamos en todo {mainCity}.
+    </p>
+    <a href="/contacto/" class="cta-section__button">{cta}</a>
   </section>
 
-  <section class="section">
-    <div class="container-narrow text-center">
-      <p class="text-sm text-gray-600">
-        Ver el <a href={`/${mainCitySlug}/`}>índice de servicios en {mainCity}</a>.
-      </p>
-    </div>
+  <section class="content">
+    <p class="content__paragraph">
+      Ver el <a href={`/${mainCitySlug}/`} class="content__link">índice de servicios en {mainCity}</a>.
+    </p>
   </section>
 </BaseLayout>
