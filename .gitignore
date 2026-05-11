@@ -1,6 +1,10 @@
-# Ejecuciones de clientes — repo separado: gmb-crush-ejecuciones
+# Ejecuciones de clientes — repo separado (ver AGENTS.md)
 ejecuciones/
+ejecuciones-webs/
 01-gmb-crush/clientes/
+
+# Claude Code session config
+.claude/
 
 # Builds y dependencias
 node_modules/
