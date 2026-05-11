@@ -19,7 +19,6 @@ sistemas-creacion-webs/                        ← este repo — solo sistema
 ├── scripts/                                   ← coherence + utilidades
 └── 01-gmb-crush/                              ← Sistema GMB Crush (SEO local + GBP)
     ├── SISTEMA.md                             ← convenciones + tabla de fases
-    ├── 01-input-humano.md                     ← inputs del operador (§Iniciales + §Finales)
     └── 02-ejecucion-ia/
         └── 01-construccion-web/
             ├── fases/                         ← 6 fases (archivos sueltos o carpetas con README)

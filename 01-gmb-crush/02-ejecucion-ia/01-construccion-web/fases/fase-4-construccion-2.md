@@ -42,7 +42,7 @@ Resumen de los bloques principales (ver el contrato para detalle completo):
 ## Paso 2 — Visitar la web de referencia
 
 URL viene de:
-- `01-input-humano.md` campo "Web actual del cliente" (preferida)
+- `fase-2-inputs-investigacion/01-inputs.md` campo "Web actual del cliente" (preferida)
 - O Fase 0 (Investigación), si el operador eligió una de las webs del Local Pack.
 
 Si no hay URL → se entrega plan B al operador. **No se "infiere" un estilo genérico.**

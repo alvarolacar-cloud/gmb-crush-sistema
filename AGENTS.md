@@ -30,12 +30,12 @@ Secuencia completa del flujo. La IA ejecuta cada fase en orden, abre primero el 
 
 ## Inputs del operador
 
-Los datos que la IA pide al operador viven en una fuente única: [`01-gmb-crush/01-input-humano.md`](01-gmb-crush/01-input-humano.md).
+Los datos que la IA pide al operador viven en una fuente única: [`01-gmb-crush/02-ejecucion-ia/01-construccion-web/fases/fase-2-inputs-investigacion/01-inputs.md`](01-gmb-crush/02-ejecucion-ia/01-construccion-web/fases/fase-2-inputs-investigacion/01-inputs.md).
 
 - **§Iniciales** se piden en Fase 2 (sub-fase 1).
 - **§Finales** se piden en Fase 6.
 
-No pidas inputs en otro sitio. Si encuentras una fase pidiendo datos que no están en `01-input-humano.md`, es un bug — repórtalo.
+No pidas inputs en otro sitio. Si encuentras una fase pidiendo datos que no están en `fase-2-inputs-investigacion/01-inputs.md`, es un bug — repórtalo.
 
 ---
 
@@ -48,7 +48,6 @@ sistemas-creacion-webs/                            ← ESTE repo — solo sistem
 ├── scripts/check-coherence.sh                     ← verificador de coherencia
 └── 01-gmb-crush/
     ├── SISTEMA.md                                 ← convenciones GMB Crush + tabla de las 6 fases
-    ├── 01-input-humano.md                         ← inputs (§Iniciales + §Finales)
     └── 02-ejecucion-ia/
         └── 01-construccion-web/
             ├── fases/

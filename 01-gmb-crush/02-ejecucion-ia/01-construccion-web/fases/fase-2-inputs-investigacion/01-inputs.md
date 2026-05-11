@@ -1,33 +1,95 @@
-# Fase 2 · sub-fase 1 — Inputs Iniciales
+# Fase 2 · sub-fase 1 — Inputs del Operador
 
-**Fuente única de qué pedir al operador:** [`01-gmb-crush/01-input-humano.md`](../../../../01-input-humano.md) §Iniciales.
+Único archivo donde se declara qué pide el sistema al operador. Toda la información que cualquier fase necesita está aquí, partida en dos momentos: **Iniciales** (sub-fase 1 de Fase 2) y **Finales** (Fase 6 — QA + Datos Finales).
 
-**No dupliques la lista aquí.** Lee ese archivo y pide al operador el mensaje exacto que vive en su §Mensaje exacto.
-
----
-
-## Procedimiento
-
-1. Abre `01-gmb-crush/01-input-humano.md`.
-2. Copia y pega el "Mensaje exacto que el agente envía al operador" (sección §Iniciales).
-3. Espera la respuesta del operador.
-4. Marca cada campo aportado como `confirmed` y cada campo faltante con el status correspondiente:
-   - Operador-dependientes faltantes → `⚠ placeholder` (`[TELÉFONO]`, `[EMAIL]`, etc.).
-   - Tokens deploy faltantes → `⚠ pendiente tokens` (se cierran en Fase 6).
-   - Web ref del cliente faltante → continuar con la web de referencia que se elija en sub-fase 2 (investigación).
+> **Si encuentras OTRO archivo del repo pidiendo inputs al operador, es un bug.** Repórtalo o redirígelo aquí. No dupliques listas.
 
 ---
 
-## Bloqueantes para arrancar Fase 2
+## §Iniciales — al arrancar (esta sub-fase)
 
-Si el operador NO aporta:
-- **Servicio principal** → STOP. Sin esto no puedes investigar el Local Pack en sub-fase 2. Pide explícitamente.
-- **Ciudad** → STOP. Idem.
+Lo que necesitas para investigar el sector (sub-fase 2 de Fase 2) y construir la web (Fases 3-5). Se piden todos en bloque tras Fase 1 (Test de Herramientas).
 
-Sin esos dos, no se pasa a la sub-fase 2.
+### Campos
+
+Significado de **Status**:
+- **bloqueante** → sin esto la IA no puede arrancar.
+- **recomendable** → arranca pero el campo va como marcador visible (`[TELÉFONO]`, `[EMAIL]`, `[DIRECCIÓN]`).
+- **opcional** → solo afecta a la fase indicada si se aporta.
+
+| # | Campo | Status | Si falta | Se usa en |
+|---|-------|--------|----------|-----------|
+| 1 | Nombre del negocio | recomendable | derivar de servicio + ciudad y marcar `⚠ placeholder` | Fase 3 output 1.1, schema Organization, slug, dominio derivado |
+| 2 | Servicio principal (qué hace) | **bloqueante** | la IA para y pide | Fase 2 sub-fase 2 (Local Pack), Fase 3 Core Services |
+| 3 | Dirección completa (calle, número, CP, ciudad) | **bloqueante** (al menos ciudad) | sin ciudad no se arranca; sin calle/número/CP marcar `[DIRECCIÓN]` placeholder | Fase 3 NAP + Direct LCAs, schema LocalBusiness |
+| 4 | Web actual del cliente (si tiene) | recomendable | sin web propia, la IA pide al operador una **referencia visual alternativa** (URL del sector que le guste) o **screenshots manuales**. Sin nada de eso, **no se ejecuta Fase 4** y el diseño queda como pendiente. | **Fase 4** — extracción de `theme.css` (colores, tipografía, layout) |
+| 5 | Ciudades adicionales para análisis Local Pack | opcional | analizar solo la Main City | Fase 2 sub-fase 2 (cruce de servicios del sector) |
+
+### Mensaje exacto que la IA envía al operador
+
+Una sola vez por proyecto, justo después de Fase 1:
+
+```
+Para arrancar, pásame los datos del negocio:
+
+1. Nombre del negocio
+2. Servicio principal (qué hace)
+3. Dirección completa (calle, número, CP y ciudad — si no la tiene, al menos la ciudad)
+4. Web actual del cliente, si tiene (la usaré como referencia de diseño en Fase 4)
+5. Ciudades adicionales para comparar el sector (opcional)
+
+Con servicio + ciudad ya arranco. El resto se completa o queda marcado con marcador visible.
+```
 
 ---
 
-## Pasa a sub-fase 2
+## §Finales — al cerrar (Fase 6)
 
-Cuando tengas servicio + ciudad → abre [`02-investigacion.md`](./02-investigacion.md).
+Lo que se cierra DESPUÉS de que la web esté construida y desplegada. La IA lee el `INFORME-FINAL.md` que produce Fase 6, identifica los `⚠ placeholder` y pide al operador estos campos según corresponda.
+
+### Campos
+
+| # | Campo | Status | Cómo cierra | Bloquea GBP |
+|---|-------|--------|-------------|:-----------:|
+| 1 | Teléfono | recomendable | operador lo provee, rebuild + redeploy | ✓ |
+| 2 | Email | recomendable | igual | — |
+| 3 | Estado GBP final (Created / Verified) | opcional | operador confirma cuando lo cree | ✓ (es el cierre del proyecto) |
+| 4 | Token GitHub (PAT con `repo` + `workflow`) | opcional | sin él, deploy queda pendiente; con él, redeploy automático | ✓ (si la web no está live, no hay GBP) |
+| 5 | Cloudflare Account ID | opcional | igual que 4 | ✓ |
+| 6 | Cloudflare API Token (permisos Pages + DNS) | opcional | igual que 4 | ✓ |
+| 7 | Dominio definitivo del cliente (con `https://`) | opcional | operador confirma o cambia el derivado | ✓ |
+
+### Mensaje de la IA al operador (post-deploy)
+
+Tras entregar `INFORME-FINAL.md`, la IA cita la tabla de pendientes y pide específicamente los campos que aún están marcados como placeholder:
+
+```
+La web está [live en https://... / construida en dist/ pendiente de deploy].
+
+Lee el INFORME-FINAL.md. Para cerrar el proyecto y desbloquear la creación del GBP necesito:
+
+[lista dinámica de los placeholders abiertos — ej:]
+- Teléfono real del negocio (hoy en la web aparece como [TELÉFONO])
+- Email del negocio
+- Tokens de deploy si quieres que pase a live: GitHub PAT + Cloudflare Account ID + API Token + dominio
+
+Cuando vayas cerrando cada uno, me lo dices y rebuild + redeploy. Cuando la tabla esté vacía, creo el GBP.
+```
+
+---
+
+## Reglas (aplican a iniciales y finales)
+
+- **Campos bloqueantes:** sin servicio principal o sin ciudad, la IA no arranca. Para y los pide.
+- **La IA no infiere datos del operador.** Si el operador no aporta un campo recomendable, va como marcador visible. La IA nunca fabrica un valor real.
+- **Datos prohibidos de inventar bajo cualquier circunstancia:** años de experiencia, número de reseñas, certificaciones, fotos, valores de schema (rating, sameAs antes del GBP). Si el operador los aporta → `confirmed`. Si no → quedan fuera del contenido publicado.
+- **Único punto de entrada:** este archivo (`01-inputs.md`). Cualquier IA que pida inputs al operador en otro sitio está duplicando — apúntala aquí.
+
+---
+
+## Procedimiento para esta sub-fase
+
+1. Envía al operador el mensaje exacto de §Iniciales arriba.
+2. Espera la respuesta. Marca cada campo aportado como `confirmed`; los faltantes como `⚠ placeholder` (operador-dependientes) o `⚠ pendiente tokens` (deploy).
+3. **Si faltan los dos bloqueantes** (servicio principal o ciudad) → para y pide de nuevo.
+4. Con servicio + ciudad mínimos → pasa a sub-fase 2 (`02-investigacion.md`).

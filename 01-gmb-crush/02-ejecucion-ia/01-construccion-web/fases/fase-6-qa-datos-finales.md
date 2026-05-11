@@ -55,7 +55,7 @@ Crea `ejecuciones-webs/gmb-crush-ejecuciones/[slug]/INFORME-FINAL.md` con 7 secc
 
 ### Bloque 3 — Parada blocking · operador aporta inputs finales
 
-Lee `01-gmb-crush/01-input-humano.md` §Finales y pide al operador el mensaje exacto que vive ahí. Los inputs finales típicos:
+Lee `01-gmb-crush/02-ejecucion-ia/01-construccion-web/fases/fase-2-inputs-investigacion/01-inputs.md` §Finales y pide al operador el mensaje exacto que vive ahí. Los inputs finales típicos:
 
 - Teléfono real, Email real
 - Estado GBP final (Created / Verified)
