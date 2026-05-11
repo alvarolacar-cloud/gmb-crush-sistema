@@ -1,6 +1,8 @@
 # AGENTS.md — Guía de arranque para agentes IA
 
 > **Variante doctrinal:** este AGENTS describe la versión de **6 fases lineales** del sistema GMB Crush (en lugar de los 6 pasos macro + 9 fases internas de la versión anterior en `main`).
+>
+> **Nota de naming:** la carpeta en disco puede llamarse `sistemawebvariante/` (worktree local del usuario) en lugar de `sistemas-creacion-webs/`. Es el mismo repo, rama `feat/variante-doctrinal`. Si la doctrina referencia `sistemas-creacion-webs/`, léelo como "raíz del repo actual".
 
 ## Qué construimos
 
@@ -70,6 +72,20 @@ ejecuciones-webs/                                  ← repo SEPARADO — datos d
 ```
 
 **Nunca crees carpetas de cliente dentro del repo del sistema.** Datos de clientes → siempre en `ejecuciones-webs/`.
+
+### Dónde vive `ejecuciones-webs/` en disco
+
+Por convención, `ejecuciones-webs/` vive **al lado** del repo del sistema, no dentro de él. Estructura recomendada:
+
+```
+C:\Users\[usuario]\Desktop\
+├── sistemawebvariante/         (o sistemas-creacion-webs/) ← este repo
+└── ejecuciones-webs/
+    └── gmb-crush-ejecuciones/
+        └── [slug]/
+```
+
+Si no existe `ejecuciones-webs/` cuando la IA va a crear el primer cliente (al inicio de Fase 3), la crea como hermana del repo del sistema. **Si la IA no puede determinar dónde está el repo del sistema, pregunta al operador antes de crear nada** — no asumas el path.
 
 ---
 

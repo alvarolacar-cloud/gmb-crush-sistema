@@ -14,6 +14,23 @@ Esto resuelve el problema de "la IA descubre a mitad de Fase 4 que no puede toma
 
 ---
 
+## Cómo verificar cada capacidad
+
+No declares ✓ por optimismo. Verifica con el comando exacto antes de marcar:
+
+| Capacidad | Cómo verificar | Marca ✓ si… |
+|-----------|----------------|-------------|
+| Navegador real | Intenta `mcp__Claude_in_Chrome__list_connected_browsers` o `mcp__computer-use__screenshot` | el tool responde sin error y hay al menos un browser/display |
+| Screenshot | Igual que arriba (mismo MCP cubre ambas) | screenshot devuelve imagen |
+| CSS inspection | `javascript_tool` o `preview_eval` disponibles en la sesión | el tool existe en el toolset actual |
+| Shell | Ejecuta `Bash` o `PowerShell` con `echo ok` | responde `ok` |
+| Git + gh CLI | `git --version && gh --version` | ambos devuelven versión (sin "command not found") |
+| pnpm | `pnpm --version` | devuelve versión |
+
+Si un comando devuelve error, la capacidad es ✗ — no la marques ✓ "porque suele estar".
+
+---
+
 ## Output exacto al operador
 
 ```
