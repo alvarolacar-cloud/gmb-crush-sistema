@@ -21,7 +21,6 @@ sistemas-creacion-webs/                        ← este repo — solo sistema
     ├── SISTEMA.md                             ← convenciones + tabla de fases
     ├── 01-input-humano.md                     ← inputs del operador (§Iniciales + §Finales)
     └── 02-ejecucion-ia/
-        ├── 00-investigacion/INVESTIGACION.md  ← Paso 4 — Local Pack
         └── 01-construccion-web/
             ├── fases/                         ← 6 fases (archivos sueltos o carpetas con README)
             ├── referencias/                   ← doctrina, ejemplos, tests

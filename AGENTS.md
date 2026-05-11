@@ -50,7 +50,6 @@ sistemas-creacion-webs/                            ← ESTE repo — solo sistem
     ├── SISTEMA.md                                 ← convenciones GMB Crush + tabla de las 6 fases
     ├── 01-input-humano.md                         ← inputs (§Iniciales + §Finales)
     └── 02-ejecucion-ia/
-        ├── 00-investigacion/INVESTIGACION.md      ← método de investigación común a todos los sistemas
         └── 01-construccion-web/
             ├── fases/
             │   ├── fase-1-test-herramientas.md
