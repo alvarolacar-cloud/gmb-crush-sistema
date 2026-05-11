@@ -1,8 +1,18 @@
-## Fase 3 · sub-fase 4 — Redacción de Contenido
+## Fase 3 · sub-fase 4 — Redacción + Página Astro por URL
 
 **Cuándo se ejecuta:** después de la sub-fase 3 (docs canónicos). Antes de la sub-fase 5 (Test Doctrinal).
 
-> Esta sub-fase transforma la arquitectura definida en las sub-fases 1-3 en copy real publicable. Sin esta sub-fase el sistema produce "qué debería ir" pero no "qué va a leer el usuario". El constructor (Fase 5 · sub-fase 1 — Build) consume este texto directamente.
+> **Cambio v0.3.0 (slim plantilla):** esta sub-fase produce **dos cosas** por cada URL de la matrix:
+> 1. **Copy real** (texto publicable: H1, párrafos, listas, FAQs).
+> 2. **Página `.astro` completa** en `ejecuciones-webs/[slug]/web/src/pages/` que renderiza ese copy con HTML libre fiel a la composición visual de la web de referencia (output de Fase 4 mapa de patrones).
+>
+> La plantilla del sistema ya no aporta páginas opinadas — solo `BaseLayout`, helpers de schema, slugify, sitemap. Cada cliente recibe HTML hecho a medida, con la libertad de usar split-heroes, media-blocks, galerías, lo que pida la referencia.
+>
+> **Cada `.astro` debe:**
+> - Importar `@layouts/BaseLayout.astro`
+> - Importar helpers de `@lib/schema-helpers` para construir los schemas que el Schema Map de sub-fase 3 declara para esa página
+> - Leer datos de `@lib/cluster` (`getValue<T>(id)`)
+> - Renderizar HTML libre con clases CSS que coordinen con el `theme.css` de Fase 4
 
 **Errores que previene:**
 - Publicar páginas con copy genérico sin contexto local

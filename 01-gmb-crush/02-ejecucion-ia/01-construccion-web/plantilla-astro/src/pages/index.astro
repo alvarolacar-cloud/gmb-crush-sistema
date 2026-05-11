@@ -1,84 +1,45 @@
 ---
 /**
- * Homepage (HP) — `/`
- * Doctrina: Root Entity Anchor. Schema Organization + WebSite (NO LocalBusiness, NO FAQPage en schema).
+ * Homepage stub.
+ *
+ * Esta página existe como placeholder mínimo para que `pnpm build` funcione sin
+ * cliente. CADA CLIENTE la sobreescribe en su carpeta `ejecuciones-webs/[slug]/web/src/pages/index.astro`
+ * con HTML libre que refleje fielmente la web de referencia (output de Fase 4).
+ *
+ * Patrón típico:
+ *   import BaseLayout from "@layouts/BaseLayout.astro";
+ *   import { organization, localBusiness, ... } from "@lib/schema-helpers";
+ *   import { getValue, getDomain } from "@lib/cluster";
+ *
+ *   const services = getValue<...>("1.9");
+ *   const schemas = [organization({...}), localBusiness({...})];
+ *
+ *   <BaseLayout title="..." description="..." schema={schemas} bodyClass="page--home">
+ *     ... HTML libre fiel a la referencia ...
+ *   </BaseLayout>
  */
 import BaseLayout from "@layouts/BaseLayout.astro";
-import Hero from "@components/Hero.astro";
-import ServicesGrid from "@components/ServicesGrid.astro";
-import TrustBlock from "@components/TrustBlock.astro";
-import Faqs from "@components/Faqs.astro";
-import {
-  getBusinessName,
-  getNAP,
-  getMainCity,
-  getMainCitySlug,
-  getLCAs,
-  getTrustSignals,
-  getPreferredCTA,
-  getPrimaryCategory,
-  phoneHref,
-  getFaqsHomepage,
-  getImages,
-} from "@lib/cluster";
-import { buildHomepageSchemas } from "@lib/schemas";
+import { getBusinessName, getDomain } from "@lib/cluster";
 
-const businessName = getBusinessName();
-const nap = getNAP();
-const mainCity = getMainCity();
-const mainCitySlug = getMainCitySlug();
-const lcas = getLCAs();
-const trustSignals = getTrustSignals();
-const cta = getPreferredCTA();
-const primaryCategory = getPrimaryCategory();
-const faqs = getFaqsHomepage();
-const images = getImages();
-
-const title = `${businessName} · ${primaryCategory} en ${mainCity}`;
-const description = `${primaryCategory} en ${mainCity}${
-  lcas.direct.length ? `: ${lcas.direct.join(", ")}` : ""
-}.${trustSignals[0] ? ` ${trustSignals[0]}.` : ""}`;
-
-const schema = buildHomepageSchemas();
-
-// H1 doctrinal: Primary Category + Main City. NO concatena Pre.2 (que ya puede incluir ciudad).
-const heroTitle = `${primaryCategory} en ${mainCity}`;
-const heroSubtitle = `Especialistas en ${primaryCategory.toLowerCase()}${
-  lcas.direct.length
-    ? ` con cobertura en zonas como ${lcas.direct.join(", ")}`
-    : ` en ${mainCity}`
-}.`;
+const name = getBusinessName();
+const domain = getDomain();
 ---
 
-<BaseLayout title={title} description={description} schema={schema} pageType="home">
-  <Hero
-    h1={heroTitle}
-    subtitle={heroSubtitle}
-    trustItem={trustSignals[0]}
-    ctaPrimary={cta}
-    ctaPrimaryHref="/contacto/"
-    ctaSecondary={`Llamar ${nap.phone}`}
-    ctaSecondaryHref={phoneHref(nap.phone)}
-    heroImage={images.hero_homepage}
-  />
-
-  <ServicesGrid />
-
-  <TrustBlock />
-
-  <Faqs faqs={faqs} />
-
-  <section class="cta-section">
-    <h2 class="cta-section__title">¿Empezamos?</h2>
-    <p class="cta-section__description">
-      Presupuesto sin compromiso en 24h. Trabajamos en todo {mainCity}.
+<BaseLayout
+  title={`${name} — sitio en construcción`}
+  description={`${name}. Sitio en construcción.`}
+  bodyClass="page--placeholder"
+>
+  <main style="font-family: system-ui, sans-serif; max-width: 640px; margin: 64px auto; padding: 0 24px;">
+    <h1 style="font-size: 32px; margin-bottom: 16px;">{name}</h1>
+    <p style="color: #555;">
+      Sitio en construcción. Esta es la página por defecto de la plantilla del sistema.
+      Para verla con contenido real, cada cliente sobreescribe <code>src/pages/index.astro</code>
+      en su carpeta de ejecución con HTML libre, usando <code>BaseLayout</code> y los helpers de
+      <code>schema-helpers</code> / <code>cluster</code>.
     </p>
-    <a href="/contacto/" class="cta-section__button">{cta}</a>
-  </section>
-
-  <section class="content">
-    <p class="content__paragraph">
-      Ver el <a href={`/${mainCitySlug}/`} class="content__link">índice de servicios en {mainCity}</a>.
+    <p style="color: #555;">
+      Dominio configurado: <a href={domain}>{domain}</a>
     </p>
-  </section>
+  </main>
 </BaseLayout>

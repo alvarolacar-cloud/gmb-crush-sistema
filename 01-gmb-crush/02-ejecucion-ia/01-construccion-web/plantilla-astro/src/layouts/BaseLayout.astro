@@ -1,28 +1,31 @@
 ---
+/**
+ * BaseLayout — slim.
+ *
+ * Provee: <head> meta tags, canonical, OG, schema JSON-LD inyectado, body wrapper.
+ * NO provee: Header, Footer, ningún bloque visual. La página de cada cliente
+ * importa este layout y compone el HTML libremente.
+ *
+ * El theme.css del cliente decide la apariencia. La plantilla solo aporta
+ * el chassis técnico (charset, viewport, schema, canonical, OG).
+ */
 import "../styles/global.css";
 import "../styles/theme.css";
-import Header from "@components/Header.astro";
-import Footer from "@components/Footer.astro";
 import { getDomain } from "@lib/cluster";
 
 interface Props {
   title: string;
   description: string;
   canonical?: string;
+  /** Array de objetos Schema.org JSON-LD. La fase decide qué schemas inyectar por página. */
   schema?: Record<string, unknown>[];
   /**
-   * Modificador del body según page type. Permite al theme.css aplicar
-   * estilos distintos por page type via `.page--lbs .hero { ... }`, etc.
+   * Clase modificadora del <body>. Útil si el theme.css quiere variar por page type.
+   * El nombre lo decide la fase, no la plantilla. Ej: "home", "lbs", "ga", o cualquier otro.
    */
-  pageType?:
-    | "home"
-    | "service-overview"
-    | "lbs"
-    | "geohub"
-    | "geoarticle"
-    | "additional-category"
-    | "contact"
-    | "auxiliary";
+  bodyClass?: string;
+  /** URL de la imagen de Open Graph (1200x630 idealmente). */
+  ogImage?: string;
 }
 
 const {
@@ -30,11 +33,11 @@ const {
   description,
   canonical,
   schema = [],
-  pageType = "auxiliary",
+  bodyClass = "",
+  ogImage,
 } = Astro.props;
 
 const canonicalUrl = canonical ?? new URL(Astro.url.pathname, getDomain()).href;
-const bodyClass = `page page--${pageType}`;
 ---
 
 <!doctype html>
@@ -55,29 +58,20 @@ const bodyClass = `page page--${pageType}`;
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:locale" content="es_ES" />
+    {ogImage && <meta property="og:image" content={ogImage} />}
 
     {/* Twitter Cards */}
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
 
-    {/* Schema JSON-LD */}
-    {
-      schema.map((s) => (
-        <script
-          is:inline
-          type="application/ld+json"
-          set:html={JSON.stringify(s)}
-        />
-      ))
-    }
+    {/* Schema JSON-LD — la fase decide qué inyecta */}
+    {schema.map((s) => (
+      <script is:inline type="application/ld+json" set:html={JSON.stringify(s)} />
+    ))}
   </head>
 
   <body class={bodyClass}>
-    <Header />
-    <main>
-      <slot />
-    </main>
-    <Footer />
+    <slot />
   </body>
 </html>

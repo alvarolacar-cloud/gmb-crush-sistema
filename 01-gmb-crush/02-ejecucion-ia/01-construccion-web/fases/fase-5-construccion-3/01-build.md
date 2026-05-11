@@ -43,17 +43,18 @@ Los outputs mínimos que `outputs.json` debe contener para que la plantilla func
 
 ### 8.2 Copiar plantilla y configurar
 
-1. Copiar `plantilla-astro/` a la carpeta del cliente: `cp -r plantilla-astro/ ejecuciones-webs/gmb-crush-ejecuciones/[slug]/web/`
-2. Colocar `outputs.json` en la raíz del proyecto.
-3. Asegurar que `outputs.json` tiene `"meta": {"catalog_version": "0.1.0"}`.
-4. Actualizar `astro.config.mjs`: `site` = dominio del cliente.
-5. Actualizar `package.json`: `name` = slug del negocio.
-6. **Copiar el `theme.css` del cliente** (producido en Fase 4) a la plantilla:
+1. Copiar `plantilla-astro/` (slim) a la carpeta del cliente: `cp -r plantilla-astro/ ejecuciones-webs/gmb-crush-ejecuciones/[slug]/web/`
+2. **Borrar el `index.astro` placeholder** de la plantilla (`web/src/pages/index.astro`) — será sobreescrito por las páginas reales del cliente.
+3. **Copiar las páginas `.astro` redactadas en Fase 3 sub-fase 4** a `web/src/pages/`. Una `.astro` por cada URL de la URL Matrix.
+4. Colocar `outputs.json` (output de Fase 3) en la raíz del proyecto.
+5. Actualizar `astro.config.mjs`: `site` = dominio del cliente.
+6. Actualizar `package.json`: `name` = slug del negocio.
+7. **Copiar el `theme.css` del cliente** (producido en Fase 4) a `web/src/styles/theme.css`:
    ```bash
    cp ejecuciones-webs/gmb-crush-ejecuciones/[slug]/theme.css \
       ejecuciones-webs/gmb-crush-ejecuciones/[slug]/web/src/styles/theme.css
    ```
-   Si no existe `theme.css` en la carpeta del cliente (Fase 4 no se ejecutó), el archivo placeholder de la plantilla queda vacío y la web sale con HTML semántico sin estilos visuales (solo `global.css` reset). Esto se documenta como `⚠ pendiente diseño` en INFORME-FINAL.
+   Si no existe `theme.css` (Fase 4 no se ejecutó), el placeholder de la plantilla queda vacío y la web sale con HTML sin estilos visuales (solo `global.css` reset). Se documenta como `⚠ pendiente diseño`.
 
 ### 8.3 Build
 

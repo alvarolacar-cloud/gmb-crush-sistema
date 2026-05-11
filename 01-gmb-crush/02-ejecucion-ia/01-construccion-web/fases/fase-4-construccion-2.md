@@ -2,7 +2,7 @@
 
 **Fuente:** `Cliente preflight` (web de referencia) + inspección directa.
 
-> **Cambio doctrinal v0.2.0**: la plantilla Astro es **design-agnostic**. Emite HTML semántico con clases del contrato (`referencias/contrato-clases-css.md`) pero no decide colores, fuentes, layouts ni estilos. **El diseño vive 100% en un archivo `theme.css` por cliente**, que esta Fase produce extrayéndolo de la web de referencia.
+> **Cambio doctrinal v0.3.0**: la plantilla Astro es **slim** — solo provee BaseLayout + helpers (schemas, slugify, sitemap). Las páginas `.astro` las escribe la IA por cliente en Fase 3 sub-fase 4 con HTML libre. Esta Fase produce **dos cosas**: (1) `theme.css` con tokens visuales + (2) **mapa de patrones de composición** (split-hero, media-block, gallery, etc.) que la IA usa al escribir las `.astro` en sub-fase 4.
 >
 > Esto elimina el conflicto que existía antes entre "el diseño promete réplica fiel" y "la plantilla tiene su propio diseño". Ahora la plantilla no opina; el `theme.css` decide. No hay rigidez visual.
 
@@ -31,7 +31,7 @@ Plan B si faltan capacidades:
 
 ## Paso 1 — Leer el contrato de clases de la plantilla
 
-Lee `referencias/contrato-clases-css.md`. Es la lista cerrada de clases CSS que la plantilla emite. **El `theme.css` que produzcas debe estilizar SOLO estas clases — no inventes nuevas.**
+**Sin contrato cerrado de clases CSS** (v0.3.0). La IA decide las clases CSS que usa al escribir las páginas `.astro` del cliente en sub-fase 4 de Fase 3. El `theme.css` que produzcas en esta Fase estiliza esas clases — son las que tú elijas, coherentes con la composición de la web de referencia.
 
 Resumen de los bloques principales (ver el contrato para detalle completo):
 - `.page--home / .page--lbs / .page--service-overview / .page--geohub / .page--geoarticle / .page--contact` (modificadores de `<body>`)

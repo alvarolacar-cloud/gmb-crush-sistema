@@ -74,4 +74,33 @@ Antes de pasar a la siguiente fase, ejecuta el gate de salida del archivo de esa
 | **Fase 5** — Construcción Web III (Build + Deploy) | `fases/fase-5-construccion-3/README.md` | `outputs.json` + `dist/` + URL live (o `⚠ pendiente tokens`) |
 | **Fase 6** — QA Final + Datos Finales | `fases/fase-6-qa-datos-finales.md` | QA visual + `INFORME-FINAL.md` + cierre de pendientes + GBP desbloqueado |
 
-Si necesitas más detalle sobre page types, consulta `02-ejecucion-ia/01-construccion-web/referencias/page-type-specs.md`. Para ver un ejemplo doctrinal, consulta `02-ejecucion-ia/01-construccion-web/referencias/ejemplo-cerrajeros.md`. Para el contrato de clases CSS de la plantilla, consulta `02-ejecucion-ia/01-construccion-web/referencias/contrato-clases-css.md`.
+Si necesitas más detalle sobre page types, consulta `02-ejecucion-ia/01-construccion-web/referencias/page-type-specs.md`. Para ver un ejemplo doctrinal, consulta `02-ejecucion-ia/01-construccion-web/referencias/ejemplo-cerrajeros.md`.
+
+---
+
+## 3. Modelo de plantilla (slim) — qué hace y qué NO hace
+
+La plantilla Astro (`02-ejecucion-ia/01-construccion-web/plantilla-astro/`) es **infraestructura técnica**, no opina sobre composición visual ni doctrinal:
+
+**Provee:**
+- Build pipeline (Astro 5 + pnpm + Cloudflare Pages compatible)
+- `BaseLayout.astro`: chassis HTML (head, meta, canonical, OG, schema JSON-LD slot, body wrapper). Sin Header/Footer hardcoded.
+- `lib/cluster.ts`: loader de `outputs.json` + getters genéricos (`getValue<T>(id)`).
+- `lib/schema-helpers.ts`: funciones constructoras de schemas (`organization()`, `localBusiness()`, `article()`, `faqPage()`, `breadcrumb()`, etc.) — **qué schema va en qué página lo decide la fase**, no la plantilla.
+- `lib/slugify.ts`: regla doctrinal de slugify.
+- `pages/sitemap.xml.ts`: genera sitemap leyendo el output `3.1 URL Matrix` de `outputs.json`.
+- `styles/global.css`: reset mínimo.
+- `styles/theme.css`: placeholder — Fase 4 lo sobreescribe con el theme del cliente.
+
+**NO provee:**
+- Páginas HTML opinadas por page type (`index.astro`, `[category]/[service]/index.astro`, etc.). **Cada cliente** las escribe en su carpeta de ejecución según el output de Fase 3 sub-fase 4 (Redacción) y Fase 4 (Diseño).
+- Componentes visuales fijos (Hero, ServicesGrid, TrustBlock, FAQs, Header, Footer). **No existe contrato cerrado de clases CSS.** El cliente puede usar las clases que decida en su HTML + theme.css.
+- Asignación schema-por-page-type, lista hardcoded de page types, internal linking topology. Todo eso es output de Fase 3, no decisión de la plantilla.
+
+**Workflow por cliente:**
+1. Copiar plantilla a `ejecuciones-webs/[slug]/web/`
+2. Pegar `outputs.json` (output de Fase 3) en raíz
+3. Pegar `theme.css` (output de Fase 4) en `src/styles/`
+4. **Escribir `.astro` por cada URL del output `3.1` (URL Matrix)** en `src/pages/`, usando `BaseLayout` + helpers
+5. `CLUSTER_PATH=./outputs.json pnpm build` → `dist/`
+6. Deploy (Fase 5 sub-fase 2)
